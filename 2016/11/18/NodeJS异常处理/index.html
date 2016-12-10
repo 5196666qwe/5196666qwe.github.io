@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="[TOC]
+异常捕获问题过去我们处理异常时，通常使用类java的try/cat/final语句块进行异常捕获，示例代码如下:
+12345678910111213function sync(fn) &amp;#123;    return fn();&amp;#125;try &amp;#123;    sync(null);    // Do something.&amp;#125; catch (err) &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS异常处理">
+<meta property="og:url" content="http://yoursite.com/2016/11/18/NodeJS异常处理/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="[TOC]
+异常捕获问题过去我们处理异常时，通常使用类java的try/cat/final语句块进行异常捕获，示例代码如下:
+12345678910111213function sync(fn) &amp;#123;    return fn();&amp;#125;try &amp;#123;    sync(null);    // Do something.&amp;#125; catch (err) &amp;#123;">
+<meta property="og:updated_time" content="2016-12-10T04:38:50.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NodeJS异常处理">
+<meta name="twitter:description" content="[TOC]
+异常捕获问题过去我们处理异常时，通常使用类java的try/cat/final语句块进行异常捕获，示例代码如下:
+12345678910111213function sync(fn) &amp;#123;    return fn();&amp;#125;try &amp;#123;    sync(null);    // Do something.&amp;#125; catch (err) &amp;#123;">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> NodeJS异常处理 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="NodeJS异常处理"> NodeJS异常处理 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-11-18T11:25:55+08:00" content="2016-11-18">
+              2016-11-18
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>[TOC]</p>
+<h2 id="异常捕获问题"><a href="#异常捕获问题" class="headerlink" title="异常捕获问题"></a>异常捕获问题</h2><p>过去我们处理异常时，通常使用类java的<code>try/cat/final</code>语句块进行异常捕获，示例代码如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sync</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> fn();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    sync(<span class="literal">null</span>);</div><div class="line">    <span class="comment">// Do something.</span></div><div class="line">&#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Error: %s'</span>, err.message);</div><div class="line">&#125;</div><div class="line"></div><div class="line">-- Console ------------------------------</div><div class="line"><span class="built_in">Error</span>: object is not a <span class="function"><span class="keyword">function</span></span></div></pre></td></tr></table></figure>
+<p>可以看到，异常会沿着代码执行路径一直冒泡，直到遇到第一个try语句时被捕获住。</p>
+<p><strong>但是这对异常编程而言不一定适用，异步的I/O操作的实现主要包含两个阶段:</strong></p>
+<p><strong>提交请求和处理结果，这两个阶段中间有事件循环的调用，两个彼此不关联。异步方法则通常在第一个阶段提交请求后立即返回，因为异常并不一定发生在这个阶段，<code>try/catch</code>的功效在此处不会发生任何作用。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">async</span>(<span class="params">fn, callback</span>) </span>&#123;</div><div class="line">    <span class="comment">// Code execution path breaks here.</span></div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)　</span>&#123;</div><div class="line">        callback(fn());</div><div class="line">    &#125;, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">async</span>(<span class="literal">null</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">        <span class="comment">// Do something.</span></div><div class="line">    &#125;);</div><div class="line">&#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Error: %s'</span>, err.message);</div><div class="line">&#125;</div><div class="line"></div><div class="line">-- Console ------------------------------</div><div class="line"> Uncaught <span class="built_in">TypeError</span>: fn is not a <span class="function"><span class="keyword">function</span>(<span class="params">…</span>)</span></div></pre></td></tr></table></figure>
+<p>你会看到直接就退出程序了，try/catch对callback执行时抛出的异常无能为力。</p>
+<p>如何改造？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">async</span>(<span class="params">fn, callback</span>) </span>&#123;</div><div class="line">    <span class="comment">// Code execution path breaks here.</span></div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)　</span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            callback(<span class="literal">null</span>, fn());</div><div class="line">        &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">            callback(err);</div><div class="line">        &#125;</div><div class="line">    &#125;, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">async</span>(<span class="literal">null</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Error: %s'</span>, err.message);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Do something.</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">-- Console ------------------------------</div><div class="line"><span class="built_in">Error</span>: object is not a <span class="function"><span class="keyword">function</span></span></div></pre></td></tr></table></figure>
+<p>在NodeJS中，几乎所有异步API都按照以上方式设计，<strong>将异常作为回调函数的第一个实参传回，如果为空值，则表明异步调用没有异常抛出。</strong>(这一点刚开始我也不能理解，为什么第一个参数总是err).</p>
+<p>有了异常处理方式后，我们接着可以想想一般我们是怎么写代码的。基本上，我们的代码都是做一些事情，然后调用一个函数，然后再做一些事情，然后再调用一个函数，如此循环。如果我们写的是同步代码，只需要在代码入口点写一个try语句就能捕获所有冒泡上来的异常，示例如下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// Do something.</span></div><div class="line">    syncA();</div><div class="line">    <span class="comment">// Do something.</span></div><div class="line">    syncB();</div><div class="line">    <span class="comment">// Do something.</span></div><div class="line">    syncC();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    main();</div><div class="line">&#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="comment">// Deal with exception.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是，如果我们写的是异步代码，就只有呵呵了。</p>
+<p>通过回调函数来传递异常，于是我们就需要在每个回调函数里判断是否有异常发生，于是只用三次异步函数调用，就会产生下边这种代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params">callback</span>) </span>&#123;</div><div class="line">    <span class="comment">// Do something.</span></div><div class="line">    asyncA(<span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (err) &#123;</div><div class="line">            callback(err);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// Do something</span></div><div class="line">            asyncB(<span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (err) &#123;</div><div class="line">                    callback(err);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="comment">// Do something</span></div><div class="line">                    asyncC(<span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</div><div class="line">                        <span class="keyword">if</span> (err) &#123;</div><div class="line">                            callback(err);</div><div class="line">                        &#125; <span class="keyword">else</span> &#123;</div><div class="line">                            <span class="comment">// Do something</span></div><div class="line">                            callback(<span class="literal">null</span>);</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">main(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="comment">// Deal with exception.</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="domain模块"><a href="#domain模块" class="headerlink" title="domain模块"></a>domain模块</h2><p>//todo</p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常捕获问题"><span class="nav-number">1.</span> <span class="nav-text">异常捕获问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#domain模块"><span class="nav-number">2.</span> <span class="nav-text">domain模块</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2016</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
