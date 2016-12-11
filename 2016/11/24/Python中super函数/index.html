@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Python," />
+
+
+<meta name="description" content="[TOC]
+啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。
+然后又发现怎么这货还有参数的，而且参数还是那么奇葩，这么反人类啊。
+之后查了点资料，才知道我是逗逼。。
+为什么super一般是两个参数的?请无视出现的父类名词，只是便于说明。
+我们最常见的，可以说几乎唯一能见到的使用super的形式是：
+1234class SubCla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中super">
+<meta property="og:url" content="http://yoursite.com/2016/11/24/Python中super函数/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="[TOC]
+啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。
+然后又发现怎么这货还有参数的，而且参数还是那么奇葩，这么反人类啊。
+之后查了点资料，才知道我是逗逼。。
+为什么super一般是两个参数的?请无视出现的父类名词，只是便于说明。
+我们最常见的，可以说几乎唯一能见到的使用super的形式是：
+1234class SubCla">
+<meta property="og:updated_time" content="2016-12-10T13:57:44.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python中super">
+<meta name="twitter:description" content="[TOC]
+啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。
+然后又发现怎么这货还有参数的，而且参数还是那么奇葩，这么反人类啊。
+之后查了点资料，才知道我是逗逼。。
+为什么super一般是两个参数的?请无视出现的父类名词，只是便于说明。
+我们最常见的，可以说几乎唯一能见到的使用super的形式是：
+1234class SubCla">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> Python中super </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="Python中super"> Python中super </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-11-24T13:59:55+08:00" content="2016-11-24">
+              2016-11-24
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Python" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>[TOC]</p>
+<p>啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。</p>
+<p>然后又发现怎么这货还有参数的，而且参数还是那么奇葩，这么反人类啊。</p>
+<p>之后查了点资料，才知道我是逗逼。。</p>
+<h2 id="为什么super一般是两个参数的"><a href="#为什么super一般是两个参数的" class="headerlink" title="为什么super一般是两个参数的?"></a>为什么super一般是两个参数的?</h2><p><strong>请无视出现的父类名词，只是便于说明。</strong></p>
+<p>我们最常见的，可以说几乎唯一能见到的使用super的形式是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubClass</span><span class="params">(BaseClass)</span>:</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">(self)</span>:</span></div><div class="line">		super(SubClass, self).method()</div><div class="line">		<span class="comment">#do some thing here...</span></div></pre></td></tr></table></figure>
+<p>其中，最常见的method()是<code>__init__()</code></p>
+<p>当我第一次见到这个super()的时候，我想说，这是啥啊？为什么Python的super看起来这么奇怪呢？</p>
+<p>super直接指向父类的实例不就得了么？<strong>为什么非得搞两个参数？</strong></p>
+<p>而且第一个参数还是自己的类名，而不是父类的类名！</p>
+<p>既然是自己的类名你还费劲写一遍干嘛，干脆省略不得了？</p>
+<p>第二个参数为啥是self？既然是self你省略不得了？</p>
+<p>还有，super()返回的是个啥玩意啊，为什么可以.method() ? 难道他返回了一个`BaseClass的instance么？</p>
+<p>今天就来解答这一连串的问题。</p>
+<p>首先是不能指向，因为子类实例里面根本就没有一个父类实例，这跟java是不同的。</p>
+<p>其次就算有，子类实例里面有个super的指针，指向父类的实例，因为多继承的关系，会存在问题。你子类不知道调用一个方法时（子类不重写父类方法时），不知道是调用哪一个父类的方法。假设说你任意调用了其中一个父类的方法，那么就体现不出来其他父类的特点了。如果都调用的话，就更糟糕了。你要是其中一个父类没有这个方法，不就over了。。</p>
+<p>那么我们自然想到，给super搞一个参数不得了，指出super的是哪个父类。</p>
+<p>先不说这种写法多么的丑陋，重复了那么多无意义的、类似的行，单说这种方法根本就行不通。</p>
+<p>比如A类继承了两个类B，C，两个类又共同继承了另一个类D。（假设BCA都重写了D方法）那么，你调用A的方法时候，D类的方法会执行两遍。。这是多傻逼的一种行为。</p>
+<p>所以，python的super()用了两个参数。</p>
+<h2 id="Super究竟是什么？"><a href="#Super究竟是什么？" class="headerlink" title="Super究竟是什么？"></a>Super究竟是什么？</h2><p>要谈论 <code>super</code>，首先我们应该无视 “super” 这个名字带给我们的干扰。</p>
+<p><strong>不要一说到 super 就想到父类！super 指的是 MRO 中的下一个类！</strong><br><strong>不要一说到 super 就想到父类！super 指的是 MRO 中的下一个类！</strong><br><strong>不要一说到 super 就想到父类！super 指的是 MRO 中的下一个类！</strong></p>
+<p>看这篇文章：<a href="https://rhettinger.wordpress.com/2011/05/26/super-considered-super/" target="_blank" rel="external">Python’s super() considered super!</a> 这是 Raymond Hettinger 写的一篇文章，也是全世界公认的对 <code>super</code> 讲解最透彻的一篇文章，凡是讨论 super 都一定会提到它（当然还有一篇 Python’s Super Considered Harmful）。</p>
+<p>如果不想看长篇大论就去看<a href="http://stackoverflow.com/questions/15896265/python-super-inheritance-and-arguments-needed/15896594#15896594" target="_blank" rel="external">这个答案</a>，<code>super</code> 其实干的是这件事：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">super</span><span class="params">(cls, inst)</span>:</span></div><div class="line">    mro = inst.__class__.mro()</div><div class="line">    <span class="keyword">return</span> mro[mro.index(cls) + <span class="number">1</span>]</div></pre></td></tr></table></figure>
+<p>两个参数 cls 和 inst 分别做了两件事： </p>
+<ol>
+<li><p><strong>inst 负责生成 MRO 的 list</strong> </p>
+</li>
+<li><p><strong>通过 cls 定位当前 MRO 中的 index, 并返回 mro[index + 1]</strong> </p>
+<p>这两件事才是 super 的实质，一定要记住！ </p>
+<p>MRO 全称 Method Resolution Order，它代表了类继承的顺序。后面详细说。</p>
+</li>
+</ol>
+<p>举个例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Root</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">"this is Root"</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(Root)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">"enter B"</span>)</div><div class="line">        <span class="comment"># print(self)  # this will print &lt;__main__.D object at 0x...&gt;</span></div><div class="line">        super(B, self).__init__()</div><div class="line">        print(<span class="string">"leave B"</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(Root)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">"enter C"</span>)</div><div class="line">        super(C, self).__init__()</div><div class="line">        print(<span class="string">"leave C"</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">d = D()</div><div class="line">print(d.__class__.__mro__)</div></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">enter B</div><div class="line">enter C</div><div class="line">this is Root</div><div class="line">leave C</div><div class="line">leave B</div><div class="line">(&lt;class '__main__.D'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.C'&gt;, &lt;class '__main__.Root'&gt;, &lt;type 'object'&gt;)</div></pre></td></tr></table></figure>
+<p>知道了 <code>super</code> 和父类其实没有实质关联之后，我们就不难理解为什么 enter B 下一句是 enter C 而不是 this is Root（如果认为 super 代表“调用父类的方法”，会想当然的认为下一句应该是this is Root）。流程如下，在 B 的 <code>__init__</code> 函数中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">super(B, self).__init__()</div></pre></td></tr></table></figure>
+<p>首先，我们获取 <code>self.__class__.__mro__</code>，注意这里的 self 是D的instance 而不是 B 的[你可以看成是d.init()]</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(&lt;class '__main__.D'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.C'&gt;, &lt;class '__main__.Root'&gt;, &lt;type 'object'&gt;)</div></pre></td></tr></table></figure>
+<p>然后，通过 B 来定位 MRO 中的 index，并找到下一个。显然 B 的下一个是 C。于是，我们调用 C 的 <code>__init__</code>，打出 enter C。</p>
+<p>顺便说一句为什么 B 的 <code>__init__</code> 会被调用：因为 D 没有定义 <code>__init__</code>，所以会在 MRO 中找下一个类，去查看它有没有定义 <code>__init__</code>，也就是去调用 B 的 <code>__init__</code>。</p>
+<p>其实这一切逻辑还是很清晰的，关键是理解 <code>super</code> 到底做了什么。</p>
+<p>于是，MRO 中类的顺序到底是怎么排的呢？Python’s super() considered super!中已经有很好的解释，我翻译一下：<br><strong>在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。</strong> </p>
+<p>参考：</p>
+<p><a href="http://zsl-oo7.blog.163.com/blog/static/35329703201502901052503/" target="_blank" rel="external"><strong>Python 的 super，一次性整明白</strong></a></p>
+<p><a href="https://laike9m.com/blog/li-jie-python-super,70/" target="_blank" rel="external"><strong>理解 Python super</strong></a></p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么super一般是两个参数的"><span class="nav-number">1.</span> <span class="nav-text">为什么super一般是两个参数的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Super究竟是什么？"><span class="nav-number">2.</span> <span class="nav-text">Super究竟是什么？</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Python" rel="tag">#Python</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2016</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
