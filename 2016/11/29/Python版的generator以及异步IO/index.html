@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Python," />
+
+
+<meta name="description" content="如果说你 es6 的 Generator 懂了，python 的 generator 就很容易
+下面是一些语法对照表
+
+
+
+es6
+python3
+
+
+
+
+yield
+yield
+
+
+yield*
+yield from
+
+
+g.next() or g.next(undefined)
+next(g) or g.send(None)
+
+
+g.next(‘xxx’)
+g.send(‘xxx’)
+
+
+
+y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python版的generator以及异步IO">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/Python版的generator以及异步IO/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="如果说你 es6 的 Generator 懂了，python 的 generator 就很容易
+下面是一些语法对照表
+
+
+
+es6
+python3
+
+
+
+
+yield
+yield
+
+
+yield*
+yield from
+
+
+g.next() or g.next(undefined)
+next(g) or g.send(None)
+
+
+g.next(‘xxx’)
+g.send(‘xxx’)
+
+
+
+y">
+<meta property="og:updated_time" content="2016-12-19T06:35:20.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python版的generator以及异步IO">
+<meta name="twitter:description" content="如果说你 es6 的 Generator 懂了，python 的 generator 就很容易
+下面是一些语法对照表
+
+
+
+es6
+python3
+
+
+
+
+yield
+yield
+
+
+yield*
+yield from
+
+
+g.next() or g.next(undefined)
+next(g) or g.send(None)
+
+
+g.next(‘xxx’)
+g.send(‘xxx’)
+
+
+
+y">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> Python版的generator以及异步IO </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="Python版的generator以及异步IO"> Python版的generator以及异步IO </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-11-29T13:59:55+08:00" content="2016-11-29">
+              2016-11-29
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Python" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>如果说你 es6 的 Generator 懂了，python 的 generator 就很容易</p>
+<p>下面是一些语法对照表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">es6</th>
+<th style="text-align:center">python3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">yield</td>
+<td style="text-align:center">yield</td>
+</tr>
+<tr>
+<td style="text-align:center">yield*</td>
+<td style="text-align:center">yield from</td>
+</tr>
+<tr>
+<td style="text-align:center">g.next() or g.next(undefined)</td>
+<td style="text-align:center">next(g) or g.send(None)</td>
+</tr>
+<tr>
+<td style="text-align:center">g.next(‘xxx’)</td>
+<td style="text-align:center">g.send(‘xxx’)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="yield-和-yield-from"><a href="#yield-和-yield-from" class="headerlink" title="yield*  和 yield from"></a>yield*  和 yield from</h2><p><code>es6</code>里面在一个<code>generator</code>调用另一个<code>generator</code>,跟在 <code>yield*</code>后面的generator函数等同与一个<code>for…of</code>循环。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">function* foo() &#123;</div><div class="line">	yield <span class="string">'a'</span>;</div><div class="line">	yield <span class="string">'b'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function * bar() &#123;</div><div class="line">    yield <span class="string">'x'</span>;</div><div class="line">    yield* foo()</div><div class="line">    yield <span class="string">'y'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 等同于</span></div><div class="line">function * bar() &#123;</div><div class="line">    yield <span class="string">'x'</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="function">let v of <span class="title">foo</span><span class="params">()</span>) </span>&#123;</div><div class="line">        yield v;</div><div class="line">    &#125;</div><div class="line">    yield <span class="string">'y'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而在<code>python</code>里面<code>yield from iterator</code>等同于</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> iterator:</div><div class="line">    <span class="keyword">yield</span> x</div></pre></td></tr></table></figure>
+<p>两者看起来有点类似。</p>
+<p>举个例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader</span><span class="params">()</span>:</span></div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</div><div class="line">		<span class="keyword">yield</span> <span class="string">'&lt;&lt; %s'</span> % i</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader_wrapper</span><span class="params">(g)</span>:</span></div><div class="line">	<span class="keyword">for</span> v <span class="keyword">in</span> g:</div><div class="line">		<span class="keyword">yield</span> v</div><div class="line"></div><div class="line">wrap = reader_wrapper(reader())</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> wrap:</div><div class="line">	print(i)</div><div class="line"><span class="comment"># 结果：</span></div><div class="line">&lt;&lt; <span class="number">0</span></div><div class="line">&lt;&lt; <span class="number">1</span></div><div class="line">&lt;&lt; <span class="number">2</span></div><div class="line">&lt;&lt; <span class="number">3</span></div></pre></td></tr></table></figure>
+<p>我们可以用<code>yield from</code>语句替代reader_wrapper(g)函数中的循环，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader_wrapper</span><span class="params">(g)</span>:</span></div><div class="line">	<span class="keyword">yield</span> <span class="keyword">from</span> g</div></pre></td></tr></table></figure>
+<p>效果一样，且代码更简洁有没有。</p>
+<p><code>es6</code>里面<code>yield*</code>语句可以接受返回值，<code>python</code>也是可以接受返回值的。两者是一样的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader</span><span class="params">()</span>:</span></div><div class="line">	<span class="keyword">yield</span> <span class="number">1</span></div><div class="line">	<span class="keyword">return</span> <span class="string">'2'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader_wrapper</span><span class="params">(g)</span>:</span></div><div class="line">	value = <span class="keyword">yield</span> <span class="keyword">from</span> g</div><div class="line">	print(value)</div><div class="line">	<span class="keyword">yield</span> <span class="string">'to do'</span></div><div class="line"></div><div class="line">wrap = reader_wrapper(reader())</div><div class="line"></div><div class="line">print(next(wrap)) </div><div class="line"><span class="comment">#打印出 1 也就是 reader 里面 yield 的 1</span></div><div class="line">next(wrap)</div><div class="line"><span class="comment">#此时执行到了 yield 'to do' 上面的print输出 2</span></div></pre></td></tr></table></figure>
+<p>值得注意的是：</p>
+<p>python中<code>for</code>循环调用generator时，发现拿不到generator的<code>return</code>语句的返回值。如果想要拿到返回值，必须捕获<code>StopIteration</code>错误，返回值包含在<code>StopIteration</code>的<code>value</code>中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        <span class="keyword">yield</span> b</div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    print(<span class="string">'haha'</span>)</div><div class="line">    <span class="comment"># return 'done'</span></div><div class="line"></div><div class="line">g  = fib(<span class="number">6</span>)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">	<span class="keyword">try</span>:</div><div class="line">		x = next(g)</div><div class="line">		print(<span class="string">'g'</span>,x)</div><div class="line">	<span class="keyword">except</span> StopIteration <span class="keyword">as</span> e:</div><div class="line">		print(<span class="string">'Generator return value:'</span>, e.value)</div><div class="line">		<span class="keyword">break</span></div><div class="line"><span class="comment">#输出</span></div><div class="line">g: <span class="number">1</span></div><div class="line">g: <span class="number">1</span></div><div class="line">g: <span class="number">2</span></div><div class="line">g: <span class="number">3</span></div><div class="line">g: <span class="number">5</span></div><div class="line">g: <span class="number">8</span></div><div class="line">haha</div><div class="line">Generator <span class="keyword">return</span> value: <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="comment">#我把return注释以后你会发现返回的是None，如果你不try/except的话，next发现没有可以yield的话就会抛出异常。</span></div><div class="line"><span class="comment">#在这里还有一个好处就是你会发现print函数会执行，尽管后面没有yield了。</span></div></pre></td></tr></table></figure>
+<h2 id="next对比"><a href="#next对比" class="headerlink" title="next对比"></a>next对比</h2><p>上次我们提到了<code>es6</code>里面</p>
+<p><strong>yield 语句本身没有返回值，或者说总是返回 undefined,</strong></p>
+<p><strong>next 方法可以带一个参数，该参数就会被当作上一个 yield 语句的返回值。</strong></p>
+<p>python里面也是一样的。只不过把next方法带参数的<code>next(&#39;xxxx&#39;)</code>改为了<code>g.send(&#39;xxx&#39;)</code>。</p>
+<blockquote>
+<p>话说为什么python3里面要<code>next(g)</code>，和<code>es6</code>同步多好。</p>
+</blockquote>
+<p>不过两者有个区别：</p>
+<p><strong>es6，遍历器调用<code>next</code>方法会返回一个有着 <code>value</code>和<code>done</code>两个属性的对象。（我们都知道value是yield后面的值）</strong></p>
+<p><strong>python，<code>next(g)</code>或则说<code>g.send(&#39;xxx&#39;)</code>会直接返回<code>yield</code>后面的值</strong></p>
+<h2 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h2><p>如果你上面概念都理解了，那么下面这段代码就应该不难理解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">()</span>:</span></div><div class="line">    r = <span class="string">''</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        n = <span class="keyword">yield</span> r</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> n:</div><div class="line">            <span class="keyword">return</span></div><div class="line">        print(<span class="string">'[CONSUMER] Consuming %s...'</span> % n)</div><div class="line">        r = <span class="string">'200 OK'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce</span><span class="params">(c)</span>:</span></div><div class="line">    c.send(<span class="keyword">None</span>)</div><div class="line">    n = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> n &lt; <span class="number">5</span>:</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">        print(<span class="string">'[PRODUCER] Producing %s...'</span> % n)</div><div class="line">        r = c.send(n)</div><div class="line">        print(<span class="string">'[PRODUCER] Consumer return: %s'</span> % r)</div><div class="line">    c.close()</div><div class="line"></div><div class="line">c = consumer()</div><div class="line">produce(c)</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[PRODUCER] Producing <span class="number">1.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">1.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">2.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">2.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">3.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">3.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">4.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">4.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">5.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">5.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div></pre></td></tr></table></figure>
+<p>注意到<code>consumer</code>函数是一个<code>generator</code>，把一个<code>consumer</code>传入<code>produce</code>后：</p>
+<ol>
+<li>首先调用<code>c.send(None)</code>启动生成器；</li>
+<li>然后，一旦生产了东西，通过<code>c.send(n)</code>切换到<code>consumer</code>执行；</li>
+<li><code>consumer</code>通过<code>yield</code>拿到消息，处理，又通过<code>yield</code>把结果传回；</li>
+<li><code>produce</code>拿到<code>consumer</code>处理的结果，继续生产下一条消息；</li>
+<li><code>produce</code>决定不生产了，通过<code>c.close()</code>关闭<code>consumer</code>，整个过程结束。</li>
+</ol>
+<p><strong>整个流程无锁，由一个线程执行，<code>produce</code>和<code>consumer</code>协作完成任务，所以称为“协程”</strong>，而非线程的抢占式多任务。</p>
+<p>在完整的下个定义之前，我们看个概念：子程序</p>
+<p><code>子程序</code>或者称为函数，在所有语言中都是层级调用，比如A调用B，B在执行过程中又调用了C，C执行完毕返回，B执行完毕返回，最后是A执行完毕。</p>
+<p>所以子程序调用是通过栈实现的，一个线程就是执行一个子程序。</p>
+<p>子程序调用总是一个入口，一次返回，调用顺序是明确的。而协程的调用和子程序不同。</p>
+<p>协程看上去也是子程序<strong>，但执行过程中，在子程序内部可中断，然后转而执行别的子程序，在适当的时候再返回来接着执行。</strong></p>
+<p>Python对协程的支持是通<code>generator</code>实现的。</p>
+<h2 id="asyncio"><a href="#asyncio" class="headerlink" title="asyncio"></a>asyncio</h2><p><code>asyncio</code>是Python 3.4版本引入的标准库，直接内置了对异步IO的支持。</p>
+<p><code>asyncio</code>的编程模型就是一个消息循环。我们从<code>asyncio</code>模块中直接获取一个<code>EventLoop</code>的引用，然后把需要执行的协程扔到<code>EventLoop</code>中执行，就实现了异步IO。</p>
+<p>用<code>asyncio</code>实现<code>Hello world</code>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"></div><div class="line"><span class="meta">@asyncio.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line">    <span class="comment"># 异步调用asyncio.sleep(1):</span></div><div class="line">    r = <span class="keyword">yield</span> <span class="keyword">from</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">"Hello again!"</span>)</div><div class="line"></div><div class="line"><span class="comment"># 获取EventLoop:</span></div><div class="line">loop = asyncio.get_event_loop()</div><div class="line"><span class="comment"># 执行coroutine</span></div><div class="line">loop.run_until_complete(hello())</div><div class="line">loop.close()</div></pre></td></tr></table></figure>
+<p><code>@asyncio.coroutine</code>把一个generator标记为coroutine类型，然后，我们就把这个<code>coroutine</code>扔到<code>EventLoop</code>中执行。</p>
+<p><code>hello()</code>会首先打印出<code>Hello world!</code>，然后，<code>yield from</code>语法可以让我们方便地调用另一个<code>generator</code>。由于<code>asyncio.sleep()</code>也是一个<code>coroutine</code>，所以线程不会等待<code>asyncio.sleep()</code>，而是直接中断并执行下一个消息循环。当<code>asyncio.sleep()</code>返回时，线程就可以从<code>yield from</code>拿到返回值（此处是<code>None</code>），然后接着执行下一行语句。</p>
+<p>把<code>asyncio.sleep(1)</code>看成是一个耗时1秒的IO操作，在此期间，主线程并未等待，而是去执行<code>EventLoop</code>中其他可以执行的<code>coroutine</code>了，因此可以实现并发执行。</p>
+<p>我们用Task封装两个<code>coroutine</code>试试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"></div><div class="line"><span class="meta">@asyncio.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'Hello world! (%s)'</span> % threading.currentThread())</div><div class="line">    <span class="keyword">yield</span> <span class="keyword">from</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">'Hello again! (%s)'</span> % threading.currentThread())</div><div class="line"></div><div class="line">loop = asyncio.get_event_loop()</div><div class="line">tasks = [hello(), hello()]</div><div class="line">loop.run_until_complete(asyncio.wait(tasks))</div><div class="line">loop.close()</div><div class="line"></div><div class="line"><span class="comment">#结果</span></div><div class="line">Hello world! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div><div class="line">Hello world! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div><div class="line">(暂停约<span class="number">1</span>秒)</div><div class="line">Hello again! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div><div class="line">Hello again! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div></pre></td></tr></table></figure>
+<p>由打印的当前线程名称可以看出，两个<code>coroutine</code>是由同一个线程并发执行的。</p>
+<p>如果把<code>asyncio.sleep()</code>换成真正的IO操作，则多个<code>coroutine</code>就可以由一个线程并发执行。</p>
+<h2 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h2><p>用<code>asyncio</code>提供的<code>@asyncio.coroutine</code>可以把一个generator标记为coroutine类型，然后在coroutine内部用<code>yield from</code>调用另一个coroutine实现异步操作。</p>
+<p>为了简化并更好地标识异步IO，从Python 3.5开始引入了新的语法<code>async</code>和<code>await</code>，可以让coroutine的代码更简洁易读。</p>
+<p>请注意，<code>async</code>和<code>await</code>是针对coroutine的新语法，要使用新的语法，只需要做两步简单的替换：</p>
+<ol>
+<li>把<code>@asyncio.coroutine</code>替换为<code>async</code>；</li>
+<li>把<code>yield from</code>替换为<code>await</code>。</li>
+</ol>
+<p>让我们对比一下上一节的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@asyncio.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line">    r = <span class="keyword">yield</span> <span class="keyword">from</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">"Hello again!"</span>)</div></pre></td></tr></table></figure>
+<p>用新语法重新编写如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line">    r = <span class="keyword">await</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">"Hello again!"</span>)</div></pre></td></tr></table></figure>
+<p>剩下的代码保持不变。</p>
+<p>注意：</p>
+<p>Python从3.5版本开始为<code>asyncio</code>提供了<code>async</code>和<code>await</code>的新语法；</p>
+<p>注意新语法只能用在Python 3.5以及后续版本，如果使用3.4版本，则仍需使用上一节的方案。</p>
+<h2 id="前方高能。。。"><a href="#前方高能。。。" class="headerlink" title="前方高能。。。"></a>前方高能。。。</h2><p>到这里你的大脑可能已经灌满了新的术语和概念，导致你想要从整体上把握所有这些东西是如何让你可以实现异步编程的稍微有些困难。为了帮助你让这一切更加具体化，这里有一个完整的（伪造的）异步编程的例子，将代码与事件循环及其相关的函数一一对应起来。这个例子里包含的几个协程，代表着火箭发射的倒计时，并且看起来是同时开始的。这是通过并发实现的异步编程；3个不同的协程将分别独立运行，并且都在同一个线程内完成。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> heapq</div><div class="line"><span class="keyword">import</span> types</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span>:</span></div><div class="line"></div><div class="line">    <span class="string">"""Represent how long a coroutine should before starting again.</span></div><div class="line"></div><div class="line">    Comparison operators are implemented for use by heapq. Two-item</div><div class="line">    tuples unfortunately don't work because when the datetime.datetime</div><div class="line">    instances are equal, comparison falls to the coroutine and they don't</div><div class="line">    implement comparison methods, triggering an exception.</div><div class="line"></div><div class="line">    Think of this as being like asyncio.Task/curio.Task.</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, wait_until, coro)</span>:</span></div><div class="line">        self.coro = coro</div><div class="line">        self.waiting_until = wait_until</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.waiting_until == other.waiting_until</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.waiting_until &lt; other.waiting_until</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SleepingLoop</span>:</span></div><div class="line"></div><div class="line">    <span class="string">"""An event loop focused on delaying execution of coroutines.</span></div><div class="line"></div><div class="line">    Think of this as being like asyncio.BaseEventLoop/curio.Kernel.</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *coros)</span>:</span></div><div class="line">        self._new = coros</div><div class="line">        self._waiting = []</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_until_complete</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment"># Start all the coroutines.</span></div><div class="line">        <span class="keyword">for</span> coro <span class="keyword">in</span> self._new:</div><div class="line">            wait_for = coro.send(<span class="keyword">None</span>)</div><div class="line">            heapq.heappush(self._waiting, Task(wait_for, coro))</div><div class="line">        <span class="comment"># Keep running until there is no more work to do.</span></div><div class="line">        <span class="keyword">while</span> self._waiting:</div><div class="line">            now = datetime.datetime.now()</div><div class="line">            <span class="comment"># Get the coroutine with the soonest resumption time.</span></div><div class="line">            task = heapq.heappop(self._waiting)</div><div class="line">            <span class="keyword">if</span> now &lt; task.waiting_until:</div><div class="line">                <span class="comment"># We're ahead of schedule; wait until it's time to resume.</span></div><div class="line">                delta = task.waiting_until - now</div><div class="line">                time.sleep(delta.total_seconds())</div><div class="line">                now = datetime.datetime.now()</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                <span class="comment"># It's time to resume the coroutine.</span></div><div class="line">                wait_until = task.coro.send(now)</div><div class="line">                heapq.heappush(self._waiting, Task(wait_until, task.coro))</div><div class="line">            <span class="keyword">except</span> StopIteration:</div><div class="line">                <span class="comment"># The coroutine is done.</span></div><div class="line">                <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="meta">@types.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep</span><span class="params">(seconds)</span>:</span></div><div class="line">    <span class="string">"""Pause a coroutine for the specified number of seconds.</span></div><div class="line"></div><div class="line">    Think of this as being like asyncio.sleep()/curio.sleep().</div><div class="line">    """</div><div class="line">    now = datetime.datetime.now()</div><div class="line">    wait_until = now + datetime.timedelta(seconds=seconds)</div><div class="line">    <span class="comment"># Make all coroutines on the call stack pause; the need to use `yield`</span></div><div class="line">    <span class="comment"># necessitates this be generator-based and not an async-based coroutine.</span></div><div class="line">    actual = <span class="keyword">yield</span> wait_until</div><div class="line">    <span class="comment"># Resume the execution stack, sending back how long we actually waited.</span></div><div class="line">    <span class="keyword">return</span> actual - now</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(label, length, *, delay=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="string">"""Countdown a launch for `length` seconds, waiting `delay` seconds.</span></div><div class="line"></div><div class="line">    This is what a user would typically write.</div><div class="line">    """</div><div class="line">    print(label, <span class="string">'waiting'</span>, delay, <span class="string">'seconds before starting countdown'</span>)</div><div class="line">    delta = <span class="keyword">await</span> sleep(delay)</div><div class="line">    print(label, <span class="string">'starting after waiting'</span>, delta)</div><div class="line">    <span class="keyword">while</span> length:</div><div class="line">        print(label, <span class="string">'T-minus'</span>, length)</div><div class="line">        waited = <span class="keyword">await</span> sleep(<span class="number">1</span>)</div><div class="line">        length -= <span class="number">1</span></div><div class="line">    print(label, <span class="string">'lift-off!'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""Start the event loop, counting down 3 separate launches.</span></div><div class="line"></div><div class="line">    This is what a user would typically write.</div><div class="line">    """</div><div class="line">    loop = SleepingLoop(countdown(<span class="string">'A'</span>, <span class="number">5</span>), countdown(<span class="string">'B'</span>, <span class="number">3</span>, delay=<span class="number">2</span>),</div><div class="line">                        countdown(<span class="string">'C'</span>, <span class="number">4</span>, delay=<span class="number">1</span>))</div><div class="line">    start = datetime.datetime.now()</div><div class="line">    loop.run_until_complete()</div><div class="line">    print(<span class="string">'Total elapsed time is'</span>, datetime.datetime.now() - start)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>简单介绍一下是怎么实现的。</p>
+<p>通过<code>SleepingLoop</code>创建一个<code>EventLoop</code>,同时传进来三个协程<code>countdown</code>,最后通过<code>run_until_complete</code>完成任务。</p>
+<p>最关键的就是<code>run_until_complete</code>里面干了什么。。</p>
+<p>首先遍历<code>SleepingLoop</code>的tuple列表(里面放置了上面那个协程)，<code>SleepingLoop</code>刚开始时初始化了一个<code>_waiting</code>的<code>[]</code>，然后通过<code>heapq</code>模块push一个个<code>task</code>,<code>task</code>是包含协程和信息的对象。同时分别执行<code>coro.send(None)</code>完成第一阶段。</p>
+<p>紧接着创建一个循环，条件是<code>self._waiting</code>这个tuple列表是否为存在。</p>
+<p><code>pop</code>出<code>task</code>,执行<code>task.coro.send(now)</code>，然后再次<code>push</code>一个<code>task</code>即更新信息，如果这里的send抛出异常，则push不执行。也就是说这个过程一直是pop，push 直到 <code>self._waiting</code>空。</p>
+<p>循环结束。</p>
+<hr>
+<p>参考：</p>
+<p><a href="http://blog.rainy.im/2016/03/10/how-the-heck-does-async-await-work-in-python-3-5/" target="_blank" rel="external">Python 3.5 协程究竟是个啥</a></p>
+<p><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143208573480558080fa77514407cb23834c78c6c7309000" target="_blank" rel="external">异步io</a></p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#yield-和-yield-from"><span class="nav-number">1.</span> <span class="nav-text">yield*  和 yield from</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next对比"><span class="nav-number">2.</span> <span class="nav-text">next对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协程"><span class="nav-number">3.</span> <span class="nav-text">协程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#asyncio"><span class="nav-number">4.</span> <span class="nav-text">asyncio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await"><span class="nav-number">5.</span> <span class="nav-text">async/await</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前方高能。。。"><span class="nav-number">6.</span> <span class="nav-text">前方高能。。。</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Python" rel="tag">#Python</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2016</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
