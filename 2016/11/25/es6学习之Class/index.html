@@ -44,20 +44,20 @@
 
 <meta name="description" content="##从函数到Class
 JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
-12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:">
+12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:&apos;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="es6 学习之 Class">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/es6学习之Class/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="##从函数到Class
 JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
-12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:">
-<meta property="og:updated_time" content="2017-01-04T11:39:26.652Z">
+12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:&apos;">
+<meta property="og:updated_time" content="2017-01-04T11:43:51.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es6 学习之 Class">
 <meta name="twitter:description" content="##从函数到Class
 JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
-12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:">
+12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:&apos;">
 
 
 
@@ -204,7 +204,7 @@ JavaScript语言的传统方法是通过构造函数，定义并生成新对象�
 
   <div class="post-body">
 
-    <div class="content markdown-body"><p> ##从函数到Class</p>
+    <div class="content markdown-body"><p>##从函数到Class</p>
 <p>JavaScript语言的传统方法是通过构造函数，定义并生成新对象。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"> name, age </span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">  <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line">Person.prototype.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'name:'</span> + <span class="keyword">this</span>.name + <span class="string">' age:'</span> + <span class="keyword">this</span>.name ;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(<span class="string">'zjl'</span>,<span class="number">35</span>);</div><div class="line"><span class="keyword">typeof</span> Person <span class="comment">// 'function'</span></div><div class="line">Person.name <span class="comment">// 'Person'  </span></div><div class="line">Person === Person.prototype.constructor <span class="comment">//true</span></div><div class="line">p.sayHello === Person.prototype.sayHello <span class="comment">//true</span></div></pre></td></tr></table></figure>
 <p>Es6通过关键字<code>class</code>让对象的原型写法更清晰了，更像面向对象编程的语法。其他的没什么新鲜的</p>
