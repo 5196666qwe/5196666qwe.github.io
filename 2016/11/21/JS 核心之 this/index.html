@@ -46,7 +46,7 @@
 每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS 核心之执行上下文(Execution Context)">
-<meta property="og:url" content="http://yoursite.com/2016/11/21/JS 核心之执行上下文(Execution Context)/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/11/21/JS 核心之 this/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="执行上下文栈(Execution Context Stack)在ECMASscript中的代码有三种类型：global, function和eval。
 每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判">
@@ -55,7 +55,7 @@
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/03.png">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/04.png">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/05.png">
-<meta property="og:updated_time" content="2017-01-05T05:10:44.249Z">
+<meta property="og:updated_time" content="2017-01-05T04:31:16.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 核心之执行上下文(Execution Context)">
 <meta name="twitter:description" content="执行上下文栈(Execution Context Stack)在ECMASscript中的代码有三种类型：global, function和eval。
@@ -247,23 +247,13 @@
 <p><img src="/img/ExecutionContext/05.png" alt="激活对象"></p>
 <p>图 8. 激活对象</p>
 <p>同样道理，function expression不在AO的行列。</p>
-<p>###作用域链(Scope Chains)</p>
-<p><strong>作用域链是一个 对象列表(list of objects) ，用以检索上下文代码中出现的 标识符(identifiers).</strong><br>作用域链的原理和原型链很类似，如果这个变量在自己的作用域中没有，那么它会寻找父级的，直到最顶层。</p>
-<p>标示符[Identifiers]可以理解为变量名称、函数声明和普通参数。例如，当一个函数在自身函数体内需要引用一个变量，但是这个变量并没有在函数内部声明（或者也不是某个参数名），那么这个变量就可以称为自由变量[free variable]。那么我们搜寻这些自由变量就需要用到作用域链。</p>
-<p>在一般情况下，一个作用域链包括父级变量对象（variable object）（作用域链的顶部）、函数自身变量VO和活动对象（activation object）。不过，有些情况下也会包含其它的对象，例如在执行期间，动态加入作用域链中的—例如with或者catch语句。[译注：with-objects指的是with语句，产生的临时作用域对象；catch-clauses指的是catch从句，如catch(e)，这会产生异常对象，导致作用域变更]。</p>
-<p>当查找标识符的时候，会从作用域链的活动对象部分开始查找，然后(如果标识符没有在活动对象中找到)查找作用域链的顶部，循环往复，就像作用域链那样。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在ECMASscript中的代码有三种类型：global, function和eval。</p>
 <p>每一种代码的执行都需要依赖自身的上下文。函数调用或则递归会产生新的上下文。各种上下文组成一个执行上下文栈。</p>
-<p>执行上下文可抽象成一个object，他有<strong>变量对象(活动对象=》在函数里面)，this指针，作用域链。</strong></p>
-<p>全局上下文中的变量对象是它自己，函数里面的变量对象是不能直接访问的，改为由活动对象扮演变量对象的角色。</p>
-<p>变量对象存储被定义在上下文中的变量和函数声明(不是函数表达式).函数里面多了一些参数，其他的差不多</p>
-<p>this先放着。</p>
-<p><strong>作用域链=AO(变量对象)+[[Scope]]</strong><br>这里的[[Scope]]是所有父级的AO对象。这也就是为什么我们每次内部函数其实看不到这个变量，但是我们却能访问到外部变量的原因。</p>
-<p>注意:<strong>活动对象是在进入函数上下文时刻被创建的，而[[scope]]在函数创建时被存储－－静态（不变的），永远永远，直至函数销毁。即：函数可以永不调用，但[[scope]]属性已经写入，并存储在函数对象中</strong></p>
-<p>也就是说创建函数是函数内部属性[[Scope]]被创建，然后我们调用函数时确定变量对象，确定Scope。从而把一切关联依赖。 个人是这么理解。。</p>
+<p>执行上下文可抽象成一个object，他有<strong>变量对象，this指针，作用域链。</strong></p>
+<p>变量对象用于<strong>存储变量和函数声明</strong></p>
+<p>变量对象在全局作用域中          VO === this === global</p>
+<p>​        在函数中 叫做 活动对象 VO === AO, 并且添加了<code>arguments</code>和<code>formal parameters</code></p>
 <p>更多请看<a href="http://chenxing.online/2016/11/21/%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1%EF%BC%88Variable%20Object%EF%BC%89/" target="_blank" rel="external">变量对象</a>那个章节。</p>
-<p>参考：</p>
-<p><a href="">汤姆大叔javascript</a></p>
 </div>
 
     <div class="post-sidebar">
