@@ -42,27 +42,24 @@
 <meta name="keywords" content="JavaScript," />
 
 
-<meta name="description" content="##执行上下文栈(Execution Context Stack)
-在ECMASscript中的代码有三种类型：global, function和eval。
-每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下">
+<meta name="description" content="执行上下文栈(Execution Context Stack)在ECMASscript中的代码有三种类型：global, function和eval。
+每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS 核心之执行上下文(Execution Context)">
-<meta property="og:url" content="http://yoursite.com/2016/11/21/执行上下文/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/11/21/JS 核心之执行上下文(Execution Context)/index.html">
 <meta property="og:site_name" content="ChenXing">
-<meta property="og:description" content="##执行上下文栈(Execution Context Stack)
-在ECMASscript中的代码有三种类型：global, function和eval。
-每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下">
+<meta property="og:description" content="执行上下文栈(Execution Context Stack)在ECMASscript中的代码有三种类型：global, function和eval。
+每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/01.png">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/02.png">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/03.png">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/04.png">
 <meta property="og:image" content="http://yoursite.com/img/ExecutionContext/05.png">
-<meta property="og:updated_time" content="2017-01-05T02:50:16.845Z">
+<meta property="og:updated_time" content="2017-01-05T02:56:45.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 核心之执行上下文(Execution Context)">
-<meta name="twitter:description" content="##执行上下文栈(Execution Context Stack)
-在ECMASscript中的代码有三种类型：global, function和eval。
-每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下">
+<meta name="twitter:description" content="执行上下文栈(Execution Context Stack)在ECMASscript中的代码有三种类型：global, function和eval。
+每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判">
 <meta name="twitter:image" content="http://yoursite.com/img/ExecutionContext/01.png">
 
 
@@ -210,8 +207,7 @@
 
   <div class="post-body">
 
-    <div class="content markdown-body"><p>##执行上下文栈(Execution Context Stack)</p>
-<p>在ECMASscript中的代码有三种类型：global, function和eval。</p>
+    <div class="content markdown-body"><h2 id="执行上下文栈-Execution-Context-Stack"><a href="#执行上下文栈-Execution-Context-Stack" class="headerlink" title="执行上下文栈(Execution Context Stack)"></a>执行上下文栈(Execution Context Stack)</h2><p>在ECMASscript中的代码有三种类型：global, function和eval。</p>
 <p>每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判断应该从何处获取变量的值。</p>
 <p>注意，一个function可能产生无限的上下文环境，因为一个函数的调用（甚至递归）都产生了一个新的上下文环境。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">bar</span>) </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">// 调用相同的function，每次都会产生3个不同的上下文</span></div><div class="line"><span class="comment">//（包含不同的状态，例如参数bar的值）</span></div><div class="line"></div><div class="line">foo(<span class="number">10</span>);</div><div class="line">foo(<span class="number">20</span>);</div><div class="line">foo(<span class="number">30</span>);</div></pre></td></tr></table></figure>
@@ -230,17 +226,21 @@
 <h2 id="执行上下文（Execution-Context"><a href="#执行上下文（Execution-Context" class="headerlink" title="执行上下文（Execution Context )"></a>执行上下文（Execution Context )</h2><p>一个执行的上下文可以抽象的理解为object。每一个执行的上下文都有一系列的属性（我们称为上下文状态），他们用来追踪关联代码的执行进度。这个图示就是一个context的结构。</p>
 <p><img src="/img/ExecutionContext/03.png" alt="上下文结构"></p>
 <p> 图 6. 上下文结构</p>
-<p>除了这3个所需要的属性(变量对象(variable object)，this指针(this value)，作用域链(scope chain) )，执行上下文根据具体实现还可以具有任意额外属性。接着，让我们仔细来看看这三个属性。</p>
+<p>除了这3个所需要的属性<strong>(变量对象(variable object)，this指针(this value)，作用域链(scope chain) )</strong>，执行上下文根据具体实现还可以具有任意额外属性。接着，让我们仔细来看看这三个属性。</p>
 <h3 id="变量对象-Variable-Object"><a href="#变量对象-Variable-Object" class="headerlink" title="变量对象(Variable Object)"></a>变量对象(Variable Object)</h3><p><strong>变量对象(variable object) 是与执行上下文相关的 数据作用域(scope of data) 。</strong><br><strong>它是与上下文关联的特殊对象，用于存储被定义在上下文中的 变量(variables) 和 函数声明</strong></p>
+<blockquote>
 <p>注意：函数表达式[function expression]（而不是函数声明[function declarations，是不包含在VO[variable object]里面的。</p>
+</blockquote>
 <p>变量对象（Variable Object）是一个抽象的概念，不同的上下文中，它表示使用不同的object。例如，在global全局上下文中，变量对象也是全局对象自身[global object]。（这就是我们可以通过全局对象的属性来指向全局变量）。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> foo = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;&#125; <span class="comment">// // 函数声明</span></div><div class="line">(<span class="function"><span class="keyword">function</span> <span class="title">baz</span>(<span class="params"></span>) </span>&#123;&#125;); <span class="comment">// 函数表达式</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  <span class="keyword">this</span>.foo == foo, <span class="comment">// true</span></div><div class="line">  <span class="built_in">window</span>.bar == bar <span class="comment">// true</span></div><div class="line">);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(baz); <span class="comment">// 引用错误，baz没有被定义</span></div></pre></td></tr></table></figure>
 <p>全局上下文中的变量对象(VO)会有如下属性：</p>
 <p><img src="/img/ExecutionContext/04.png" alt=" 全局变量对象"></p>
 <p>图 7. 全局变量对象</p>
-<p>那函数以及自身的变量对象又是怎样的呢?在一个函数上下文中，变量对象被表示为活动对象(activation object)。</p>
-<h3 id="活动对象-activation-object"><a href="#活动对象-activation-object" class="headerlink" title="活动对象(activation object)"></a>活动对象(activation object)</h3><p><strong>当函数被调用者激活，这个特殊的活动对象(activation object) 就被创建了。它包含普通参数(formal parameters) 与特殊参数(arguments)对象(具有索引属性的参数映射表)。活动对象在函数上下文中作为变量对象使用。</strong></p>
+<p>那函数以及自身的变量对象又是怎样的呢?<strong>在一个函数上下文中，变量对象被表示为活动对象(activation object)。</strong></p>
+<h3 id="活动对象-activation-object"><a href="#活动对象-activation-object" class="headerlink" title="活动对象(activation object)"></a>活动对象(activation object)</h3><p>当函数被调用者激活，这个特殊的活动对象(activation object) 就被创建了。它包含普通参数(formal parameters) 与特殊参数(arguments)对象(具有索引属性的参数映射表)。活动对象在函数上下文中作为变量对象使用。</p>
+<blockquote>
 <p>即：函数的变量对象保持不变，但除去存储变量与函数声明之外，还包含以及特殊对象arguments 。</p>
+</blockquote>
 <p>考虑下面的情况：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x, y</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> z = <span class="number">30</span>;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;&#125; <span class="comment">// 函数声明</span></div><div class="line">  (<span class="function"><span class="keyword">function</span> <span class="title">baz</span>(<span class="params"></span>) </span>&#123;&#125;); <span class="comment">// 函数表达式</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(<span class="number">10</span>, <span class="number">20</span>);</div></pre></td></tr></table></figure>
 <p>“foo”函数上下文的下一个激活对象(AO)如下图所示：</p>
@@ -265,7 +265,7 @@
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#执行上下文（Execution-Context"><span class="nav-number">1.</span> <span class="nav-text">执行上下文（Execution Context )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量对象-Variable-Object"><span class="nav-number">1.1.</span> <span class="nav-text">变量对象(Variable Object)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#活动对象-activation-object"><span class="nav-number">1.2.</span> <span class="nav-text">活动对象(activation object)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#执行上下文栈-Execution-Context-Stack"><span class="nav-number">1.</span> <span class="nav-text">执行上下文栈(Execution Context Stack)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行上下文（Execution-Context"><span class="nav-number">2.</span> <span class="nav-text">执行上下文（Execution Context )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量对象-Variable-Object"><span class="nav-number">2.1.</span> <span class="nav-text">变量对象(Variable Object)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#活动对象-activation-object"><span class="nav-number">2.2.</span> <span class="nav-text">活动对象(activation object)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
       
     </div>
   </section>
