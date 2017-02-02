@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Python," />
+
+
+<meta name="description" content="1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
+1234567class Foo(object):    def hello(self):        print(&apos;hello world&apos;)foo = Foo()print(type(foo))">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中的元类">
+<meta property="og:url" content="http://yoursite.com/2016/11/24/Python中的元类/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
+1234567class Foo(object):    def hello(self):        print(&apos;hello world&apos;)foo = Foo()print(type(foo))">
+<meta property="og:updated_time" content="2017-02-02T02:12:14.033Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python中的元类">
+<meta name="twitter:description" content="1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
+1234567class Foo(object):    def hello(self):        print(&apos;hello world&apos;)foo = Foo()print(type(foo))">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> Python中的元类 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="Python中的元类"> Python中的元类 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-11-24T14:59:55+08:00" content="2016-11-24">
+              2016-11-24
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Python" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><h2 id="1-Python中一切皆对象，包括类"><a href="#1-Python中一切皆对象，包括类" class="headerlink" title="1. Python中一切皆对象，包括类"></a>1. Python中一切皆对象，包括类</h2><p>这点和<code>java</code>一样，<code>java</code>里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据<code>Class</code>对象动态创建类。每个类都有与之对应的<code>Class</code>对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'hello world'</span>)</div><div class="line">foo = Foo()</div><div class="line">print(type(foo))            <span class="comment"># &lt;class '__main__.Foo'&gt;</span></div><div class="line">print(type(foo.hello))      <span class="comment"># &lt;class 'method'&gt;</span></div><div class="line">print(type(Foo))            <span class="comment"># &lt;class 'type'&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="2-类的创建过程"><a href="#2-类的创建过程" class="headerlink" title="2. 类的创建过程"></a>2. 类的创建过程</h2><p>在上边的例子中，类Foo的创建过程中会执行class语句，此时需要首先确定元类（元类定制类的创建行为）。元类的确定过程如下：</p>
+<ul>
+<li>确定类Foo的父类是否有参数metaclass，如果没有则：</li>
+<li>确定类Foo的父类的父类是否有参数metaclass，如果没有则：</li>
+<li>使用默认元类type。</li>
+</ul>
+<p>上边的例子中，前2项都不符合，则直接使用默认元类type。即上边的语句相当于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"hello world"</span>)</div><div class="line"></div><div class="line">Foo = type(<span class="string">"Foo"</span>, (object,), &#123;<span class="string">"hello"</span>: hello&#125;)</div></pre></td></tr></table></figure>
+<p>要创建一个class对象，<code>type()</code>函数依次传入3个参数：</p>
+<ol>
+<li>class的名称；</li>
+<li>继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法；</li>
+<li>class的方法名称与函数绑定，这里我们把函数<code>hello</code>绑定到方法名<code>hello</code>上。</li>
+</ol>
+<p>通过<code>type()</code>函数创建的类和直接写class是完全一样的，因为Python解释器遇到class定义时，仅仅是扫描一下class定义的语法，然后调用<code>type()</code>函数创建出class。</p>
+<p>正常情况下，我们都用<code>class Xxx...</code>来定义类，但是，<code>type()</code>函数也允许我们动态创建出类来，也就是说，动态语言本身支持运行期动态创建类，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。</p>
+<h2 id="3-自定义元类"><a href="#3-自定义元类" class="headerlink" title="3. 自定义元类"></a>3. 自定义元类</h2><p>再一次说明实例、类和元类之间的关系：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>foo.__class__     <span class="comment"># &lt;class 'Foo'&gt;</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Foo.__class__     <span class="comment"># &lt;class 'type'&gt;</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type.__class__    <span class="comment"># &lt;class 'type'&gt;</span></div></pre></td></tr></table></figure>
+<p>foo是Foo的实例，Foo是type的实例，type的类又是type。type是默认的元类。那么如何自定义元类呢？</p>
+<p>除了使用<code>type()</code>动态创建类以外，要控制类的创建行为，还可以使用<strong>metaclass</strong>。</p>
+<p>metaclass，直译为元类，简单的解释就是：</p>
+<p>当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。</p>
+<p>但是如果我们想创建出类呢？那就必须根据<strong>metaclass</strong>创建出类，所以：先定义<strong>metaclass</strong>，然后创建类。</p>
+<p>连接起来就是：先定义<strong>metaclass</strong>，就可以创建类，最后创建实例。</p>
+<p><strong>你可以在metaclass中放置些什么代码呢？</strong></p>
+<p><strong>答案就是：可以创建一个类的东西。那么什么可以用来创建一个类呢？type，或者任何使用到type或者子类化type的东东都可以。</strong></p>
+<p>我们先看一个简单的例子，这个metaclass可以给我们自定义的MyList增加一个<code>add</code>方法：</p>
+<p>定义<code>ListMetaclass</code>，按照默认习惯，metaclass的类名总是以Metaclass结尾，以便清楚地表示这是一个metaclass：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># __new__ 是在__init__之前被调用的特殊方法</span></div><div class="line"><span class="comment"># __new__是用来创建对象并返回之的方法</span></div><div class="line"><span class="comment"># 而__init__只是用来将传入的参数初始化给对象</span></div><div class="line"><span class="comment"># 你很少用到__new__，除非你希望能够控制对象的创建</span></div><div class="line"><span class="comment"># 这里，创建的对象是类，我们希望能够自定义它，所以我们这里改写__new__</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListMetaclass</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        attrs[<span class="string">'add'</span>] = <span class="keyword">lambda</span> self, value: self.append(value)</div><div class="line">        <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div></pre></td></tr></table></figure>
+<p>有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数<code>metaclass</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyList</span><span class="params">(list, metaclass=ListMetaclass)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p><code>__new__()</code>方法接收到的参数依次是：</p>
+<ol>
+<li>当前准备创建的类的对象；</li>
+<li>类的名字；</li>
+<li>类继承的父类集合；</li>
+<li>类的方法集合。</li>
+</ol>
+<p>测试一下<code>MyList</code>是否可以调用<code>add()</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>L = MyList()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>L.add(<span class="number">1</span>)</div><div class="line">&gt;&gt; L</div><div class="line">[<span class="number">1</span>]</div></pre></td></tr></table></figure>
+<h2 id="4-简易orm"><a href="#4-简易orm" class="headerlink" title="4. 简易orm"></a>4. 简易orm</h2><p>比方说我们想定义一个<code>User</code>类来操作对应的数据库表<code>User</code>，我们期待写出这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Model)</span>:</span></div><div class="line">    <span class="comment"># 定义类的属性到列的映射：</span></div><div class="line">    id = IntegerField(<span class="string">'id'</span>)</div><div class="line">    name = StringField(<span class="string">'username'</span>)</div><div class="line">    email = StringField(<span class="string">'email'</span>)</div><div class="line">    password = StringField(<span class="string">'password'</span>)</div><div class="line"><span class="comment"># 创建一个实例：</span></div><div class="line">u = User(id=<span class="number">12345</span>, name=<span class="string">'Michael'</span>, email=<span class="string">'test@orm.org'</span>, password=<span class="string">'my-pwd'</span>)</div><div class="line"><span class="comment"># 保存到数据库：</span></div><div class="line">u.save()</div></pre></td></tr></table></figure>
+<p>父类<code>Model</code>和属性类型<code>StringField</code>、<code>IntegerField</code>是由ORM框架提供的，剩下的魔术方法比如<code>save()</code>全部由metaclass自动完成。虽然metaclass的编写会比较复杂，但ORM的使用者用起来却异常简单。</p>
+<p>首先定义<code>Filed</code>类，它负责保存数据库表的字段名和字段类型。 可看可不看，无伤大雅。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Field</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, column_type)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.column_type = column_type</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;%s:%s&gt;'</span> % (self.__class__.__name__, self.name)</div><div class="line">  </div><div class="line"><span class="comment">#两个派生类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringField</span><span class="params">(Field)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">        super(StringField, self).__init__(name, <span class="string">'varchar(100)'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntegerField</span><span class="params">(Field)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">        super(IntegerField, self).__init__(name, <span class="string">'bigint'</span>)</div></pre></td></tr></table></figure>
+<p>编写复杂的<code>ModelMetaclass</code>了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ModelMetaclass</span><span class="params">(type)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        <span class="keyword">if</span> name==<span class="string">'Model'</span>:</div><div class="line">            <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div><div class="line">        print(<span class="string">'Found model: %s'</span> % name)</div><div class="line">        mappings = dict()</div><div class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> attrs.items():</div><div class="line">            <span class="keyword">if</span> isinstance(v, Field):</div><div class="line">                print(<span class="string">'Found mapping: %s ==&gt; %s'</span> % (k, v))</div><div class="line">                mappings[k] = v</div><div class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> mappings.keys():</div><div class="line">            attrs.pop(k)</div><div class="line">        attrs[<span class="string">'__mappings__'</span>] = mappings <span class="comment"># 保存属性和列的映射关系</span></div><div class="line">        attrs[<span class="string">'__table__'</span>] = name <span class="comment"># 假设表名和类名一致</span></div><div class="line">        <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div></pre></td></tr></table></figure>
+<p>以及基类<code>Model</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span><span class="params">(dict, metaclass=ModelMetaclass)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, **kw)</span>:</span></div><div class="line">        super(Model, self).__init__(**kw)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, key)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self[key]</div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">r"'Model' object has no attribute '%s'"</span> % key)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">        self[key] = value</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self)</span>:</span></div><div class="line">        fields = []</div><div class="line">        params = []</div><div class="line">        args = []</div><div class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.__mappings__.items():</div><div class="line">            fields.append(v.name)</div><div class="line">            params.append(<span class="string">'?'</span>)</div><div class="line">            args.append(getattr(self, k, <span class="keyword">None</span>))</div><div class="line">        sql = <span class="string">'insert into %s (%s) values (%s)'</span> % (self.__table__, <span class="string">','</span>.join(fields), <span class="string">','</span>.join(params))</div><div class="line">        print(<span class="string">'SQL: %s'</span> % sql)</div><div class="line">        print(<span class="string">'ARGS: %s'</span> % str(args))</div></pre></td></tr></table></figure>
+<p>走一下流程，首先先不管ModelMetaclass 这个元类是干嘛用。</p>
+<p><code>User</code>继承<code>Model</code>，<code>Model</code>继承<code>dict</code>，方便关系映射。</p>
+<p>所以在<code>Model</code>类中，就可以定义各种操作数据库的方法<code>save()</code>，<code>delete()</code>，<code>find()</code>，<code>update</code>等等。</p>
+<p>我们要让<code>save</code>方法生效，就必须先凑出<code>sql</code>语句，然后交给数据库去做，这里我们只凑出<code>sql</code>语句。</p>
+<p>凑出<code>sql</code>语句应该是很简单，遍历实例属性是不是差不多了。</p>
+<p>但是像表名，字段属性名，这些是所有sql语句应有的，我们不可能每次写一个方法，都去获取这些数据。</p>
+<p>自然而然，我们想到可以在类初始的时候获取这些数据，放到<code>__new__</code>构造器里面应该是可以的。但是这个<code>__new__</code>显然不是通用的，而且意图也不明显。</p>
+<p>所以 所以我可以想到可以使用 上面讲过的元类。</p>
+<p>最后看这个元类做了什么。</p>
+<p>在<code>ModelMetaclass</code>中，一共做了几件事情：</p>
+<ol>
+<li>排除掉对<code>Model</code>类的修改；</li>
+<li>在当前类（比如<code>User</code>）中查找定义的类的所有属性，如果找到一个Field属性，就把它保存到一个<code>__mappings__</code>的dict中，同时从类属性中删除该Field属性，否则，容易造成运行时错误（<strong>实例的属性会遮盖类的同名属性</strong>）；</li>
+<li>把表名保存到<code>__table__</code>中，这里简化为表名默认为类名。</li>
+</ol>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Python中一切皆对象，包括类"><span class="nav-number">1.</span> <span class="nav-text">1. Python中一切皆对象，包括类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-类的创建过程"><span class="nav-number">2.</span> <span class="nav-text">2. 类的创建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-自定义元类"><span class="nav-number">3.</span> <span class="nav-text">3. 自定义元类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-简易orm"><span class="nav-number">4.</span> <span class="nav-text">4. 简易orm</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Python" rel="tag">#Python</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
