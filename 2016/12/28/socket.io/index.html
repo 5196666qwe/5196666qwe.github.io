@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="WebSocketWebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。
+现很多网站为了实现即时通讯，所用的技术都是轮询(polling)。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客服端的浏览器，这种方式有一个很大的弊端，就是会占用很多的带宽。
+最新的轮询效果是Comet – 用了AJAX。但这种技术虽然可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket.io">
+<meta property="og:url" content="http://yoursite.com/2016/12/28/socket.io/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="WebSocketWebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。
+现很多网站为了实现即时通讯，所用的技术都是轮询(polling)。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客服端的浏览器，这种方式有一个很大的弊端，就是会占用很多的带宽。
+最新的轮询效果是Comet – 用了AJAX。但这种技术虽然可">
+<meta property="og:updated_time" content="2017-02-18T11:57:51.727Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Socket.io">
+<meta name="twitter:description" content="WebSocketWebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。
+现很多网站为了实现即时通讯，所用的技术都是轮询(polling)。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客服端的浏览器，这种方式有一个很大的弊端，就是会占用很多的带宽。
+最新的轮询效果是Comet – 用了AJAX。但这种技术虽然可">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> Socket.io </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="Socket.io"> Socket.io </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-12-28T23:53:53+08:00" content="2016-12-28">
+              2016-12-28
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><h2 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h2><p>WebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。</p>
+<p>现很多网站为了实现即时通讯，所用的技术都是轮询(polling)。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客服端的浏览器，这种方式有一个很大的弊端，就是会占用很多的带宽。</p>
+<p>最新的轮询效果是Comet – 用了AJAX。但这种技术虽然可达到全双工通信，但依然需要发出请求。</p>
+<p>使用WebSocket，浏览器和服务器只需要要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道，两者之间就直接可以数据互相传送。而且它为我们实现即时服务带来了两大好处：</p>
+<ul>
+<li>节省资源：互相沟通的Header是很小的-大概只有 2 Bytes。</li>
+<li>推送信息：不需要客户端请求，服务器可以主动传送数据给客户端。</li>
+</ul>
+<h2 id="socket-io"><a href="#socket-io" class="headerlink" title="socket.io"></a>socket.io</h2><p>Socket.IO是一个WebSocket库，包括了客户端的js和服务器端的nodejs，它的目标是构建可以在不同浏览器和移动设备上使用的实时应用。</p>
+<p>socket.io的特点</p>
+<ul>
+<li>易用性：socket.io封装了服务端和客户端，使用起来非常简单方便。</li>
+<li>跨平台：socket.io支持跨平台，这就意味着你有了更多的选择，可以在自己喜欢的平台下开发实时应用。</li>
+<li>自适应：它会自动根据浏览器从WebSocket、AJAX长轮询、Iframe流等等各种方式中选择最佳的方式来实现网络实时应用，非常方便和人性化，而且支持的浏览器最低达IE5.5。</li>
+</ul>
+<p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install socket.io</div></pre></td></tr></table></figure>
+<p><strong>服务监听</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> io = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(<span class="number">80</span>);</div></pre></td></tr></table></figure>
+<p>然后调用listen函数，传入监听的端口号，开始服务监听。</p>
+<p><strong>注册事件</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> io = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(<span class="number">80</span>);</div><div class="line">io.on(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</div><div class="line">     <span class="comment">//连接成功...</span></div><div class="line">     socket.on(<span class="string">'disconnect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">         <span class="comment">//用户已经离开...</span></div><div class="line">     &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><em>connection</em>事件在客户端成功连接到服务端时触发，有了这个事件，我们可以随时掌握用户连接到服务端的信息。</p>
+<p>当客户端成功建立连接时，在<em>connection</em>事件的回调函数中，我们还是可以为socket注册一些常用的事件,如：<em>disconnect</em>事件，它在客户端连接断开是触发，这时候我就知道用户已经离开了。</p>
+<p><strong>启动服务</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line">app.get(<span class="string">'/'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">  res.status(<span class="number">200</span>).send(<span class="string">'hello world'</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> server = <span class="built_in">require</span>(<span class="string">'http'</span>).createServer(app);</div><div class="line"><span class="keyword">var</span> io = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(server);</div><div class="line">io.on(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</div><div class="line">          </div><div class="line">&#125;);</div><div class="line">server.listen(<span class="number">80</span>);</div></pre></td></tr></table></figure>
+<p><strong>客户端引用</strong></p>
+<p>服务端运行后会在根目录动态生成socket.io的客户端js文件，客户端可以通过固定路径<em>/socket.io/socket.io.js</em>添加引用。</p>
+<p>首先添加网页<em>index.html</em>,并在网页中引用客户端js文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/socket.io/socket.io.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当然这样的客户端引用方式并不是必须的，我们也可以引用官方的cdn或者下载到本地的客户端文件。一般情况下推荐引用动态生成的客户端文件，因为这样客户端和服务端的版本可以保持一致，减少出错的几率。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//官方CDN</div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.socket.io/socket.io-1.2.1.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>连接服务</strong></p>
+<p>当客户端成功加载socket.io客户端文件后会获取到一个全局对象io，我们将通过io.connect函数来向服务端发起连接请求。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> socket = io.connect(<span class="string">'/'</span>);</div><div class="line">socket.on(<span class="string">'connect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//连接成功</span></div><div class="line">&#125;);</div><div class="line">socket.on(<span class="string">'disconnect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">    <span class="comment">//连接断开</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><em>connect</em>函数可以接受一个url参数，url可以socket服务的http完整地址，也可以是相对路径，如果省略则表示默认连接当前路径。与服务端类似，客户端也需要注册相应的事件来捕获信息，不同的是客户端连接成功的事件是<em>connect</em>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//下面我们创建网页index.html，并添加如下内容(保存):</div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/socket.io/socket.io.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="keyword">var</span> socket = io.connect(<span class="string">'/'</span>);</div><div class="line">            socket.on(<span class="string">'connect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                <span class="built_in">document</span>.write(<span class="string">'连接成功!'</span>);</div><div class="line">            &#125;);</div><div class="line">        &#125;;</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>页面添加完毕还要记得在服务端app.js中为它添加路由，让我们可以访问测试网页：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">app.get(<span class="string">'/index'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">   res.sendFile(<span class="string">'index.html'</span>,&#123;<span class="attr">root</span>:__dirname&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>实时通讯</strong></p>
+<p>当我们成功建立连接后，我们可以通过socket对象的<em>send</em>函数来互相发送消息，示例-客户端向服务端发送消息(index.html)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> socket = io.connect(<span class="string">'/'</span>);</div><div class="line">socket.on(<span class="string">'connect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//客户端连接成功后发送消息'hello world!'</span></div><div class="line">   socket.send(<span class="string">'hello !!!!!'</span>);</div><div class="line">&#125;);</div><div class="line">socket.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">   alert(data);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>连接成功后，我们向服务端发送消息<em>hello !!!!!</em>，还为socket注册了<em>message</em>事件，它是<em>send</em>函数对应的接收消息的事件，当服务端向客户端send消息时，我们就可以在<em>message</em>事件中接收到发送过来的消息。</p>
+<p>服务端向客户端发送消息也可以通过<em>send</em>的方式，示例 - 服务端向客户端发送消息(app.js)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> io = <span class="built_in">require</span>(<span class="string">'scoket.io'</span>);</div><div class="line">io.on(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</div><div class="line">  socket.send(<span class="string">'hahahhah！'</span>);</div><div class="line">  socket.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">      <span class="comment">//收到消息</span></div><div class="line">      <span class="built_in">console</span>.log(data);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>与客户端相同，服务端也需要为socket注册<em>message</em>事件来接收客户端发送过来的消息。</p>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><p><strong>发送信息</strong></p>
+<p>在<em>socket.io</em>中，<em>emit</em>函数用于发送数据，还记得在入门篇中，我们使用<em>send</em>的方式实现了信息的互发，其实<em>send</em>函数只是<em>emit</em>的封装，实际上还是使用了<em>emit</em>，且看<em>send</em>函数是如何实现的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> args = toArray(<span class="built_in">arguments</span>);</div><div class="line">  <span class="comment">//插入一个参数message</span></div><div class="line">  args.unshift(<span class="string">'message'</span>);</div><div class="line">  <span class="keyword">this</span>.emit.apply(<span class="keyword">this</span>, args);</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的message事件就是这么来的，还有是不是很熟悉，这就是发布订阅模式。。。普遍应用啊。</p>
+<p>了解清楚了工作原理，下面来将<em>send</em>替换成<em>emit</em>函数发送信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//app.js</span></div><div class="line">io.on(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</div><div class="line">     socket.emit(<span class="string">'message'</span>,<span class="string">'连接成功！'</span>);</div><div class="line">     socket.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//index.html</span></div><div class="line"><span class="keyword">var</span> socket = io.connect(<span class="string">'/'</span>);</div><div class="line">socket.on(<span class="string">'connect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">document</span>.write(<span class="string">'连接成功!'</span>);</div><div class="line">     socket.emit(<span class="string">'message'</span>,<span class="string">'连接成功！'</span>);</div><div class="line">&#125;);</div><div class="line">socket.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">		alert(data);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>服务端事件</strong></p>
+<p>事件监听是实现通讯的基础，因此充分了解<em>socket.io</em>的事件，学习如何在正确的时候使用它们至关重要。在一些关键的的状态下，<em>socket.io</em>可以注册相应的事件，通过事件监听，我们可以在这些事件中作出反应，常用的事件如下：</p>
+<table>
+<thead>
+<tr>
+<th>connection</th>
+<th>客户端成功连接到服务器。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td>捕获客户端send信息。</td>
+</tr>
+<tr>
+<td>disconnect</td>
+<td>客户端断开连接。</td>
+</tr>
+<tr>
+<td>error</td>
+<td>发生错误。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>客户端</strong></p>
+<p>较服务端而言，客户端提供更多的监听事件，在实时应用中，我们可以为这些事件注册监听并作出反应，例如：<em>connect</em>提示用户连接成功，<em>disconnect</em>时提示用户停止服务等等。</p>
+<table>
+<thead>
+<tr>
+<th>connect</th>
+<th>成功连接到服务器。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connecting</td>
+<td>正在连接。</td>
+</tr>
+<tr>
+<td>disconnect</td>
+<td>断开连接。</td>
+</tr>
+<tr>
+<td>connect_failed</td>
+<td>连接失败。</td>
+</tr>
+<tr>
+<td>error</td>
+<td>连接错误。</td>
+</tr>
+<tr>
+<td>message</td>
+<td>监听服务端send的信息。</td>
+</tr>
+<tr>
+<td>reconnect_failed</td>
+<td>重新连接失败。</td>
+</tr>
+<tr>
+<td>reconnect</td>
+<td>重新连接成功。</td>
+</tr>
+<tr>
+<td>reconnecting</td>
+<td>正在重连。</td>
+</tr>
+</tbody>
+</table>
+<p>那么客户端socket发起连接时的顺序是怎么样的呢？</p>
+<p>当第一次连接时，事件触发顺序为： <em>connecting</em> → <em>connect</em>；</p>
+<p>当失去连接时，事件触发顺序为：<em>disconnect</em> → <em>reconnecting</em> → <em>connecting</em> → <em>reconnect</em> → <em>connect</em>。</p>
+<p><strong>命名空间</strong></p>
+<p>命名空间着实是一个非常实用好用的功能。我们可以通过命名空间，划分出不同的房间，在房间里的广播和通信都不会影响到房间以外的客户端。</p>
+<p>那么如何创建房间呢？在服务端，通过<em>of(“”)</em>的方式来划分新的命名空间：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">io.of(<span class="string">'chat'</span>).on(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</div><div class="line"> </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>示例中，我们创建一个名为<em>chat</em>的房间，客户端可以通过如下方式连接到指定的房间：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> socket = io.connect(<span class="string">'/chat'</span>);</div></pre></td></tr></table></figure>
+<p>虽然连接到指定的房间，但是我们也可以在服务端操作，自由的进出房间：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">socket.join(<span class="string">'chat'</span>);<span class="comment">//进入chat房间</span></div><div class="line">socket.leave(<span class="string">'chat'</span>);<span class="comment">//离开chat房间</span></div></pre></td></tr></table></figure>
+<p><strong>广播消息</strong></p>
+<p>在实时应用中，广播是一个不可或缺的功能，<em>socket.io</em>提供两种服务端广播方式。</p>
+<p>第一种广播方式可以称之为’全局广播’，顾名思义，全局广播就是所有连接到服务器的客户端都会受到广播的信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">socket.broadcast.emit(<span class="string">'DATA'</span>,data);</div></pre></td></tr></table></figure>
+<p>但是，在实际应用场景中，我们很多时候并不需要所有用户都收到广播信息，有的广播信息只发送给一部分客户端，比如某个房间里面的用户，那么可以使用如下方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">socket.broadcast.to(<span class="string">'chat'</span>).emit(<span class="string">'DATA'</span>,data);</div></pre></td></tr></table></figure>
+<p>当使用<em>to()</em>的方式广播信息时，只有该命名空间下的客户端才会收到广播信息，</p>
+<p>比方说</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">io.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">socket</span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">"socket id"</span> + socket.id);</div><div class="line">         socket.join(<span class="string">'users'</span>);  </div><div class="line">         socket.to(<span class="string">'user'</span>).emit(<span class="string">'message'</span>,&#123;&#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p><strong>中间件</strong></p>
+<p><em>socket.io</em>提供中间件功能，我们可以通过中间件来对请求进行预处理，比如身份验证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">io.use(<span class="function"><span class="keyword">function</span>(<span class="params">socket, next</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span> (socket.request.headers.cookie) <span class="keyword">return</span> next();</div><div class="line">  next(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Authentication error'</span>));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>示例中展示了通过中间件进行身份验证，当没有cookie的时候抛出异常。</p>
+<p><strong>传递参数</strong></p>
+<p>在很多应用场景中，客户端发起连接请求时都需要传递参数，这些参数可能是身份验证、初始化设置等等，那么<em>socket.io</em>发起连接时如何传递参数呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> socket = io.connect(<span class="string">'/'</span>);</div></pre></td></tr></table></figure>
+<p>由于<em>connect</em>函数发起连接的参数是一个url，你可能会想到把参数拼接到url上，如<em><a href="http://xxxx?xx=xxxx" target="_blank" rel="external">http://xxxx?xx=xxxx</a></em>，但是很遗憾这样是行不通的，我们可以通过这样的方式来传递参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> socket = io.connect(<span class="string">'/'</span>,&#123; <span class="attr">_query</span>:<span class="string">'sid=123456'</span> &#125;);</div></pre></td></tr></table></figure>
+<p>在服务端可以这样获取到传递的参数:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">io.use(<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</div><div class="line">     <span class="keyword">var</span> query = socket.request._query;</div><div class="line">     <span class="keyword">var</span> sid = query.sid; </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>客户端传递的参数已经被解析成了一个<code>json</code>对象，这个对象就是<code>_query</code>。</p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocket"><span class="nav-number">1.</span> <span class="nav-text">WebSocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-io"><span class="nav-number">2.</span> <span class="nav-text">socket.io</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶"><span class="nav-number">3.</span> <span class="nav-text">进阶</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>

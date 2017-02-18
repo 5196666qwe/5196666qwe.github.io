@@ -172,23 +172,21 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/07/git/">git</a></h2>
+    <h2 class="title"><a href="/2016/11/21/变量对象（Variable Object）/">变量对象（Variable Object）</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-07T20:53:53+08:00" content="2016-11-07">
-        2016-11-07
+      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
+        2016-11-21
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/07/git/">
+      <a href="/2016/11/21/变量对象（Variable Object）/">
         
-        Git[TOC]
-Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash”，
-安装完成后，还需要最后一步设置，在命令行输入：
-12$ git config --global user.name "Your Name"$ git config --global user.ema
+        大多数ECMAScript程序员应该都知道变量与执行上下文有密切关系：
+12345678var a = 10; // 全局上下文中的变量 (function () &#123;  var b = 20; // function上下文中的局部变量&#125;)(); alert(a); // 10al
         ...
       </a>
     </div>
@@ -201,8 +199,8 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
         &nbsp; 分类于
         
           <span itemprop="about" itemscope>
-            <a href="/categories#Git" itemprop="url" rel="index">
-              <span itemprop="name">Git</span>
+            <a href="/categories#JavaScript" itemprop="url" rel="index">
+              <span itemprop="name">JavaScript</span>
             </a>
           </span>
 
@@ -213,7 +211,7 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/07/git/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/21/变量对象（Variable Object）/" itemprop="url">
       more...
     </a>
   </div>
@@ -227,24 +225,24 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/07/Java算法/">Java算法</a></h2>
+    <h2 class="title"><a href="/2016/11/21/JS 核心之 this/">This? Yes,this!</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-07T20:50:50+08:00" content="2016-11-07">
-        2016-11-07
+      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
+        2016-11-21
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/07/Java算法/">
+      <a href="/2016/11/21/JS 核心之 this/">
         
-        JAVA算法[TOC]
-1.Java常用数据结构实现
-下压栈
-
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657//使用数组结构实现pub
+        以前一直搞不懂this的指向，然后我看了阮大神的博客，发现以前出现的问题用这个理论都解释的通了。
+但是我还是不懂为什么的是这样的，直到一天我看了汤姆大叔的写的this，。。
+先看看阮大神的
+一般版的thisthis是Javascript语言的一个关键字。
+它代表函数运行时，自动生成的一个内部对象，只
         ...
       </a>
     </div>
@@ -257,8 +255,8 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
         &nbsp; 分类于
         
           <span itemprop="about" itemscope>
-            <a href="/categories#Java" itemprop="url" rel="index">
-              <span itemprop="name">Java</span>
+            <a href="/categories#JavaScript" itemprop="url" rel="index">
+              <span itemprop="name">JavaScript</span>
             </a>
           </span>
 
@@ -269,7 +267,7 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/07/Java算法/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 this/" itemprop="url">
       more...
     </a>
   </div>
@@ -283,20 +281,22 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/07/打造轻量web框架01/">打造轻量web框架</a></h2>
+    <h2 class="title"><a href="/2016/11/18/NodeJS异常处理/">NodeJS异常处理</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-07T20:50:50+08:00" content="2016-11-07">
-        2016-11-07
+      <time datetime="2016-11-18T11:25:55+08:00" content="2016-11-18">
+        2016-11-18
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/07/打造轻量web框架01/">
+      <a href="/2016/11/18/NodeJS异常处理/">
         
-        理想的controlelr我们一直使用原始的servlet来充当mvc模式中的controller。这样做虽然可以实现基本的功能，但是servlet的数量会随着业务功能的扩展而不断增加，这不是我们所期望的。因此有必要减少Servlet的数量，将某类业务交给Controller处理，他负责调用Serv
+        [TOC]
+异常捕获问题过去我们处理异常时，通常使用类java的try/cat/final语句块进行异常捕获，示例代码如下:
+12345678910111213function sync(fn) &#123;    return fn();&#125;try &#123;    sync(null)
         ...
       </a>
     </div>
@@ -309,8 +309,8 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
         &nbsp; 分类于
         
           <span itemprop="about" itemscope>
-            <a href="/categories#Java" itemprop="url" rel="index">
-              <span itemprop="name">Java</span>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
             </a>
           </span>
 
@@ -321,7 +321,113 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/07/打造轻量web框架01/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/18/NodeJS异常处理/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/18/es6学习之Generator函数/">es6 学习之 Generator 函数</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-18T11:25:55+08:00" content="2016-11-18">
+        2016-11-18
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/18/es6学习之Generator函数/">
+        
+        什么是Generator？generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次。
+123456function* helloWorldGenerator() &#123;	yield 'hello';	yield 'world';	ret
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#es6" itemprop="url" rel="index">
+              <span itemprop="name">es6</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/18/es6学习之Generator函数/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/14/mongoose的使用/">mongoose的使用</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-14T13:59:55+08:00" content="2016-11-14">
+        2016-11-14
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/14/mongoose的使用/">
+        
+        mongoose[TOC]
+MongoDB是一个开源的NoSQL数据库，相比MySQL那样的关系型数据库，它更显得轻巧、灵活，非常适合在数据规模很大、事务性不强的场合下使用。同时它也是一个对象数据库，没有表、行等概念，也没有固定的模式和结构，所有的数据以文档的形式存储(文档，就是一个关联数组式的对象
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/14/mongoose的使用/" itemprop="url">
       more...
     </a>
   </div>
@@ -331,7 +437,7 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
     </div>
     
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2016/page/3/">&laquo;</a><a class="page-number" href="/archives/2016/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2016/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/archives/2016/page/3/">&laquo;</a><a class="page-number" href="/archives/2016/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2016/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2016/page/5/">5</a><a class="extend next" rel="next" href="/archives/2016/page/5/">&raquo;</a>
   </nav>
 
 
@@ -342,19 +448,19 @@ Git的安装安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash�
     <h5>FEATURED TAGS</h5>
     <div class="tags">
     
-      <a href="/tags#JavaScript">JavaScript</a>
-    
       <a href="/tags#Node">Node</a>
     
-      <a href="/tags#Python">Python</a>
+      <a href="/tags#JavaScript">JavaScript</a>
     
       <a href="/tags#Java">Java</a>
     
       <a href="/tags#es6">es6</a>
     
-      <a href="/tags#Git">Git</a>
+      <a href="/tags#Python">Python</a>
     
       <a href="/tags#hexo">hexo</a>
+    
+      <a href="/tags#Git">Git</a>
     
     </div>
   </div>

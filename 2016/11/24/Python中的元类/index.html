@@ -50,7 +50,7 @@
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
 1234567class Foo(object):    def hello(self):        print(&apos;hello world&apos;)foo = Foo()print(type(foo))">
-<meta property="og:updated_time" content="2017-02-02T02:12:14.033Z">
+<meta property="og:updated_time" content="2017-02-02T02:20:39.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中的元类">
 <meta name="twitter:description" content="1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
@@ -267,6 +267,8 @@
 <li>在当前类（比如<code>User</code>）中查找定义的类的所有属性，如果找到一个Field属性，就把它保存到一个<code>__mappings__</code>的dict中，同时从类属性中删除该Field属性，否则，容易造成运行时错误（<strong>实例的属性会遮盖类的同名属性</strong>）；</li>
 <li>把表名保存到<code>__table__</code>中，这里简化为表名默认为类名。</li>
 </ol>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000" target="_blank" rel="external">元类</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23887627" target="_blank" rel="external">Python进阶：一步步理解Python中的元类metaclass</a></p>
 </div>
 
     <div class="post-sidebar">
@@ -278,7 +280,7 @@
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Python中一切皆对象，包括类"><span class="nav-number">1.</span> <span class="nav-text">1. Python中一切皆对象，包括类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-类的创建过程"><span class="nav-number">2.</span> <span class="nav-text">2. 类的创建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-自定义元类"><span class="nav-number">3.</span> <span class="nav-text">3. 自定义元类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-简易orm"><span class="nav-number">4.</span> <span class="nav-text">4. 简易orm</span></a></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Python中一切皆对象，包括类"><span class="nav-number">1.</span> <span class="nav-text">1. Python中一切皆对象，包括类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-类的创建过程"><span class="nav-number">2.</span> <span class="nav-text">2. 类的创建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-自定义元类"><span class="nav-number">3.</span> <span class="nav-text">3. 自定义元类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-简易orm"><span class="nav-number">4.</span> <span class="nav-text">4. 简易orm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考："><span class="nav-number">5.</span> <span class="nav-text">参考：</span></a></li></ol></div>
       
     </div>
   </section>
