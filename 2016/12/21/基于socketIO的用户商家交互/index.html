@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="今天完成一个小项目。该项目的功能是：
+　用户功能：
+
+用户注册
+用户登录
+在用户功能页面展示所有在线家政服务商家信息
+选择某个商家的服务，并可以发送消息
+
+　　商家功能：
+
+商家注册
+商家登录
+在商家功能页面展示选择该商家服务的用户信息与是否接单
+接单确认
+
+注册功能不做，登录的数据使用 json文件。
+准备工作Express框架、socket.io 
+其主要内容就是如何对消息进行转发，如何对消息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于socketIO的用户商家交互">
+<meta property="og:url" content="http://yoursite.com/2016/12/21/基于socketIO的用户商家交互/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="今天完成一个小项目。该项目的功能是：
+　用户功能：
+
+用户注册
+用户登录
+在用户功能页面展示所有在线家政服务商家信息
+选择某个商家的服务，并可以发送消息
+
+　　商家功能：
+
+商家注册
+商家登录
+在商家功能页面展示选择该商家服务的用户信息与是否接单
+接单确认
+
+注册功能不做，登录的数据使用 json文件。
+准备工作Express框架、socket.io 
+其主要内容就是如何对消息进行转发，如何对消息">
+<meta property="og:image" content="http://yoursite.com/img/socketio/login.png">
+<meta property="og:image" content="http://yoursite.com/img/socketio/list.png">
+<meta property="og:image" content="http://yoursite.com/img/socketio/shops.png">
+<meta property="og:updated_time" content="2017-02-21T14:09:19.416Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于socketIO的用户商家交互">
+<meta name="twitter:description" content="今天完成一个小项目。该项目的功能是：
+　用户功能：
+
+用户注册
+用户登录
+在用户功能页面展示所有在线家政服务商家信息
+选择某个商家的服务，并可以发送消息
+
+　　商家功能：
+
+商家注册
+商家登录
+在商家功能页面展示选择该商家服务的用户信息与是否接单
+接单确认
+
+注册功能不做，登录的数据使用 json文件。
+准备工作Express框架、socket.io 
+其主要内容就是如何对消息进行转发，如何对消息">
+<meta name="twitter:image" content="http://yoursite.com/img/socketio/login.png">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> 基于socketIO的用户商家交互 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="基于socketIO的用户商家交互"> 基于socketIO的用户商家交互 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-12-21T14:59:55+08:00" content="2016-12-21">
+              2016-12-21
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>今天完成一个小项目。该项目的功能是：</p>
+<p>　<strong>用户功能</strong>：</p>
+<ol>
+<li>用户注册</li>
+<li>用户登录</li>
+<li>在用户功能页面展示所有在线家政服务商家信息</li>
+<li>选择某个商家的服务，并可以发送消息</li>
+</ol>
+<p>　　<strong>商家功能</strong>：</p>
+<ol>
+<li>商家注册</li>
+<li>商家登录</li>
+<li>在商家功能页面展示选择该商家服务的用户信息与是否接单</li>
+<li>接单确认</li>
+</ol>
+<p>注册功能不做，登录的数据使用 json文件。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><em>Express</em>框架、<em>socket.io</em> </p>
+<p>其主要内容就是如何对消息进行转发，如何对消息进行广播，以及如何将收到的消息进行绑定展示。</p>
+<p><strong>文件目录</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">│─ app.js</div><div class="line">│─ users.json</div><div class="line">│  </div><div class="line">├─lib</div><div class="line">│      socket.js</div><div class="line">│          </div><div class="line">├─public</div><div class="line">├─routes</div><div class="line">│      index.js</div><div class="line">│      </div><div class="line">└─views</div><div class="line">        list.html</div><div class="line">        login.html</div><div class="line">        shops.html</div></pre></td></tr></table></figure>
+<p><strong>引入模块设置中间件</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>),</div><div class="line">	express = <span class="built_in">require</span>(<span class="string">'express'</span>),</div><div class="line">    bodyParser   = <span class="built_in">require</span>(<span class="string">'body-parser'</span>),</div><div class="line">    cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> app = express(),</div><div class="line">	server = <span class="built_in">require</span>(<span class="string">'http'</span>).Server(app);</div><div class="line"></div><div class="line"><span class="comment">//路径与使用view模版为html</span></div><div class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</div><div class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'html'</span>);</div><div class="line">app.engine( <span class="string">'.html'</span>, <span class="built_in">require</span>( <span class="string">'ejs'</span> ).__express );</div><div class="line"><span class="comment">//中间用到的插件</span></div><div class="line"><span class="comment">//解析json格式的中间件</span></div><div class="line">app.use(bodyParser.json());</div><div class="line"><span class="comment">//这个中间件用来解析body中的urlencoded字符， 只支持utf-8的编码的字符。</span></div><div class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</div><div class="line">app.use(cookieParser());</div><div class="line"><span class="comment">//设置本地静态资源路径</span></div><div class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</div><div class="line"></div><div class="line"></div><div class="line"><span class="built_in">require</span>(<span class="string">'./routes'</span>)(app);</div><div class="line"><span class="built_in">require</span>(<span class="string">'./lib/socket'</span>)(server);</div><div class="line"></div><div class="line">server.listen(<span class="number">8080</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">'server is running in 8080 ，ctrl + c to stop'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>用户集合</strong></p>
+<p>user.json代替数据库</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"a"</span>:&#123; <span class="string">"pwd_s"</span>:<span class="string">"a"</span>,<span class="string">"role"</span>:<span class="number">1</span>,<span class="string">"service"</span>: <span class="string">"服装"</span>&#125;,</div><div class="line">  <span class="string">"b"</span>:&#123; <span class="string">"pwd_u"</span>:<span class="string">"b"</span>,<span class="string">"role"</span>:<span class="number">2</span>,<span class="string">"tel"</span>:<span class="string">"137xxxx2345"</span> &#125;,</div><div class="line">  <span class="string">"c"</span>:&#123; <span class="string">"pwd_s"</span>:<span class="string">"c"</span>,<span class="string">"role"</span>:<span class="number">1</span>,<span class="string">"service"</span>:<span class="string">""</span>&#125;,</div><div class="line">   <span class="string">"d"</span>:&#123; <span class="string">"pwd_s"</span>:<span class="string">"d"</span>,<span class="string">"role"</span>:<span class="number">1</span>,<span class="string">"service"</span>:<span class="string">"手机"</span>&#125;,</div><div class="line">  <span class="string">"e"</span>:&#123; <span class="string">"pwd_s"</span>:<span class="string">"e"</span>,<span class="string">"role"</span>:<span class="number">1</span>,<span class="string">"service"</span>:<span class="string">"电脑"</span> &#125;,</div><div class="line">  <span class="string">"f"</span>:&#123; <span class="string">"pwd_s"</span>:<span class="string">"f"</span>,<span class="string">"role"</span>:<span class="number">1</span>,<span class="string">"service"</span>:<span class="string">"玩具"</span>&#125;,</div><div class="line">  <span class="string">"g"</span>:&#123; <span class="string">"pwd_u"</span>:<span class="string">"g"</span>,<span class="string">"role"</span>:<span class="number">2</span>,<span class="string">"tel"</span>:<span class="string">"156xxxx4963"</span>&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//其中a,b,c为用户的用户名，pwd_u为密码，role标识是用户还是商家，</span></div><div class="line"><span class="comment">//1代表商家，2代表用户；tel为用户电话。我们这样保存数据的目的是为更简单的操作json数据。</span></div></pre></td></tr></table></figure>
+<p><strong>用户登录与注册页面–login.html)</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/login"</span> <span class="attr">method</span>=<span class="string">"post"</span> &gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"margin:auto"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span> <span class="attr">align</span>=<span class="string">"center"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">label</span>&gt;</span>用 户 名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"userName"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">label</span>&gt;</span>密　　码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span>  <span class="attr">name</span>=<span class="string">"pwd"</span> <span class="attr">id</span>=<span class="string">"pwd"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">label</span>&gt;</span>用户类型：<span class="tag">&lt;/<span class="name">label</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"userType"</span> <span class="attr">name</span>=<span class="string">"role"</span>&gt;</span></div><div class="line">                 <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>商家用户<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">                 <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>个人用户<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"登录"</span> &gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">""</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>  <span class="attr">href</span>=<span class="string">""</span>&gt;</span>商家注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如图：</p>
+<p><img src="/img/socketio/login.png" alt="login"></p>
+<p><strong>用户操作页面–list.html</strong></p>
+<p>实现的功能就是展示所有商家的信息与服务内容。当用户选择商家时，向商家发送信息。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>用户页<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"allUsers"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">align</span>=<span class="string">"center"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>商户列表<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectPerson"</span>  <span class="attr">onchange</span>=<span class="string">"selectChange()"</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">lable</span>&gt;</span>商家服务<span class="tag">&lt;/<span class="name">lable</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"shopText"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">lable</span>&gt;</span>发送内容<span class="tag">&lt;/<span class="name">lable</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"sendTxt"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"sendMessage()"</span>&gt;</span>点单<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">lable</span>&gt;</span>收到的内容<span class="tag">&lt;/<span class="name">lable</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"receiveTxt"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如图：</p>
+<p><img src="/img/socketio/list.png" alt="list"></p>
+<p>商家操作页面–shops.html**</p>
+<p>主要功能就是在收到用户消息后，对用户消息进行反馈。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>商家页<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"shop"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">align</span>=<span class="string">"center"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"sendMessage()"</span>&gt;</span>接单<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"cancelMessage()"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">lable</span>&gt;</span>收到的内容<span class="tag">&lt;/<span class="name">lable</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"receiveTxt"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">lable</span>&gt;</span>用户电话<span class="tag">&lt;/<span class="name">lable</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"addressText"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">lable</span>&gt;</span>收到的用户<span class="tag">&lt;/<span class="name">lable</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"userText"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如图:</p>
+<p><img src="/img/socketio/shops.png" alt="shops"></p>
+<p><strong>路由功能</strong></p>
+<p>无非是用户登录，表单提交，页面显示，较简单。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//   routers/index.js </span></div><div class="line"><span class="keyword">var</span> data = <span class="built_in">require</span>(<span class="string">"fs"</span>).readFileSync(<span class="string">"users.json"</span>,<span class="string">"utf-8"</span>);</div><div class="line"><span class="keyword">var</span> users = <span class="built_in">JSON</span>.parse(data);</div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">app</span>)</span>&#123;</div><div class="line">    app.get(<span class="string">'/'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">        res.render(<span class="string">'login'</span>);</div><div class="line">    &#125;);</div><div class="line">    app.post(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'用户登录~'</span>);</div><div class="line">        <span class="keyword">var</span> name = req.body.name ;</div><div class="line">        <span class="keyword">var</span> user = users[name];</div><div class="line">        <span class="keyword">if</span>(user &amp;&amp; user.pwd_s == req.body.pwd &amp;&amp; <span class="string">"1"</span> == req.body.role)&#123;</div><div class="line">          	<span class="comment">//是商家时 设置cookie的字段值</span></div><div class="line">            res.cookie(<span class="string">'name_s'</span>,name);</div><div class="line">            res.cookie(<span class="string">'role'</span>,req.body.role);</div><div class="line">            res.cookie(<span class="string">'service'</span>,user.service);</div><div class="line">            res.redirect(<span class="string">'/shops'</span>);</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(user &amp;&amp; user.pwd_u == req.body.pwd &amp;&amp; <span class="string">"2"</span> == req.body.role)&#123;</div><div class="line">          	<span class="comment">// 是用户时 设置cookie的字段值</span></div><div class="line">            res.cookie(<span class="string">'name_u'</span>,name);</div><div class="line">            res.cookie(<span class="string">'role'</span>,req.body.role);</div><div class="line">            res.cookie(<span class="string">'tel'</span>,user.tel);</div><div class="line">            <span class="built_in">console</span>.log(user.tel);</div><div class="line">            res.redirect(<span class="string">'/list'</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            res.sendStatus(<span class="number">404</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    app.get(<span class="string">'/list'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">        res.render(<span class="string">'list'</span>);</div><div class="line">    &#125;);</div><div class="line">    app.get(<span class="string">'/shops'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">        res.render(<span class="string">'shops'</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>主要就是我们的 socket.js 怎么写了。</p>
+<p>首先客户端与服务器端连接时，要执行登录验证，通过才可以继续进行，放在connection里面显然不合适，所以我们放在中间件里面，在这里我们通过cookie取到我们想要的数据然后存储到对应的socket中，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// lib/socket.js</span></div><div class="line"><span class="keyword">var</span> Cookie= <span class="built_in">require</span>(<span class="string">'cookie'</span>); <span class="comment">//使用cookie	</span></div><div class="line"><span class="keyword">var</span> io = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(app);  <span class="comment">//这里app应该是module传过来。</span></div><div class="line"><span class="comment">//因为没有数据库，所以暂时用变量代替。</span></div><div class="line"><span class="keyword">var</span> sockets = &#123;&#125;;       <span class="comment">//存储用户的socket</span></div><div class="line"><span class="keyword">var</span> socketShops=&#123;&#125;;     <span class="comment">//存储商家的socket</span></div><div class="line"><span class="keyword">var</span> socketShopsName=&#123;&#125;; <span class="comment">//存储所有商家的名字</span></div><div class="line"><span class="keyword">var</span> socketsTel=&#123;&#125;;      <span class="comment">//存储所有用户电话</span></div><div class="line"><span class="keyword">var</span> socketShopsService=&#123;&#125;; <span class="comment">//存储商家的服务</span></div><div class="line"></div><div class="line">io.use(<span class="function"><span class="keyword">function</span>(<span class="params">socket,next</span>)</span>&#123;</div><div class="line">	        <span class="built_in">console</span>.log(<span class="string">'socket登录验证'</span>);</div><div class="line">	        <span class="keyword">var</span> cookie =  Cookie.parse(socket.handshake.headers.cookie);</div><div class="line">	        <span class="keyword">if</span>(!cookie.role) <span class="keyword">return</span> next(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"登录失败！"</span>));</div><div class="line">	        socket.role = cookie.role;</div><div class="line">	        <span class="keyword">if</span>(cookie.role==<span class="number">1</span>) &#123;</div><div class="line">	            socket.name = cookie.name_s;</div><div class="line">	        &#125;<span class="keyword">else</span>&#123;</div><div class="line">	            socket.name = cookie.name_u;</div><div class="line">	        &#125;</div><div class="line">	        socket.tel=cookie.tel;</div><div class="line">	        socket.service=cookie.service;</div><div class="line">	        next();</div><div class="line">	&#125;);</div></pre></td></tr></table></figure>
+<p>然后真正连接的时候，根据socket.role值，也就是标识用户或则商家来决定，客户端要进入哪个广播组。</p>
+<p>这里分两种情况，用户进入时不必告诉商家我来了。(除非你是王思聪。。)</p>
+<p>而商家进入时得广播所有用户组告诉他们，我们开张了，快来快活。。。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">io.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">socket</span>) </span>&#123;</div><div class="line">  		<span class="comment">//每一次socket连接都会为id设定一个值。</span></div><div class="line">        <span class="keyword">var</span> id   = socket.id,</div><div class="line">            role = socket.role;</div><div class="line">        <span class="keyword">if</span>(role == <span class="number">1</span>)&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'商家进入'</span>);</div><div class="line">            socket.join(<span class="string">'shop'</span>);  <span class="comment">//商家上线，加入商家组</span></div><div class="line">            socketShops[id]=socket; <span class="comment">//保存每个商家的连接</span></div><div class="line">            socketShopsName[id]=socket.name; <span class="comment">//保存商家的名称</span></div><div class="line">            socketShopsService[id]=socket.service;  <span class="comment">//保存商家服务</span></div><div class="line">            socket.to(<span class="string">'user'</span>).emit(<span class="string">'message'</span>,&#123; <span class="attr">cmd</span>:<span class="string">'online'</span>,<span class="attr">data</span>: &#123;<span class="attr">id</span>:id,<span class="attr">name</span>:socket.name,<span class="attr">service</span>:socket.service&#125; &#125;); <span class="comment">//向每个用户发送广播，商家上线了</span></div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(role == <span class="number">2</span>)&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'用户进入'</span>);</div><div class="line">            socket.join(<span class="string">'user'</span>);  </div><div class="line">            <span class="built_in">console</span>.log(user);</div><div class="line">            sockets[id]=socket;</div><div class="line">            socketsTel[id]=socket.tel;</div><div class="line">        &#125;</div><div class="line"> &#125;)</div></pre></td></tr></table></figure>
+<p>然后就是连接成功后，根据客户端发来的命令，来决定我们的逻辑处理。</p>
+<p>以及最后当断开连接时的操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//　　当客户端发送chat命令时，我们把消息发送给商家用户；</span></div><div class="line"><span class="comment">//当收到online命令时，向所有用户发送所有商家信息；当收到ok命令时，将消息发送到用户页面。</span></div><div class="line"> socket.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">packet</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> sp = packet.cmd;</div><div class="line">    <span class="keyword">switch</span>(sp) &#123;</div><div class="line">        <span class="comment">//收到用户上线指令，发送所有商家信息到用户页面</span></div><div class="line">        <span class="keyword">case</span> <span class="string">"online"</span>:</div><div class="line">            socket.send(&#123;<span class="attr">cmd</span>:<span class="string">"list"</span>,<span class="attr">data</span>:&#123;<span class="attr">names</span>:socketShopsName,<span class="attr">services</span>:socketShopsService&#125;&#125;); </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"chat"</span>:</div><div class="line">              socketShops[packet.data.id].send(&#123;<span class="attr">cmd</span>: <span class="string">"rec"</span>, <span class="attr">data</span>:&#123; <span class="attr">id</span>:id,<span class="attr">message</span>:packet.data.message,<span class="attr">name</span>:packet.data.name,<span class="attr">tel</span>:packet.data.tel&#125;&#125;); <span class="comment">//与商家进行通信</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"ok"</span>:</div><div class="line">            sockets[packet.data.id].send(&#123;<span class="attr">cmd</span>:<span class="string">"ok"</span>,<span class="attr">data</span>:packet.data.message&#125;); <span class="comment">//与用户进行通信</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"> socket.on(<span class="string">'disconnect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="keyword">delete</span> socketShops[id];</div><div class="line">            <span class="keyword">delete</span> socketShopsName[id];</div><div class="line">            <span class="keyword">delete</span> sockets[id];</div><div class="line">            <span class="keyword">delete</span> socketsTel[id];</div><div class="line">            <span class="keyword">delete</span> socketShopsService[id] ;</div><div class="line">            socket.to(<span class="string">'user'</span>).emit(<span class="string">'message'</span>,&#123; <span class="attr">cmd</span>:<span class="string">'list'</span>,<span class="attr">data</span>:&#123;<span class="attr">names</span>:socketShopsName,<span class="attr">services</span>:socketShopsService&#125;  &#125;);<span class="comment">//向用户广播商家已下线</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>下面是具体用户和商家的连接操作。</p>
+<p><strong>用户 list.html</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取cookie</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> result = &#123;&#125;;</div><div class="line">    <span class="keyword">var</span> arr = <span class="built_in">document</span>.cookie.split(<span class="string">";"</span>);</div><div class="line">    arr.map(<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> cache = a.split(<span class="string">'='</span>);</div><div class="line">        result[cache[<span class="number">0</span>].trim()] = cache[<span class="number">1</span>].trim();</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> services=&#123;&#125;;</div><div class="line"><span class="keyword">var</span> params = getCookie();</div><div class="line"><span class="keyword">var</span> socket = io.connect();</div><div class="line">socket.on(<span class="string">'connect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'连接成功'</span>);</div><div class="line">    socket.send(&#123;<span class="attr">cmd</span>:<span class="string">"online"</span>,<span class="attr">data</span>:<span class="string">""</span>&#125;);</div><div class="line">&#125;);</div><div class="line">socket.on(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'收到消息:'</span>+<span class="built_in">JSON</span>.stringify(data));</div><div class="line">    <span class="keyword">switch</span> (data.cmd) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">"rec"</span>:  <span class="comment">//收到消息在页面展示</span></div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"receiveTxt"</span>).value = data.data;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"list"</span>:   <span class="comment">//收到所有在线商家的消息， 然后把数据在页面进行绑定</span></div><div class="line">                <span class="built_in">console</span>.log(data.data);</div><div class="line">            <span class="keyword">var</span> options = <span class="built_in">document</span>.getElementById(<span class="string">"selectPerson"</span>);</div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"selectPerson"</span>).options.length=<span class="number">0</span>;</div><div class="line">            services=data.data.services;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> data.data.names)   &#123;</div><div class="line">                    <span class="keyword">var</span> opp = <span class="keyword">new</span> Option(data.data.names[i],i );</div><div class="line">                    options.add(opp);</div><div class="line">                &#125;</div><div class="line">            <span class="keyword">var</span> id = <span class="built_in">document</span>.getElementById(<span class="string">"selectPerson"</span>).value;</div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"shopText"</span>).value=services[id];</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"online"</span>:  <span class="comment">//收到刚上线的商户通知，对页面进行数据添加</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="string">"online"</span>)</div><div class="line">            <span class="built_in">console</span>.log(data);</div><div class="line">            <span class="keyword">var</span> options = <span class="built_in">document</span>.getElementById(<span class="string">"selectPerson"</span>);</div><div class="line">            <span class="comment">//document.getElementById("selectPerson").options.length=0;</span></div><div class="line">            <span class="keyword">var</span> opp = <span class="keyword">new</span> Option(data.data.name,data.data.id );</div><div class="line">            options.add(opp);</div><div class="line">                services[data.data.id]=data.data.service;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"ok"</span>:</div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"receiveTxt"</span>).value = data.data;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">   &#125;</div><div class="line">&#125;);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendMessage</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> data=<span class="built_in">document</span>.getElementById(<span class="string">"sendTxt"</span>).value;</div><div class="line">  <span class="keyword">var</span> id = <span class="built_in">document</span>.getElementById(<span class="string">"selectPerson"</span>).value; <span class="comment">// 选中值</span></div><div class="line">  socket.send(&#123;<span class="attr">cmd</span>:<span class="string">"chat"</span>,<span class="attr">data</span>:&#123;<span class="attr">id</span>:id,<span class="attr">message</span>:data,<span class="attr">tel</span>:params.tel,<span class="attr">name</span>:params.name_u  &#125;&#125;);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectChange</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> id = <span class="built_in">document</span>.getElementById(<span class="string">"selectPerson"</span>).value;</div><div class="line">  <span class="comment">//console.log(services);</span></div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">"shopText"</span>).value=services[id] ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>商家 shops.html</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> id;</div><div class="line"><span class="keyword">var</span> params = getCookie();</div><div class="line"><span class="keyword">var</span> socket = io.connect();</div><div class="line">socket.on(<span class="string">'connect'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'连接成功'</span>);</div><div class="line">&#125;);</div><div class="line">socket.on(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'收到消息:'</span>+<span class="built_in">JSON</span>.stringify(data));</div><div class="line">    <span class="keyword">switch</span> (data.cmd) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">"rec"</span>:   <span class="comment">//收到数据进行绑定</span></div><div class="line">                id=data.data.id;</div><div class="line">                <span class="built_in">console</span>.log(data.data.name);</div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"receiveTxt"</span>).value = data.data.message;</div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"addressText"</span>).value =data.data.tel;</div><div class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"userText"</span>).value =data.data.name;</div><div class="line">            <span class="comment">//socket.send(&#123;cmd:"ok",data:&#123;id:id,message:"ok"  &#125;&#125;);</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">&#125;);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendMessage</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(id);</div><div class="line">    alert(<span class="string">"接单成功！"</span>) ;</div><div class="line">    socket.send(&#123;<span class="attr">cmd</span>:<span class="string">"ok"</span>,<span class="attr">data</span>:&#123;<span class="attr">id</span>:id,<span class="attr">message</span>:<span class="string">"接单成功！"</span>&#125;&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>先登录用户，然后在登录商家，你会发现用户的商品列表里面商家上线了。</p>
+<p>再登录一个商家，用户的商品列表就有增加了。然后就可以进行服务操作了，用户点单，商家接单等等。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>如果正常用我们ajax进行交互，express处理，可能我们的逻辑全部在router里面，但是客户端就要用ajax频繁发送请求。</p>
+<p>而使用socket，服务器和浏览器可以在给定的时间范围内的任意时刻，相互推送信息。在建立连接之后，服务器可以主动传送数据给浏览器。这是非常方便的。而且节省流量，节省资源。</p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number">4.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
