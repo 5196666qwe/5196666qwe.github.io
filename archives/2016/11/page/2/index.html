@@ -391,7 +391,7 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/">作用域链(Scope Chain)及其特征闭包（Closures）</a></h2>
+    <h2 class="title"><a href="/2016/11/21/JS 核心之 this/">This? Yes,this!</a></h2>
   </div>
 
   <div class="post-cont">
@@ -402,11 +402,13 @@
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/">
+      <a href="/2016/11/21/JS 核心之 this/">
         
-        如果要简要的描述并展示其重点，那么作用域链大多数与内部函数相关。
-我们知道，ECMAScript 允许创建内部函数，我们甚至能从父函数中返回这些函数。
-1234567891011var x = 10; function foo() &#123;   var y = 20;   function ba
+        以前一直搞不懂this的指向，然后我看了阮大神的博客，发现以前出现的问题用这个理论都解释的通了。
+但是我还是不懂为什么的是这样的，直到一天我看了汤姆大叔的写的this，。。
+先看看阮大神的
+一般版的thisthis是Javascript语言的一个关键字。
+它代表函数运行时，自动生成的一个内部对象，只
         ...
       </a>
     </div>
@@ -431,7 +433,7 @@
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 this/" itemprop="url">
       more...
     </a>
   </div>
@@ -460,9 +462,9 @@
     
       <a href="/tags#Python">Python</a>
     
-      <a href="/tags#Git">Git</a>
-    
       <a href="/tags#es6">es6</a>
+    
+      <a href="/tags#Git">Git</a>
     
       <a href="/tags#hexo">hexo</a>
     
