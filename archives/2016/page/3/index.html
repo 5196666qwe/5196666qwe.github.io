@@ -172,24 +172,21 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/24/Python中super函数/">Python中super</a></h2>
+    <h2 class="title"><a href="/2016/11/24/Python中的元类/">Python中的元类</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-24T13:59:55+08:00" content="2016-11-24">
+      <time datetime="2016-11-24T14:59:55+08:00" content="2016-11-24">
         2016-11-24
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/24/Python中super函数/">
+      <a href="/2016/11/24/Python中的元类/">
         
-        [TOC]
-啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。
-然后又发现怎么这货还有参数的，而且参数还是那么奇葩，这么反人类啊。
-之后查了点资料，才知道我是逗逼。。
-为什么super一般是两个参数的?请无视出现的父类名词，只是便于说
+        1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
+1234567class Foo(object):    def hello(self):      
         ...
       </a>
     </div>
@@ -214,7 +211,7 @@
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/24/Python中super函数/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/24/Python中的元类/" itemprop="url">
       more...
     </a>
   </div>
@@ -282,6 +279,62 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/24/Python中super函数/">Python中super</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-24T13:59:55+08:00" content="2016-11-24">
+        2016-11-24
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/24/Python中super函数/">
+        
+        [TOC]
+啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。
+然后又发现怎么这货还有参数的，而且参数还是那么奇葩，这么反人类啊。
+之后查了点资料，才知道我是逗逼。。
+为什么super一般是两个参数的?请无视出现的父类名词，只是便于说
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Python" itemprop="url" rel="index">
+              <span itemprop="name">Python</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/24/Python中super函数/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
     <h2 class="title"><a href="/2016/11/22/JS中new的模拟/">JS中new的模拟</a></h2>
   </div>
 
@@ -325,60 +378,6 @@
     
 
     <a class="read-more-btn" target="_blank" href="/2016/11/22/JS中new的模拟/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/">作用域链(Scope Chain)及其特征闭包（Closures）</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
-        2016-11-21
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/">
-        
-        如果要简要的描述并展示其重点，那么作用域链大多数与内部函数相关。
-我们知道，ECMAScript 允许创建内部函数，我们甚至能从父函数中返回这些函数。
-1234567891011var x = 10; function foo() &#123;   var y = 20;   function ba
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#JavaScript" itemprop="url" rel="index">
-              <span itemprop="name">JavaScript</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/" itemprop="url">
       more...
     </a>
   </div>
@@ -458,13 +457,13 @@
     
       <a href="/tags#Java">Java</a>
     
-      <a href="/tags#es6">es6</a>
-    
       <a href="/tags#Python">Python</a>
     
-      <a href="/tags#hexo">hexo</a>
+      <a href="/tags#es6">es6</a>
     
       <a href="/tags#Git">Git</a>
+    
+      <a href="/tags#hexo">hexo</a>
     
     </div>
   </div>
