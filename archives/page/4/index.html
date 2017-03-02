@@ -172,22 +172,21 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/20/Nodejs源码解析之events/">Nodejs源码解析之events</a></h2>
+    <h2 class="title"><a href="/2016/11/18/变量对象（Variable Object）/">变量对象（Variable Object）</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-20T20:53:53+08:00" content="2016-11-20">
-        2016-11-20
+      <time datetime="2016-11-18T13:59:55+08:00" content="2016-11-18">
+        2016-11-18
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/20/Nodejs源码解析之events/">
+      <a href="/2016/11/18/变量对象（Variable Object）/">
         
-        [TOC]
-在分析events源码之前，我们来看看js设计模式中的发布 — 订阅模式。
-发布—订阅模式发布 — 订阅模式又叫观察者模式，它定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。在 JavaScript开发中，我们一般用事件模型来替代传统的发布 
+        大多数ECMAScript程序员应该都知道变量与执行上下文有密切关系：
+12345678var a = 10; // 全局上下文中的变量 (function () &#123;  var b = 20; // function上下文中的局部变量&#125;)(); alert(a); // 10al
         ...
       </a>
     </div>
@@ -200,8 +199,8 @@
         &nbsp; 分类于
         
           <span itemprop="about" itemscope>
-            <a href="/categories#Node" itemprop="url" rel="index">
-              <span itemprop="name">Node</span>
+            <a href="/categories#JavaScript" itemprop="url" rel="index">
+              <span itemprop="name">JavaScript</span>
             </a>
           </span>
 
@@ -212,7 +211,60 @@
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/20/Nodejs源码解析之events/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/18/变量对象（Variable Object）/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/18/es6学习之Generator函数/">es6 学习之 Generator 函数</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-18T11:25:55+08:00" content="2016-11-18">
+        2016-11-18
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/18/es6学习之Generator函数/">
+        
+        什么是Generator？generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次。
+123456function* helloWorldGenerator() &#123;	yield 'hello';	yield 'world';	ret
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#es6" itemprop="url" rel="index">
+              <span itemprop="name">es6</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/18/es6学习之Generator函数/" itemprop="url">
       more...
     </a>
   </div>
@@ -267,59 +319,6 @@
     
 
     <a class="read-more-btn" target="_blank" href="/2016/11/18/NodeJS异常处理/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/18/es6学习之Generator函数/">es6 学习之 Generator 函数</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-18T11:25:55+08:00" content="2016-11-18">
-        2016-11-18
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/18/es6学习之Generator函数/">
-        
-        什么是Generator？generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次。
-123456function* helloWorldGenerator() &#123;	yield 'hello';	yield 'world';	ret
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#es6" itemprop="url" rel="index">
-              <span itemprop="name">es6</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/18/es6学习之Generator函数/" itemprop="url">
       more...
     </a>
   </div>
@@ -449,9 +448,9 @@ MongoDB是一个开源的NoSQL数据库，相比MySQL那样的关系型数据库
     <h5>FEATURED TAGS</h5>
     <div class="tags">
     
-      <a href="/tags#JavaScript">JavaScript</a>
-    
       <a href="/tags#Node">Node</a>
+    
+      <a href="/tags#JavaScript">JavaScript</a>
     
       <a href="/tags#Java">Java</a>
     

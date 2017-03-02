@@ -172,117 +172,6 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/26/测试利器Mocha/">测试利器Mocha</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-26T22:53:53+08:00" content="2016-11-26">
-        2016-11-26
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/26/测试利器Mocha/">
-        
-        mocha 是一个功能丰富的javascript测试框架，可以运行在nodejs和浏览器环境，使异步测试变得简单有趣。mocha 串联运行测试，允许灵活和精确地报告结果，同时映射未捕获的异常用来纠正测试用例。
-支持TDD/BDD 的 开发方式，结合 should.js/expect/chai/bet
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#Node" itemprop="url" rel="index">
-              <span itemprop="name">Node</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/26/测试利器Mocha/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/26/cookie、session/">cookie、session</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-26T20:53:53+08:00" content="2016-11-26">
-        2016-11-26
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/26/cookie、session/">
-        
-        [TOC]
-cookie在web应用中，多个请求之间共享“用户会话”是非常必要的。但HTTP1.0协议是无状态的。那这时Cookie就出现了。那Cookie又是如何处理的呢？
-Cookie的处理：
-
-服务端向客户端发送Cookie
-客户端的浏览器把Cookie保存
-然后在每次请求浏览器都会将Cook
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#Node" itemprop="url" rel="index">
-              <span itemprop="name">Node</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/26/cookie、session/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
     <h2 class="title"><a href="/2016/11/25/es6学习之Class/">es6 学习之 Class</a></h2>
   </div>
 
@@ -391,18 +280,18 @@ JavaScript语言的传统方法是通过构造函数，定义并生成新对象�
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/24/Python中super函数/">Python中super</a></h2>
+    <h2 class="title"><a href="/2016/11/22/Python中super函数/">Python中super</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-24T13:59:55+08:00" content="2016-11-24">
-        2016-11-24
+      <time datetime="2016-11-22T13:59:55+08:00" content="2016-11-22">
+        2016-11-22
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/24/Python中super函数/">
+      <a href="/2016/11/22/Python中super函数/">
         
         [TOC]
 啃Python时候，发现super的几个问题，开始我以为这货和java中的super有点类似，毕竟效果看起来差不多。
@@ -433,7 +322,117 @@ JavaScript语言的传统方法是通过构造函数，定义并生成新对象�
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/24/Python中super函数/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/22/Python中super函数/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/20/Nodejs源码解析之events/">Nodejs源码解析之events</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-20T20:53:53+08:00" content="2016-11-20">
+        2016-11-20
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/20/Nodejs源码解析之events/">
+        
+        [TOC]
+在分析events源码之前，我们来看看js设计模式中的发布 — 订阅模式。
+发布—订阅模式发布 — 订阅模式又叫观察者模式，它定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。在 JavaScript开发中，我们一般用事件模型来替代传统的发布 
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/20/Nodejs源码解析之events/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/20/JS中new的模拟/">JS中new的模拟</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-20T13:59:55+08:00" content="2016-11-20">
+        2016-11-20
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/20/JS中new的模拟/">
+        
+        new对象的过程
+
+创建一个空的Object对象 var obj = new Object();
+将构造函数Person中this指向刚创建的obj对象(this不懂，请看this那一章)
+将创建的obj的__proto__指向构造函数的prototype，这一步是建立对象和原型直接的对应关系(注意
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#JavaScript" itemprop="url" rel="index">
+              <span itemprop="name">JavaScript</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/20/JS中new的模拟/" itemprop="url">
       more...
     </a>
   </div>
@@ -443,7 +442,7 @@ JavaScript语言的传统方法是通过构造函数，定义并生成新对象�
     </div>
     
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2016/11/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2016/11/page/4/">4</a><a class="extend next" rel="next" href="/archives/2016/11/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/archives/2016/11/page/2/">2</a><a class="page-number" href="/archives/2016/11/page/3/">3</a><a class="extend next" rel="next" href="/archives/2016/11/page/2/">&raquo;</a>
   </nav>
 
 
@@ -454,9 +453,9 @@ JavaScript语言的传统方法是通过构造函数，定义并生成新对象�
     <h5>FEATURED TAGS</h5>
     <div class="tags">
     
-      <a href="/tags#JavaScript">JavaScript</a>
-    
       <a href="/tags#Node">Node</a>
+    
+      <a href="/tags#JavaScript">JavaScript</a>
     
       <a href="/tags#Java">Java</a>
     
