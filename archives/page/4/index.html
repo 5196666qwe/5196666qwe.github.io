@@ -172,24 +172,22 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/21/JS 核心之 this/">This? Yes,this!</a></h2>
+    <h2 class="title"><a href="/2016/11/20/Nodejs源码解析之events/">Nodejs源码解析之events</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
-        2016-11-21
+      <time datetime="2016-11-20T20:53:53+08:00" content="2016-11-20">
+        2016-11-20
       </time>
     </span>
     <div class="text">
-      <a href="/2016/11/21/JS 核心之 this/">
+      <a href="/2016/11/20/Nodejs源码解析之events/">
         
-        以前一直搞不懂this的指向，然后我看了阮大神的博客，发现以前出现的问题用这个理论都解释的通了。
-但是我还是不懂为什么的是这样的，直到一天我看了汤姆大叔的写的this，。。
-先看看阮大神的
-一般版的thisthis是Javascript语言的一个关键字。
-它代表函数运行时，自动生成的一个内部对象，只
+        [TOC]
+在分析events源码之前，我们来看看js设计模式中的发布 — 订阅模式。
+发布—订阅模式发布 — 订阅模式又叫观察者模式，它定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。在 JavaScript开发中，我们一般用事件模型来替代传统的发布 
         ...
       </a>
     </div>
@@ -202,8 +200,8 @@
         &nbsp; 分类于
         
           <span itemprop="about" itemscope>
-            <a href="/categories#JavaScript" itemprop="url" rel="index">
-              <span itemprop="name">JavaScript</span>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
             </a>
           </span>
 
@@ -214,167 +212,7 @@
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 this/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/21/变量对象（Variable Object）/">变量对象（Variable Object）</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
-        2016-11-21
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/21/变量对象（Variable Object）/">
-        
-        大多数ECMAScript程序员应该都知道变量与执行上下文有密切关系：
-12345678var a = 10; // 全局上下文中的变量 (function () &#123;  var b = 20; // function上下文中的局部变量&#125;)(); alert(a); // 10al
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#JavaScript" itemprop="url" rel="index">
-              <span itemprop="name">JavaScript</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/21/变量对象（Variable Object）/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/21/JS 核心之 执行上下文(Execution Context)/">JS 核心之执行上下文(Execution Context)</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
-        2016-11-21
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/21/JS 核心之 执行上下文(Execution Context)/">
-        
-        执行上下文栈(Execution Context Stack)在ECMASscript中的代码有三种类型：global, function和eval。
-每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#JavaScript" itemprop="url" rel="index">
-              <span itemprop="name">JavaScript</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 执行上下文(Execution Context)/" itemprop="url">
-      more...
-    </a>
-  </div>
-</div>
-
-      
-        
-
-
-<div class="post-item without-bgimage">
-
-
-  <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/">作用域链(Scope Chain)及其特征闭包（Closures）</a></h2>
-  </div>
-
-  <div class="post-cont">
-    <span class="post-time">
-      发表于
-      <time datetime="2016-11-21T13:59:55+08:00" content="2016-11-21">
-        2016-11-21
-      </time>
-    </span>
-    <div class="text">
-      <a href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/">
-        
-        如果要简要的描述并展示其重点，那么作用域链大多数与内部函数相关。
-我们知道，ECMAScript 允许创建内部函数，我们甚至能从父函数中返回这些函数。
-1234567891011var x = 10; function foo() &#123;   var y = 20;   function ba
-        ...
-      </a>
-    </div>
-  </div>
-
-  <div class="bottom-bar">
-
-    
-      <span class="post-category" >
-        &nbsp; 分类于
-        
-          <span itemprop="about" itemscope>
-            <a href="/categories#JavaScript" itemprop="url" rel="index">
-              <span itemprop="name">JavaScript</span>
-            </a>
-          </span>
-
-          
-          
-
-        
-      </span>
-    
-
-    <a class="read-more-btn" target="_blank" href="/2016/11/21/JS 核心之 作用域链(Scope Chain)/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2016/11/20/Nodejs源码解析之events/" itemprop="url">
       more...
     </a>
   </div>
@@ -435,6 +273,168 @@
 </div>
 
       
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/18/es6学习之Generator函数/">es6 学习之 Generator 函数</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-18T11:25:55+08:00" content="2016-11-18">
+        2016-11-18
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/18/es6学习之Generator函数/">
+        
+        什么是Generator？generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次。
+123456function* helloWorldGenerator() &#123;	yield 'hello';	yield 'world';	ret
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#es6" itemprop="url" rel="index">
+              <span itemprop="name">es6</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/18/es6学习之Generator函数/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/14/mongoose的使用/">mongoose的使用</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-14T13:59:55+08:00" content="2016-11-14">
+        2016-11-14
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/14/mongoose的使用/">
+        
+        mongoose[TOC]
+MongoDB是一个开源的NoSQL数据库，相比MySQL那样的关系型数据库，它更显得轻巧、灵活，非常适合在数据规模很大、事务性不强的场合下使用。同时它也是一个对象数据库，没有表、行等概念，也没有固定的模式和结构，所有的数据以文档的形式存储(文档，就是一个关联数组式的对象
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/14/mongoose的使用/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/12/JS 核心之 this/">This? Yes,this!</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-12T13:59:55+08:00" content="2016-11-12">
+        2016-11-12
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/12/JS 核心之 this/">
+        
+        以前一直搞不懂this的指向，然后我看了阮大神的博客，发现以前出现的问题用这个理论都解释的通了。
+但是我还是不懂为什么的是这样的，直到一天我看了汤姆大叔的写的this，。。
+先看看阮大神的
+一般版的thisthis是Javascript语言的一个关键字。
+它代表函数运行时，自动生成的一个内部对象，只
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#JavaScript" itemprop="url" rel="index">
+              <span itemprop="name">JavaScript</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/12/JS 核心之 this/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
     </div>
     
   <nav class="pagination">
@@ -449,19 +449,19 @@
     <h5>FEATURED TAGS</h5>
     <div class="tags">
     
-      <a href="/tags#Node">Node</a>
-    
       <a href="/tags#JavaScript">JavaScript</a>
     
-      <a href="/tags#Python">Python</a>
+      <a href="/tags#Node">Node</a>
     
       <a href="/tags#Java">Java</a>
     
+      <a href="/tags#Python">Python</a>
+    
       <a href="/tags#es6">es6</a>
     
-      <a href="/tags#hexo">hexo</a>
-    
       <a href="/tags#Git">Git</a>
+    
+      <a href="/tags#hexo">hexo</a>
     
     </div>
   </div>
