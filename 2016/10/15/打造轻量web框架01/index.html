@@ -48,10 +48,12 @@
 <meta property="og:url" content="http://yoursite.com/2016/10/15/打造轻量web框架01/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="理想的controlelr我们一直使用原始的servlet来充当mvc模式中的controller。这样做虽然可以实现基本的功能，但是servlet的数量会随着业务功能的扩展而不断增加，这不是我们所期望的。因此有必要减少Servlet的数量，将某类业务交给Controller处理，他负责调用Service的相关方法，并将返回值放入Request和Response。除此之外，Service不是通过n">
-<meta property="og:updated_time" content="2017-03-02T13:16:32.649Z">
+<meta property="og:image" content="http://yoursite.com/img/java_web/java_web.png">
+<meta property="og:updated_time" content="2017-03-16T03:51:54.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="打造轻量web框架">
 <meta name="twitter:description" content="理想的controlelr我们一直使用原始的servlet来充当mvc模式中的controller。这样做虽然可以实现基本的功能，但是servlet的数量会随着业务功能的扩展而不断增加，这不是我们所期望的。因此有必要减少Servlet的数量，将某类业务交给Controller处理，他负责调用Service的相关方法，并将返回值放入Request和Response。除此之外，Service不是通过n">
+<meta name="twitter:image" content="http://yoursite.com/img/java_web/java_web.png">
 
 
 
@@ -202,6 +204,27 @@
 <p>我们在<code>Controller</code>中使用应该是长这样的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//假设说我们是一个客户管理</span></div><div class="line"></div><div class="line"><span class="comment">//处理客户管理相关请求</span></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerController</span></span>&#123;</div><div class="line">  </div><div class="line">  <span class="meta">@Inject</span></div><div class="line">  <span class="keyword">private</span> CustomerService customerService;</div><div class="line">  </div><div class="line">  <span class="meta">@Action</span>(<span class="string">"get:/xxxxx"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> View <span class="title">index</span><span class="params">(Param param)</span></span>&#123;</div><div class="line">    List&lt;Customer&gt; customerList = customerService.getCustomerList();</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> View(<span class="string">"customer.jsp"</span>).addModel(<span class="string">"customerList"</span>,customerList);</div><div class="line">  &#125;</div><div class="line">  ....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>通过<code>Controller</code>注解来定义<code>Controller</code>类，类中通过<code>inject</code>注解定义一系列<code>Service</code>成员变量，这就是<code>依赖注入</code>，此外，有一系列<code>Action</code>注解所定义的方法，在方法中，调用了<code>Service</code>成员变量的方法完成具体业务逻辑。若是返回<code>View</code>对象，则表示<code>jsp</code>页面，若是返回了<code>Data</code>对象，则表示<code>JSON</code>数据。</p>
+<p>让我们看看完成这个<code>controlle</code>r需要干几件事。</p>
+<ol>
+<li><p>最基本的定义注解类，<code>Controller</code>作为标识，<code>inject</code>用来依赖注入，<code>Action</code>表示请求方法和路径。</p>
+</li>
+<li><p>首先<code>servlet</code>应该统一处理，获取请求方法和路径，那么问题来了，请求到这个方法应该怎么执行？</p>
+<ol>
+<li>我们自然而然就能想到利用反射，获取相应参数，调用该方法。问题来了，我们是要请求的时候，实例化相应类，完成IOC,在调用方法？</li>
+<li>显然这么做不合理，那么多请求，都反射，实例化类，很浪费资源的。我们换条道，提前把实例化过的类保存起来。等到请求的时候取出来，这么做合理很多。</li>
+</ol>
+</li>
+<li><p>跟据上面的推测，我们首先要得到这些标识为<code>Controlle</code>r的类。怎么做？还是反射。获取注解。问题是<code>Class</code>对象哪来的？三种方法，class.forName();Object.class;object.getClass()</p>
+<ol>
+<li>不假思索，我们就能排除后面两种方法。那么如何获取包名+类名？遍历一下应用包目录，获取即可。然后就有了<code>class</code>对象。</li>
+<li>有了<code>class</code>对象，根据注解获取Controller的<code>Class</code>对象，就有了相应的实例化对象。然后依赖注入相应类。即可。</li>
+<li>最后的最后，<code>servlet</code>得到请求方法，方法路径获取对应参数，得到实例化对象，调用方法，根据方法的返回值，返回响应页面。o了。</li>
+</ol>
+</li>
+<li>我们的思想已经到位了，剩下的就是实施了。</li>
+</ol>
+<p><img src="/img/java_web/java_web.png" alt="原型"></p>
+<p>这大概是一张流程图，下面代码分别看不懂，先看看这个。</p>
 <h2 id="定义框架配置项以及加载"><a href="#定义框架配置项以及加载" class="headerlink" title="定义框架配置项以及加载"></a>定义框架配置项以及加载</h2><p>假设我们搭建是一个<code>web</code>的<code>maven</code>项目，那么在<code>src/main/resources</code>目录下，创建一个名为<code>smart.properties</code>的配置文件，内容如下:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">smart.framework.jdbc.driver = com.mysql.jdbc.Driver</div><div class="line"></div><div class="line">smart.framework.jdbc.url= jdbc:mysql:<span class="comment">//localhost:3306/demo</span></div><div class="line">smart.framework.jdbc.username= root</div><div class="line">smart.framework.jdbc.password= <span class="number">123456</span></div><div class="line"></div><div class="line">smart.framework.app.base_package = com.xxxx.yyy   <span class="comment">//该项目的基础包名</span></div><div class="line">smart.framework.app.jsp_path= /WEB-INF/view/    <span class="comment">//jsp的路径</span></div><div class="line">smart.framework.app.asset_path= /asset/       <span class="comment">//静态文件资源路径，js或css。。。</span></div></pre></td></tr></table></figure>
 <p>配置文件有了，就可以根据配置项的名称来获取配置项的值.我们创建一个<code>ConfigConstant</code>的常量类，维护配置文件中的相关配置名称</p>
