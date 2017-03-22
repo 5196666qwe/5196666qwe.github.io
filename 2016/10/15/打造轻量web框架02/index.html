@@ -50,11 +50,13 @@
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。
 先看看Js是怎么实现AOP，">
-<meta property="og:updated_time" content="2017-03-22T14:13:29.238Z">
+<meta property="og:image" content="http://yoursite.com/img/java_web/java_web2.png">
+<meta property="og:updated_time" content="2017-03-22T14:19:03.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="打造轻量web框架02">
 <meta name="twitter:description" content="前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。
 先看看Js是怎么实现AOP，">
+<meta name="twitter:image" content="http://yoursite.com/img/java_web/java_web2.png">
 
 
 
@@ -258,7 +260,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object obj,Method method,Object[] args,MethodProxy proxy)</span> <span class="keyword">throws</span> Throwable</span>&#123;</div><div class="line">		XXXbefore();</div><div class="line"> 		YYYbefore();</div><div class="line">		Object result = proxy.invokeSuper(obj,args);</div><div class="line">		XXXafter();</div><div class="line">  		YYYafter();</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
 <p>2.这里面还有个问题，分析方法应该具有控制类信息，也是就说得把控制类和方法当作参数传进来，以便分析。</p>
 <p>方法已经有了.剩下的就是实施了。</p>
-<p><img src="" alt="/img/java_web/java_web2.png"></p>
+<p><img src="/img/java_web/java_web2.png" alt="java_web"></p>
 <h3 id="定义切面注解"><a href="#定义切面注解" class="headerlink" title="定义切面注解"></a>定义切面注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.TYPE)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Aspect &#123;</div><div class="line">    Class&lt;? extends Annotation&gt; value();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注解包含一个value属性，它是一个注解类，用来定义 Controller 这类的注解.</p>
 <h3 id="搭建代理框架"><a href="#搭建代理框架" class="headerlink" title="搭建代理框架"></a>搭建代理框架</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Proxy</span> </span>&#123;</div><div class="line">    <span class="function">Object <span class="title">doProxy</span><span class="params">(ProxyChain proxyChain)</span> <span class="keyword">throws</span> Throwable</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
