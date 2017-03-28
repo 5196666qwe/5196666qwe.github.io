@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="node是基于v8引擎，其内存管理方式与v8一致。下面简单介绍v8的相关内存特效。
+V8内存限制node基于V8构建，通过V8的方式进行分配跟管理js对象。V8对内存的使用有限制（老生代内存64位系统下约为1.4G，32位系统下约为0.7G，新生代内存64位系统下约为32MB，32系统下约为16MB）。在这样的限制下，将导致无法操作大内存对象。如果不小心触碰这个界限，就会造成进程退出。
+原因：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V8内存">
+<meta property="og:url" content="http://yoursite.com/2017/03/12/V8内存 /index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="node是基于v8引擎，其内存管理方式与v8一致。下面简单介绍v8的相关内存特效。
+V8内存限制node基于V8构建，通过V8的方式进行分配跟管理js对象。V8对内存的使用有限制（老生代内存64位系统下约为1.4G，32位系统下约为0.7G，新生代内存64位系统下约为32MB，32系统下约为16MB）。在这样的限制下，将导致无法操作大内存对象。如果不小心触碰这个界限，就会造成进程退出。
+原因：">
+<meta property="og:updated_time" content="2017-03-28T14:14:50.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="V8内存">
+<meta name="twitter:description" content="node是基于v8引擎，其内存管理方式与v8一致。下面简单介绍v8的相关内存特效。
+V8内存限制node基于V8构建，通过V8的方式进行分配跟管理js对象。V8对内存的使用有限制（老生代内存64位系统下约为1.4G，32位系统下约为0.7G，新生代内存64位系统下约为32MB，32系统下约为16MB）。在这样的限制下，将导致无法操作大内存对象。如果不小心触碰这个界限，就会造成进程退出。
+原因：">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> V8内存 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="V8内存"> V8内存 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-03-12T21:53:53+08:00" content="2017-03-12">
+              2017-03-12
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>node是基于v8引擎，其内存管理方式与v8一致。下面简单介绍v8的相关内存特效。</p>
+<h4 id="V8内存限制"><a href="#V8内存限制" class="headerlink" title="V8内存限制"></a>V8内存限制</h4><p>node基于V8构建，通过V8的方式进行分配跟管理js对象。V8对内存的使用有限制（老生代内存64位系统下约为1.4G，32位系统下约为0.7G，新生代内存64位系统下约为32MB，32系统下约为16MB）。在这样的限制下，将导致无法操作大内存对象。如果不小心触碰这个界限，就会造成进程退出。</p>
+<p><strong>原因：</strong></p>
+<ol>
+<li>V8最初是针对浏览器引擎设计的，不大可能遇到大内存的场景 。而且浏览器经常关闭时，页面内存都会释放掉。</li>
+<li>V8在执行垃圾回收时会阻塞JavaScript应用逻辑，直到垃圾回收结束再重新执行JavaScript应用逻辑，这种行为被称为“全停顿”（stop-the-world）。若是堆内存增大，垃圾回收时间变长。会造成假死现象。</li>
+</ol>
+<p><strong>突破限制：</strong>类似于JVM，通过node –max-old-space-size=xxx（单位MB） , node –max-new-space-size=xxx（单位KB） 设置新生代内存以及老生代内存来破解默认的内存限制。</p>
+<h2 id="V8的内存管理模式"><a href="#V8的内存管理模式" class="headerlink" title="V8的内存管理模式"></a>V8的内存管理模式</h2><p>一个运行的程序通常是通过在内存中分配一部分空间来表示的。这部分空间被称为驻留集（Resident Set）。 V8的内存管理模式有点类似于jvm，它会将内存进行分段：</p>
+<ul>
+<li>代码 Code：实际被执行的代码</li>
+<li>栈 Stack：包括所有的携带指针引用堆上对象的值类型（原始类型，例如整型和布尔），以及定义程序控制流的指针。</li>
+<li>堆 Heap：用于保存引用类型（包括对象、字符串和闭包）的内</li>
+</ul>
+<h2 id="V8的堆构成"><a href="#V8的堆构成" class="headerlink" title="V8的堆构成"></a>V8的堆构成</h2><p>V8的堆其实并不只是由老生代和新生代两部分构成，可以将堆分为几个不同的区域：</p>
+<p><em>　新生代内存区：大多数的对象被分配在这里，这个区域很小但是垃圾回特别频繁
+</em>　老生代指针区：属于老生代，这里包含了大多数可能存在指向其他对象的指针的对象，大多数从新生代晋升的对象会被移动到这里。<br><em>　老生代数据区：属于老生代，这里只保存原始数据对象，这些对象没有指向其他对象的指针
+</em>　大对象区：这里存放体积超越其他区大小的对象，每个对象有自己的内存，垃圾回收其不会移动大对象<br><em>　代码区：代码对象，也就是包含JIT之后指令的对象，会被分配在这里。唯一拥有执行权限的内存区
+</em>　Cell区、属性Cell区、Map区：存放Cell、属性Cell和Map，每个区域都是存放相同大小的元素，结构简单</p>
+<h2 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h2><p>内存泄露是指你的应用使用资源之后没有及时释放，导致应用内存中持有了不需要的资源，这是一种状态描述</p>
+<p>内存溢出是指你的应用的内存已经不能满足正常使用了，堆栈已经达到系统设置的最大值，进而导致崩溃，这事一种结果描述</p>
+<p><strong>内存泄漏的实质只有一个：应当回收的对象出现意外没有被回收，变成常驻老生代中的对象。</strong></p>
+<h4 id="内存泄漏的途径"><a href="#内存泄漏的途径" class="headerlink" title="内存泄漏的途径"></a>内存泄漏的途径</h4><ul>
+<li>缓存</li>
+<li>队列消费不及时</li>
+<li>作用域未释放</li>
+</ul>
+<p><strong>1.缓存</strong></p>
+<p>缓存可以十分有效的节省资源，因为它的访问效率比IO的效率高，一旦命中，就可以节省一次IO。</p>
+<p>JS中，我们经常把一个对象当作缓存来使用，这意味著它将会常驻在老生代中。缓存中存储的键越多，长期存活 的对象也就越多。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cache = &#123;&#125;;</div><div class="line"><span class="keyword">var</span> get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span> (cache[ key ])&#123;</div><div class="line">    <span class="keyword">return</span> cache[ key ];</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">//从别处获取 。</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> set = <span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;</div><div class="line">  cache[ key ] = value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子十分简单，只要限定缓存对象的大小，加上完善的过期策略防止内存无限制增长。</p>
+<p>可能会无意识造成内存泄漏的场景：memoize，著名类库underscore对memoize的实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">_.memoize = <span class="function"><span class="keyword">function</span> (<span class="params">func, hasher</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> memo = &#123;&#125;;</div><div class="line">    hasher || (hasher = _.identity);</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> key = hasher.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">        <span class="keyword">return</span> _.has(memo, key) ? memo[key] : (memo[key] = func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>));</div><div class="line">    &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这就是一个闭包，这里隐藏陷阱即是每个被执行的结果都会被设置到memo对象上，不会被清除。</p>
+<p>解决办法 ：小型场景下可以对对象里的键值对进行数量限制，先进先出。如需要高效缓存，则要改进方法。</p>
+<p>如要使用大量缓存，用redis即可。</p>
+<p><strong>2.作用域释放问题</strong></p>
+<p>这里主要说两个问题。全局作用域和闭包。</p>
+<p><strong>全局作用域：</strong>等到进程退出的时候才能释放，如果它引用的对象过多常驻内存，在需要通过释放对象。可以通过delete操作删除引用关系，或则将变量重新赋值。让旧的对象脱离引用 。</p>
+<p><strong>闭包：</strong>闭包至少在js是和[[scope]相关的，别的语言不知道怎么实现的。</p>
+<p>说点人话就是 <strong>所有函数都是闭包．</strong>通俗的说，闭包就是作用域范围，因为js是函数作用域，所以函数就是闭包．全局函数的作用域范围就是全局，所以无须讨论．更多的应用其实是在内嵌函数，这就会涉及到内嵌作用域，或者叫作用域链．说到内嵌，其实就是父子引用关系(父函数包含子函数，子函数因为函数作用域又引用父函数，这它妈不是死结吗？所以叫闭包），这就会带来另外一个问题，什么时候引用结束？如果不结束，就会一直占用内存，引起内存泄漏．好吧，不用的时候就引用设为空，死结就解开了．</p>
+<p><strong>题外话：按知乎贺老的说法，闭包不会造成代码泄漏，程序写的有问题才会。</strong></p>
+<p>至于内存泄漏的分析和排查，网上一大堆工具和使用方法。我觉得我暂时用不到。。</p>
+<p><a href="https://segmentfault.com/a/1190000000440270" target="_blank" rel="external">浅谈V8引擎中的垃圾回收机制</a></p>
+<p><a href="http://www.ituring.com.cn/article/263557" target="_blank" rel="external">node内存知识</a></p>
+<p>这个对v8引擎介绍和回收算法过程写的挺详细的。</p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#V8内存限制"><span class="nav-number">1.</span> <span class="nav-text">V8内存限制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V8的内存管理模式"><span class="nav-number"></span> <span class="nav-text">V8的内存管理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V8的堆构成"><span class="nav-number"></span> <span class="nav-text">V8的堆构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄漏"><span class="nav-number"></span> <span class="nav-text">内存泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存泄漏的途径"><span class="nav-number">1.</span> <span class="nav-text">内存泄漏的途径</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
