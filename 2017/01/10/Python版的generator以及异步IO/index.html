@@ -104,7 +104,7 @@ g.send(‘xxx’)
 
 
 y">
-<meta property="og:updated_time" content="2017-03-02T12:59:30.695Z">
+<meta property="og:updated_time" content="2017-03-29T02:52:53.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python版的generator以及异步IO">
 <meta name="twitter:description" content="如果说你 es6 的 Generator 懂了，python 的 generator 就很容易
@@ -390,6 +390,7 @@ y">
 <p><code>pop</code>出<code>task</code>,执行<code>task.coro.send(now)</code>，然后再次<code>push</code>一个<code>task</code>即更新信息，如果这里的send抛出异常，则push不执行。也就是说这个过程一直是pop，push 直到 <code>self._waiting</code>空。</p>
 <p>循环结束。</p>
 <hr>
+<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
 <p>参考：</p>
 <p><a href="http://blog.rainy.im/2016/03/10/how-the-heck-does-async-await-work-in-python-3-5/" target="_blank" rel="external">Python 3.5 协程究竟是个啥</a></p>
 <p><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143208573480558080fa77514407cb23834c78c6c7309000" target="_blank" rel="external">异步io</a></p>

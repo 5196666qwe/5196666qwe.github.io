@@ -60,7 +60,7 @@
 为什么super一般是两个参数的?请无视出现的父类名词，只是便于说明。
 我们最常见的，可以说几乎唯一能见到的使用super的形式是：
 1234class SubCla">
-<meta property="og:updated_time" content="2017-03-02T13:14:23.368Z">
+<meta property="og:updated_time" content="2017-03-29T02:48:46.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中super">
 <meta name="twitter:description" content="[TOC]
@@ -263,6 +263,7 @@
 <p>顺便说一句为什么 B 的 <code>__init__</code> 会被调用：因为 D 没有定义 <code>__init__</code>，所以会在 MRO 中找下一个类，去查看它有没有定义 <code>__init__</code>，也就是去调用 B 的 <code>__init__</code>。</p>
 <p>其实这一切逻辑还是很清晰的，关键是理解 <code>super</code> 到底做了什么。</p>
 <p>于是，MRO 中类的顺序到底是怎么排的呢？Python’s super() considered super!中已经有很好的解释，我翻译一下：<br><strong>在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。</strong> </p>
+<p><strong>本人技术有限，且技术更新很快，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
 <p>参考：</p>
 <p><a href="http://zsl-oo7.blog.163.com/blog/static/35329703201502901052503/" target="_blank" rel="external"><strong>Python 的 super，一次性整明白</strong></a></p>
 <p><a href="https://laike9m.com/blog/li-jie-python-super,70/" target="_blank" rel="external"><strong>理解 Python super</strong></a></p>

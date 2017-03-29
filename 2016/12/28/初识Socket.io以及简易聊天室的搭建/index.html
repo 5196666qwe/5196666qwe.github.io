@@ -52,7 +52,7 @@
 <meta property="og:description" content="WebSocketWebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。
 现很多网站为了实现即时通讯，所用的技术都是轮询(polling)。轮询是在特定的的时间间隔（如每1秒），由浏览器对服务器发出HTTP请求，然后由服务器返回最新的数据给客服端的浏览器，这种方式有一个很大的弊端，就是会占用很多的带宽。
 最新的轮询效果是Comet – 用了AJAX。但这种技术虽然可">
-<meta property="og:updated_time" content="2017-03-02T13:00:29.049Z">
+<meta property="og:updated_time" content="2017-03-29T02:53:39.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Socket.io以及简易聊天室的搭建">
 <meta name="twitter:description" content="WebSocketWebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术。
@@ -395,6 +395,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">socket.on(<span class="string">'user message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"> data </span>)</span>&#123;</div><div class="line">	io.sockets.emit(<span class="string">'user message'</span>,&#123;</div><div class="line">		<span class="attr">nick</span>: socket.nickname,</div><div class="line">		<span class="attr">message</span>: data</div><div class="line">	&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h2><p>简单的介绍了下socket.io基本操作以及搭建一个简易聊天室。暂时没有用到命名空间功能。要是用到私密信息的话就可以使用命名空间功能。</p>
 <p>在这里面遇到几个问题，socket绑定一个事件后，不能再在里面使用socket绑定或则发送一个事件，这样会造成一个socket绑定多个事件，显然不是我们想要的。所以使用io.sockets.emit或则是命名空间的方式。</p>
+<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
 </div>
 
     <div class="post-sidebar">
