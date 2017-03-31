@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="这几天要开始看koa了，决定最后把 express 过一遍，以免以后忘了。
+首先 express 是 connect 的加强版，准确来说应该是 app._router 是 connect的加强版。
+connect我们先复习一下 connect，
+12345678910//index.jsfunction createServer() &amp;#123;  function app(req, res, n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于express我知道的不多">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/关于express我知道的不多/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="这几天要开始看koa了，决定最后把 express 过一遍，以免以后忘了。
+首先 express 是 connect 的加强版，准确来说应该是 app._router 是 connect的加强版。
+connect我们先复习一下 connect，
+12345678910//index.jsfunction createServer() &amp;#123;  function app(req, res, n">
+<meta property="og:image" content="http://yoursite.com/img/express/result.png">
+<meta property="og:updated_time" content="2017-03-31T10:17:44.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于express我知道的不多">
+<meta name="twitter:description" content="这几天要开始看koa了，决定最后把 express 过一遍，以免以后忘了。
+首先 express 是 connect 的加强版，准确来说应该是 app._router 是 connect的加强版。
+connect我们先复习一下 connect，
+12345678910//index.jsfunction createServer() &amp;#123;  function app(req, res, n">
+<meta name="twitter:image" content="http://yoursite.com/img/express/result.png">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> 关于express我知道的不多 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="关于express我知道的不多"> 关于express我知道的不多 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-03-14T21:53:53+08:00" content="2017-03-14">
+              2017-03-14
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>这几天要开始看koa了，决定最后把 express 过一遍，以免以后忘了。</p>
+<p>首先 express 是 connect 的加强版，准确来说应该是 app._router 是 connect的加强版。</p>
+<h2 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h2><p>我们先复习一下 connect，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//index.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createServer</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">app</span>(<span class="params">req, res, next</span>)</span>&#123; app.handle(req, res, next); &#125;</div><div class="line">  merge(app, proto);</div><div class="line">  merge(app, EventEmitter.prototype);</div><div class="line">  app.route = <span class="string">'/'</span>;</div><div class="line">  app.stack = [];</div><div class="line">  <span class="keyword">return</span> app;</div><div class="line">&#125;</div><div class="line"><span class="built_in">module</span>.exports = createServer;</div></pre></td></tr></table></figure>
+<ul>
+<li>返回的app就是 我们平时 app() ，然后用它use各种中间件。至于 app 的 handle，listen，use属性是通过 merge方法(for in 遍历属性)来继承的。</li>
+<li>use中间件的时候，所有的中间件都是以 { route : path, handle: fn} 这种对象 push 进 app.stack 里面的。</li>
+<li>请求到来的时候，<code>http.createServer(this)</code>,这里的 this 就是 app，所以请求到来时候，通过app.handle方法来处理的。具体什么时候请看http源码（反正我当初是没看懂）。</li>
+<li>handle方法获取req.url，取出中间件 layer= stack[index++] 进行首匹配，尾匹配，最后进行中间件的方法调用 。通过中间件显示调用next，进行下一次匹配。这也就是为什么我们没显示调用next，每次请求只能匹配第一个中间件。</li>
+</ul>
+<h2 id="express"><a href="#express" class="headerlink" title="express"></a>express</h2><p>有了预备知识，我们来看看express</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//express.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createApplication</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> app = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    app.handle(req, res, next);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  mixin(app, EventEmitter.prototype, <span class="literal">false</span>);</div><div class="line">  mixin(app, proto, <span class="literal">false</span>);</div><div class="line"></div><div class="line">  app.request = &#123; <span class="attr">__proto__</span>: req, <span class="attr">app</span>: app &#125;;</div><div class="line">  app.response = &#123; <span class="attr">__proto__</span>: res, <span class="attr">app</span>: app &#125;;</div><div class="line">  app.init();</div><div class="line">  <span class="keyword">return</span> app;</div><div class="line">&#125;</div><div class="line">exports = <span class="built_in">module</span>.exports = createApplication;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>同上 app 就是我们平时使用的 express()，然后通过它use中间件，get，post等等。至于app的handle，listen，use等等都是通过mixin方法(Object.defineProperty())来设置(继承)的。区别是加了一层属性检测。</p>
+</li>
+<li><p>我们都知道EventEmitter是自带events的，所以app的属性都是从proto来的。剩下的都是直接定义在exports(createApplication)上也就是我们经常用的express.xxx上。</p>
+<p>(express4.0以后把若干中间件都给干掉了。。听说是为了两者独立更好的发展，所以让用户调用废弃属性时抛错并带上自定义的错误信息。。)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[<span class="string">'json'</span>, <span class="string">'urlencoded'</span>, <span class="string">'bodyParser'</span>, <span class="string">'compress'</span>, <span class="string">'cookieSession'</span>, <span class="string">'session'</span>, <span class="string">'logger'</span>, <span class="string">'cookieParser'</span>, <span class="string">'favicon'</span>, <span class="string">'responseTime'</span>, <span class="string">'errorHandler'</span>, <span class="string">'timeout'</span>, <span class="string">'methodOverride'</span>, <span class="string">'vhost'</span>, <span class="string">'csrf'</span>, <span class="string">'directory'</span>, <span class="string">'limit'</span>, <span class="string">'multipart'</span>, <span class="string">'staticCache'</span>, </div><div class="line">].forEach(<span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</div><div class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'xxx'</span>+name+<span class="string">'yyy'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">configurable</span>: <span class="literal">true</span></div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里的 proto 就是 application，看看我们app经常用的方法都干了什么(<strong>仔细看，好像少了什么</strong>)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//application.js</span></div><div class="line">app.init = <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">app.defaultConfiguration = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">app.lazyrouter = <span class="function"><span class="keyword">function</span> <span class="title">lazyrouter</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">app.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, callback</span>) </span>&#123;&#125;;</div><div class="line">app.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;&#125;;</div><div class="line">app.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;&#125;;</div><div class="line">app.engine = <span class="function"><span class="keyword">function</span> <span class="title">engine</span>(<span class="params">ext, fn</span>) </span>&#123;&#125;;</div><div class="line">app.param = <span class="function"><span class="keyword">function</span> <span class="title">param</span>(<span class="params">name, fn</span>) </span>&#123;&#125;;</div><div class="line">app.set = <span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">setting, val</span>) </span>&#123;&#125;;</div><div class="line">app.path = <span class="function"><span class="keyword">function</span> <span class="title">path</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">app.enabled = <span class="function"><span class="keyword">function</span> <span class="title">enabled</span>(<span class="params">setting</span>) </span>&#123;&#125;;</div><div class="line">app.disabled = <span class="function"><span class="keyword">function</span> <span class="title">disabled</span>(<span class="params">setting</span>) </span>&#123;&#125;;</div><div class="line">app.all = <span class="function"><span class="keyword">function</span> <span class="title">all</span>(<span class="params">path</span>) </span>&#123;&#125;;</div><div class="line">app.render = <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">name, options, callback</span>) </span>&#123;&#125;;</div><div class="line">app.listen = <span class="function"><span class="keyword">function</span> <span class="title">listen</span>(<span class="params"></span>) </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>首先是init方法，上面 createApplication 用到的，顾名思义用来初始化一些属性的,</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.init = <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.cache = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.engines = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.settings = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.defaultConfiguration();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>比较重要的settings属性，我们set方法设置属性的时候就是放在这里的。而且get方法单参数的时候，也是通过set方法返回相应属性的。—-可以看出来，不要往这里面放置太多东西。</li>
+<li>defaultConfiguration()方法，默认配置属性的一个方法，通过set方法设置了env，query parser，view，views等等</li>
+</ul>
+<p><strong>lazyrouter方法</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">app.lazyrouter = <span class="function"><span class="keyword">function</span> <span class="title">lazyrouter</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>._router) &#123;</div><div class="line">    <span class="keyword">this</span>._router = <span class="keyword">new</span> Router(&#123;</div><div class="line">      <span class="attr">caseSensitive</span>: <span class="keyword">this</span>.enabled(<span class="string">'case sensitive routing'</span>),</div><div class="line">      <span class="attr">strict</span>: <span class="keyword">this</span>.enabled(<span class="string">'strict routing'</span>)</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">this</span>._router.use(query(<span class="keyword">this</span>.get(<span class="string">'query parser fn'</span>)));</div><div class="line">    <span class="keyword">this</span>._router.use(middleware.init(<span class="keyword">this</span>));</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>我认为的很重要方法。定义了一个私有属性_router为一个Router对象，然后use了两个中间件，一就是现在唯一两个express自带的中间件。物以稀为贵啊。</p>
+<p>我们翻翻这个Router是什么.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// router/index.js</span></div><div class="line"><span class="keyword">var</span> proto = <span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">router</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    router.handle(req, res, next);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// mixin Router class functions</span></div><div class="line">  router.__proto__ = proto;</div><div class="line"></div><div class="line">  router.params = &#123;&#125;;</div><div class="line">  router._params = [];</div><div class="line">  router.caseSensitive = opts.caseSensitive;</div><div class="line">  router.mergeParams = opts.mergeParams;</div><div class="line">  router.strict = opts.strict;</div><div class="line">  router.stack = [];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> router;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>看到了吗   <strong>router.stack = [];</strong>  这也是为什么我上面说 app._router 是 connect 加强版，所有中间件都是放在这里嘀，，，</p>
+<p>然后，我们以use，get，方法为例，来看看这个stack放了什么。</p>
+<p>等等，</p>
+<p>等等，好像上面没有get，post之类的啊，这哪来的。。。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//application.js</span></div><div class="line"><span class="comment">//methods =  ['get', 'post', 'put', 'head', 'delete', 'options', 'trace', 'copy', 'lock', 'mkcol', 'move', 'purge', 'propfind', 'proppatch', 'unlock', 'report', 'mkactivity', 'checkout', 'merge', 'm-search', 'notify', 'subscribe', 'unsubscribe', 'patch', 'search', 'connect'];</span></div><div class="line"></div><div class="line">methods.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</div><div class="line">  app[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (method === <span class="string">'get'</span> &amp;&amp; <span class="built_in">arguments</span>.length === <span class="number">1</span>) &#123;</div><div class="line">      <span class="comment">// app.get(setting)</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.set(path);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.lazyrouter();</div><div class="line"></div><div class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>._router.route(path);</div><div class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>比方说我们use这两个 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="string">'/main'</span>, (req, res, next) =&gt; &#123;</div><div class="line">    res.end(<span class="string">"hello world\n"</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.get(<span class="string">'/main'</span>, (req, res, next) =&gt; &#123;</div><div class="line">    res.end(<span class="string">"hello world\n"</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>然后我们直接看结果</p>
+<p><img src="/img/express/result.png" alt=""></p>
+<p>你可以明显看到stack[2]是我们use产生的，stack[0],stack[1]是默认的两个中间，stack[3]是get产生的。</p>
+<p>我们可以初步做个总结 </p>
+<p><strong>express中的中间件 function 都是会被一个Layer对象封装，通过app._router.stack数组 push 该Layer对象</strong></p>
+<p><strong>app.use</strong></p>
+<p>传入的参数（路径、回调函数）会被封装成Layer对象（其中route属性为undefined），push到app._router.stack</p>
+<p><strong>app.get</strong></p>
+<p>1.首先根据传入的路径封装一个Route对象，再对传入的回调函数封装成Layer对象，接着把这个Layer对象push到Route.stack里面去</p>
+<p>2.再创建一个默认Layer(跟app.use里面Layer的同级)，把步骤一中的Route挂到这个Layer.route属性上面，而这个Layer对象，会被push到app._router.stack里面</p>
+<h2 id="app-use代码"><a href="#app-use代码" class="headerlink" title="app.use代码"></a>app.use代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// application.js</span></div><div class="line"></div><div class="line">app.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line"> 	...</div><div class="line">  <span class="comment">// setup router</span></div><div class="line">  <span class="keyword">this</span>.lazyrouter();</div><div class="line">  <span class="keyword">var</span> router = <span class="keyword">this</span>._router;</div><div class="line">  </div><div class="line">  fns.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="comment">// restore .app property on req and res</span></div><div class="line">    router.use(path, <span class="function"><span class="keyword">function</span> <span class="title">mounted_app</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> orig = req.app;</div><div class="line">      fn.handle(req, res, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">        req.__proto__ = orig.request;</div><div class="line">        res.__proto__ = orig.response;</div><div class="line">        next(err);</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">    &#125;);</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">// mounted an app</span></div><div class="line"></div><div class="line">    fn.emit(<span class="string">'mount'</span>, <span class="keyword">this</span>);</div><div class="line"></div><div class="line">  &#125;, <span class="keyword">this</span>);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>可以看到app.use总是会调用router的use，也就是connect的加强版。这里app.use两个参数的时候，利用offset来保证每次fns总是函数列表。</p>
+<h2 id="app-get代码"><a href="#app-get代码" class="headerlink" title="app.get代码"></a>app.get代码</h2><p>get方法看代码有一个值得注意的地方。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//application.js</span></div><div class="line">methods.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</div><div class="line">  app[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (method === <span class="string">'get'</span> &amp;&amp; <span class="built_in">arguments</span>.length === <span class="number">1</span>) &#123;</div><div class="line">      <span class="comment">// app.get(setting)</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.set(path);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.lazyrouter();</div><div class="line"></div><div class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>._router.route(path);</div><div class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面<code>_router</code>是下面的index。你可以很清楚的看到 new 了Route，layer，然后把layer.route设为route，根据我们总结的route得有一个stack属性里面还放置了layer，但看这个代码只有一个<code>_router</code>放置了，我们的route是没有的。关键就在<code>route[method].apply(route, slice.call(arguments, 1));</code>这句话，具体你看代码就知道了。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// lib/index.js</span></div><div class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</div><div class="line"></div><div class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</div><div class="line">    <span class="attr">sensitive</span>: <span class="keyword">this</span>.caseSensitive,</div><div class="line">    <span class="attr">strict</span>: <span class="keyword">this</span>.strict,</div><div class="line">    <span class="attr">end</span>: <span class="literal">true</span></div><div class="line">  &#125;, route.dispatch.bind(route));</div><div class="line"></div><div class="line">  layer.route = route;</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.stack.push(layer);</div><div class="line">  <span class="keyword">return</span> route;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="next链式调用"><a href="#next链式调用" class="headerlink" title="next链式调用"></a>next链式调用</h2><p>最后我们看看是怎么链式调用的，根据上面分析流程是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">请求过来--&gt; app.handle---&gt; proto.handle</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">app.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, callback</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> router = <span class="keyword">this</span>._router;</div><div class="line">  ...</div><div class="line">  router.handle(req, res, done);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">proto.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, out</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// middleware and routes</span></div><div class="line">  <span class="keyword">var</span> stack = self.stack;</div><div class="line"></div><div class="line">  next();</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// find next matching layer</span></div><div class="line">    <span class="keyword">var</span> layer;</div><div class="line">    <span class="keyword">var</span> match;</div><div class="line">    <span class="keyword">var</span> route;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (match !== <span class="literal">true</span> &amp;&amp; idx &lt; stack.length) &#123;</div><div class="line">      layer = stack[idx++];</div><div class="line">      match = matchLayer(layer, path);</div><div class="line">      route = layer.route;</div><div class="line">      </div><div class="line">      <span class="keyword">if</span> (match !== <span class="literal">true</span>) &#123;</div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (!route) &#123;</div><div class="line">        <span class="comment">// process non-route handlers normally</span></div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// no match</span></div><div class="line">    <span class="keyword">if</span> (match !== <span class="literal">true</span>) &#123;</div><div class="line">      <span class="keyword">return</span> done(layerError);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// this should be done for the layer</span></div><div class="line">    self.process_params(layer, paramcalled, req, res, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span> next(layerError || err);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (route) &#123;</div><div class="line">        <span class="keyword">return</span> layer.handle_request(req, res, next);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      trim_prefix(layer, layerError, layerPath, path);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>_router.stack里面存储了一个个Layer对象,获取到每个layer对象之后，用请求path与layer进行匹配，此处匹配用的是layer.match，如果能匹配到对应的layer，则获得layer.route.</p>
+<p><strong>如果route不为空则执行对应的layer.handle_request()，如果route为空说明这个layer是通过use()添加的非路由中间件</strong>.</p>
+<p>(handle_request用来执行next的和connect里面call是差不多的)</p>
+<p>(如果通过use()添加的中间件没有指定path，则在layer.match中默认返回true，也就是说，没有指定path的非路由中间件会匹配所有的http请求)</p>
+<p>写的有点乱，暂时就这样，以后回来挖坑。。。</p>
+<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#connect"><span class="nav-number">1.</span> <span class="nav-text">connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#express"><span class="nav-number">2.</span> <span class="nav-text">express</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-use代码"><span class="nav-number">3.</span> <span class="nav-text">app.use代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-get代码"><span class="nav-number">4.</span> <span class="nav-text">app.get代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next链式调用"><span class="nav-number">5.</span> <span class="nav-text">next链式调用</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+
+  
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
