@@ -193,6 +193,12 @@ HTTPNodejs 的经典 httpServer 代码
 
           
             
+              <span class="post-comments-count">
+                <a href="/2016/12/15/(转载)何为 connect 中间件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/(转载)何为 connect 中间件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
         </div>
         
@@ -511,7 +517,7 @@ HTTPNodejs 的经典 httpServer 代码
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《何为-connect-中间件》"><span class="nav-number">1.</span> <span class="nav-text">《何为 connect 中间件》</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#课程内容"><span class="nav-number">1.2.</span> <span class="nav-text">课程内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-number">2.</span> <span class="nav-text">HTTP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Connect的实现"><span class="nav-number">3.</span> <span class="nav-text">Connect的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#createServer"><span class="nav-number">3.1.</span> <span class="nav-text">createServer()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-use-route-fn"><span class="nav-number">3.2.</span> <span class="nav-text">app.use(route, fn)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-handle-req-res-out"><span class="nav-number">3.3.</span> <span class="nav-text">app.handle(req, res, out)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-handle-route-err-req-res-next"><span class="nav-number">3.4.</span> <span class="nav-text">call(handle, route, err, req, res, next)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listen"><span class="nav-number">3.5.</span> <span class="nav-text">listen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图解Connect"><span class="nav-number">3.6.</span> <span class="nav-text">图解Connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connect的subapp特性"><span class="nav-number">3.7.</span> <span class="nav-text">Connect的subapp特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Express"><span class="nav-number">4.</span> <span class="nav-text">Express</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Router"><span class="nav-number">4.1.</span> <span class="nav-text">Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request"><span class="nav-number">4.2.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-number">4.3.</span> <span class="nav-text">Response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application"><span class="nav-number">4.4.</span> <span class="nav-text">Application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Express小结"><span class="nav-number">4.5.</span> <span class="nav-text">Express小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《何为-connect-中间件》"><span class="nav-text">《何为 connect 中间件》</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#课程内容"><span class="nav-text">课程内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-text">HTTP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Connect的实现"><span class="nav-text">Connect的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#createServer"><span class="nav-text">createServer()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-use-route-fn"><span class="nav-text">app.use(route, fn)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-handle-req-res-out"><span class="nav-text">app.handle(req, res, out)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-handle-route-err-req-res-next"><span class="nav-text">call(handle, route, err, req, res, next)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listen"><span class="nav-text">listen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图解Connect"><span class="nav-text">图解Connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connect的subapp特性"><span class="nav-text">Connect的subapp特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Express"><span class="nav-text">Express</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Router"><span class="nav-text">Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request"><span class="nav-text">Request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-text">Response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application"><span class="nav-text">Application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Express小结"><span class="nav-text">Express小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
       
     </div>
   </section>
@@ -539,6 +545,10 @@ HTTPNodejs 的经典 httpServer 代码
 
       
   <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/15/(转载)何为 connect 中间件/"
+           data-title="<转载> 何为 connect 中间件" data-url="http://yoursite.com/2016/12/15/(转载)何为 connect 中间件/">
+      </div>
     
   </div>
 
@@ -575,8 +585,24 @@ HTTPNodejs 的经典 httpServer 代码
 
 
 
-
   
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
 
 
 

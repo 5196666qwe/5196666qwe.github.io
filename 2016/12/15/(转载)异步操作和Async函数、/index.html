@@ -166,6 +166,12 @@ Thunk函数参数的求值策略Thunk函数早在上个世纪60年代就诞生�
 
           
             
+              <span class="post-comments-count">
+                <a href="/2016/12/15/(转载)异步操作和Async函数、/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/(转载)异步操作和Async函数、/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
         </div>
         
@@ -401,7 +407,7 @@ Thunk函数参数的求值策略Thunk函数早在上个世纪60年代就诞生�
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thunk函数"><span class="nav-number">1.</span> <span class="nav-text">Thunk函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数的求值策略"><span class="nav-number">1.1.</span> <span class="nav-text">参数的求值策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunk函数的含义"><span class="nav-number">1.2.</span> <span class="nav-text">Thunk函数的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript语言的Thunk函数"><span class="nav-number">1.3.</span> <span class="nav-text">JavaScript语言的Thunk函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunkify模块"><span class="nav-number">1.4.</span> <span class="nav-text">Thunkify模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator-函数的流程管理"><span class="nav-number">1.5.</span> <span class="nav-text">Generator 函数的流程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunk函数的自动流程管理"><span class="nav-number">1.6.</span> <span class="nav-text">Thunk函数的自动流程管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#co模块"><span class="nav-number">2.</span> <span class="nav-text">co模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用法"><span class="nav-number">2.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#co模块的原理"><span class="nav-number">2.2.</span> <span class="nav-text">co模块的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Promise对象的自动执行"><span class="nav-number">2.3.</span> <span class="nav-text">基于Promise对象的自动执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#co模块的源码"><span class="nav-number">2.4.</span> <span class="nav-text">co模块的源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理并发的异步操作"><span class="nav-number">2.5.</span> <span class="nav-text">处理并发的异步操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async函数"><span class="nav-number">3.</span> <span class="nav-text">async函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义"><span class="nav-number">3.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">3.2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async函数的实现"><span class="nav-number">3.3.</span> <span class="nav-text">async函数的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async-函数的用法"><span class="nav-number">3.4.</span> <span class="nav-text">async 函数的用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-number">3.5.</span> <span class="nav-text">注意点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与Promise、Generator的比较"><span class="nav-number">3.6.</span> <span class="nav-text">与Promise、Generator的比较</span></a></li></ol></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thunk函数"><span class="nav-text">Thunk函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数的求值策略"><span class="nav-text">参数的求值策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunk函数的含义"><span class="nav-text">Thunk函数的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript语言的Thunk函数"><span class="nav-text">JavaScript语言的Thunk函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunkify模块"><span class="nav-text">Thunkify模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator-函数的流程管理"><span class="nav-text">Generator 函数的流程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunk函数的自动流程管理"><span class="nav-text">Thunk函数的自动流程管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#co模块"><span class="nav-text">co模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用法"><span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#co模块的原理"><span class="nav-text">co模块的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Promise对象的自动执行"><span class="nav-text">基于Promise对象的自动执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#co模块的源码"><span class="nav-text">co模块的源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理并发的异步操作"><span class="nav-text">处理并发的异步操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async函数"><span class="nav-text">async函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义"><span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async函数的实现"><span class="nav-text">async函数的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async-函数的用法"><span class="nav-text">async 函数的用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-text">注意点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与Promise、Generator的比较"><span class="nav-text">与Promise、Generator的比较</span></a></li></ol></li></ol></div>
       
     </div>
   </section>
@@ -429,6 +435,10 @@ Thunk函数参数的求值策略Thunk函数早在上个世纪60年代就诞生�
 
       
   <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/15/(转载)异步操作和Async函数、/"
+           data-title="<转载> 异步操作和 Async 函数" data-url="http://yoursite.com/2016/12/15/(转载)异步操作和Async函数、/">
+      </div>
     
   </div>
 
@@ -465,8 +475,24 @@ Thunk函数参数的求值策略Thunk函数早在上个世纪60年代就诞生�
 
 
 
-
   
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
 
 
 

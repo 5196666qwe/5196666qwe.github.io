@@ -169,6 +169,12 @@
 
           
             
+              <span class="post-comments-count">
+                <a href="/2016/12/20/异步执行流程控制模块Async/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/20/异步执行流程控制模块Async/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
         </div>
         
@@ -323,7 +329,7 @@
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-series-tasks-callback"><span class="nav-number">1.</span> <span class="nav-text">1.series(tasks,callback);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-waterfall-tasks-callback"><span class="nav-number">2.</span> <span class="nav-text">2..waterfall(tasks, [callback])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-parallel-tasks-callback"><span class="nav-number">3.</span> <span class="nav-text">3.parallel(tasks, [callback])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-parallelLimit-tasks-limit-callback"><span class="nav-number">4.</span> <span class="nav-text">4..parallelLimit(tasks, limit, [callback])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-whilst-test-fn-callback"><span class="nav-number">5.</span> <span class="nav-text">5.whilst(test, fn, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-doWhilst-fn-test-callback"><span class="nav-number">6.</span> <span class="nav-text">6.doWhilst(fn, test, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-until-test-fn-callback"><span class="nav-number">7.</span> <span class="nav-text">7.until(test, fn, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-doUntil-fn-test-callback"><span class="nav-number">8.</span> <span class="nav-text">8.doUntil(fn, test, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-forever-fn-errback"><span class="nav-number">9.</span> <span class="nav-text">9.forever(fn, errback);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-compose-fn1-fn2…"><span class="nav-number">10.</span> <span class="nav-text">10.compose(fn1, fn2…);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-auto-tasks-callback"><span class="nav-number">11.</span> <span class="nav-text">11.auto(tasks, [callback]);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-queue-worker-concurrency"><span class="nav-number">12.</span> <span class="nav-text">12.queue(worker, concurrency);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-apply-function-arguments"><span class="nav-number">13.</span> <span class="nav-text">13.apply(function, arguments..)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-iterator-tasks"><span class="nav-number">14.</span> <span class="nav-text">14.iterator(tasks)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-each-eachSeries-eachLimit"><span class="nav-number">15.</span> <span class="nav-text">15.each,eachSeries,eachLimit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-filter-reject"><span class="nav-number">16.</span> <span class="nav-text">16.filter_reject</span></a></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-series-tasks-callback"><span class="nav-text">1.series(tasks,callback);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-waterfall-tasks-callback"><span class="nav-text">2..waterfall(tasks, [callback])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-parallel-tasks-callback"><span class="nav-text">3.parallel(tasks, [callback])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-parallelLimit-tasks-limit-callback"><span class="nav-text">4..parallelLimit(tasks, limit, [callback])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-whilst-test-fn-callback"><span class="nav-text">5.whilst(test, fn, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-doWhilst-fn-test-callback"><span class="nav-text">6.doWhilst(fn, test, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-until-test-fn-callback"><span class="nav-text">7.until(test, fn, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-doUntil-fn-test-callback"><span class="nav-text">8.doUntil(fn, test, callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-forever-fn-errback"><span class="nav-text">9.forever(fn, errback);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-compose-fn1-fn2…"><span class="nav-text">10.compose(fn1, fn2…);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-auto-tasks-callback"><span class="nav-text">11.auto(tasks, [callback]);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-queue-worker-concurrency"><span class="nav-text">12.queue(worker, concurrency);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-apply-function-arguments"><span class="nav-text">13.apply(function, arguments..)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-iterator-tasks"><span class="nav-text">14.iterator(tasks)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-each-eachSeries-eachLimit"><span class="nav-text">15.each,eachSeries,eachLimit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-filter-reject"><span class="nav-text">16.filter_reject</span></a></li></ol></div>
       
     </div>
   </section>
@@ -351,6 +357,10 @@
 
       
   <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/20/异步执行流程控制模块Async/"
+           data-title="异步执行流程控制模块Async" data-url="http://yoursite.com/2016/12/20/异步执行流程控制模块Async/">
+      </div>
     
   </div>
 
@@ -387,8 +397,24 @@
 
 
 
-
   
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
 
 
 
