@@ -42,31 +42,31 @@
 <meta name="keywords" content="JavaScript," />
 
 
-<meta name="description" content="new对象的过程
+<meta name="description" content="new的模拟new对象的过程
 
 创建一个空的Object对象 var obj = new Object();
 将构造函数Person中this指向刚创建的obj对象(this不懂，请看this那一章)
 将创建的obj的__proto__指向构造函数的prototype，这一步是建立对象和原型直接的对应关系(注意: __proto__不是标准，chrome和firefox自己实现的，ie不支持)
-执行构造函数中">
+执">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中new的模拟">
-<meta property="og:url" content="http://yoursite.com/2016/11/20/JS中new的模拟/index.html">
+<meta property="og:title" content="JS中常用方法的模拟">
+<meta property="og:url" content="http://yoursite.com/2016/11/20/JS中常用方法的模拟/index.html">
 <meta property="og:site_name" content="ChenXing">
-<meta property="og:description" content="new对象的过程
+<meta property="og:description" content="new的模拟new对象的过程
 
 创建一个空的Object对象 var obj = new Object();
 将构造函数Person中this指向刚创建的obj对象(this不懂，请看this那一章)
 将创建的obj的__proto__指向构造函数的prototype，这一步是建立对象和原型直接的对应关系(注意: __proto__不是标准，chrome和firefox自己实现的，ie不支持)
-执行构造函数中">
-<meta property="og:updated_time" content="2017-03-02T13:14:44.158Z">
+执">
+<meta property="og:updated_time" content="2017-04-11T12:24:33.881Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中new的模拟">
-<meta name="twitter:description" content="new对象的过程
+<meta name="twitter:title" content="JS中常用方法的模拟">
+<meta name="twitter:description" content="new的模拟new对象的过程
 
 创建一个空的Object对象 var obj = new Object();
 将构造函数Person中this指向刚创建的obj对象(this不懂，请看this那一章)
 将创建的obj的__proto__指向构造函数的prototype，这一步是建立对象和原型直接的对应关系(注意: __proto__不是标准，chrome和firefox自己实现的，ie不支持)
-执行构造函数中">
+执">
 
 
 
@@ -93,7 +93,7 @@
 })();
 </script>
 
-  <title> JS中new的模拟 </title>
+  <title> JS中常用方法的模拟 </title>
   
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -140,7 +140,7 @@
   <div class="header-cont">
     <div class="text-area">
       
-        <h1 class="title" data-text="JS中new的模拟"> JS中new的模拟 </h1>
+        <h1 class="title" data-text="JS中常用方法的模拟"> JS中常用方法的模拟 </h1>
 
         
         <div class="post-meta">
@@ -170,8 +170,8 @@
           
             
               <span class="post-comments-count">
-                <a href="/2016/11/20/JS中new的模拟/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/20/JS中new的模拟/" itemprop="commentsCount"></span>
+                <a href="/2016/11/20/JS中常用方法的模拟/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/20/JS中常用方法的模拟/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -219,7 +219,7 @@
 
   <div class="post-body">
 
-    <div class="content markdown-body"><p><strong>new对象的过程</strong></p>
+    <div class="content markdown-body"><h2 id="new的模拟"><a href="#new的模拟" class="headerlink" title="new的模拟"></a>new的模拟</h2><p>new对象的过程</p>
 <ol>
 <li>创建一个空的<code>Object</code>对象 <code>var obj = new Object();</code></li>
 <li>将构造函数<code>Person</code>中<code>this</code>指向刚创建的<code>obj对象</code>(this不懂，请看this那一章)</li>
@@ -238,7 +238,14 @@
 <p><strong>复杂版:</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"> name </span>)</span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Person.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> objectFactory = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();<span class="comment">// 从 Object.prototype 上克隆一个空的对象</span></div><div class="line">	<span class="comment">// arguments  = [function function, "sven"];</span></div><div class="line">	Constructor = [].shift.call( <span class="built_in">arguments</span> ); <span class="comment">// 取得外部传入的构造器，此时Constructor是Person函数</span></div><div class="line">	obj.__proto__ = Constructor.prototype; <span class="comment">// 指向正确的原型</span></div><div class="line">	<span class="comment">// arguments  = ["sven"];</span></div><div class="line">	<span class="keyword">var</span> ret = Constructor.apply( obj, <span class="built_in">arguments</span> ); <span class="comment">// 借用外部传入的构造器给 obj 设置属性</span></div><div class="line">	<span class="keyword">return</span> <span class="keyword">typeof</span> ret === <span class="string">'object'</span> ? ret : obj; <span class="comment">// 确保构造器总是会返回一个对象</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> a = objectFactory( Person, <span class="string">'sven'</span> );</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log( a.name ); <span class="comment">// 输出：sven</span></div><div class="line"><span class="built_in">console</span>.log( a.getName() ); <span class="comment">// 输出：sven</span></div><div class="line"><span class="built_in">console</span>.log( <span class="built_in">Object</span>.getPrototypeOf( a ) === Person.prototype ); <span class="comment">// 输出：true</span></div></pre></td></tr></table></figure>
 <p>值得注意的是<code>arguments</code>是一个类数组，不能直接操作。所以得借用数组的方法。</p>
-</div>
+<h2 id="bind的模拟"><a href="#bind的模拟" class="headerlink" title="bind的模拟"></a>bind的模拟</h2><p>相信大家都用过call,apply。bind或多或少看过也用过。 call和apply其实是一样的。bind只不过做了个闭包。其他就没什么了。</p>
+<p><strong>简单版</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> self = <span class="keyword">this</span>; <span class="comment">// 保存原函数</span></div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 返回一个新的函数</span></div><div class="line">		<span class="keyword">return</span> self.apply(context, <span class="built_in">arguments</span>); <span class="comment">// 执行新的函数的时候，会把之前传入的 context</span></div><div class="line">		<span class="comment">// 当作新函数体内的 this</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此类只能解决传递改变this的问题。不能处理多参数。很简单，对argument进行处理</p>
+<p><strong>复杂版</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> self = <span class="keyword">this</span>, <span class="comment">// 保存原函数</span></div><div class="line">		context = [].shift.call(<span class="built_in">arguments</span>), <span class="comment">// 需要绑定的 this 上下文</span></div><div class="line">		args = [].slice.call(<span class="built_in">arguments</span>); <span class="comment">// 剩余的参数转成数组</span></div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 返回一个新的函数</span></div><div class="line">		<span class="keyword">return</span> self.apply(context, [].concat.call(args, [].slice.call(<span class="built_in">arguments</span>)));</div><div class="line">		<span class="comment">// 执行新的函数的时候，会把之前传入的 context 当作新函数体内的 this</span></div><div class="line">		<span class="comment">// 并且组合两次分别传入的参数，作为新函数的参数</span></div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//测试</span></div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">	<span class="attr">name</span>: <span class="string">'sven'</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c, d</span>) </span>&#123;</div><div class="line">	alert(<span class="keyword">this</span>.name); </div><div class="line">	alert([a, b, c, d]) </div><div class="line">&#125;.bind(obj, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">func(<span class="number">3</span>, <span class="number">4</span>);</div><div class="line"></div><div class="line"><span class="comment">//猜猜输出什么。</span></div></pre></td></tr></table></figure>
+<h2 id="Object-create的模拟"><a href="#Object-create的模拟" class="headerlink" title="Object.create的模拟"></a>Object.create的模拟</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.create = <span class="built_in">Object</span>.create || <span class="function"><span class="keyword">function</span>(<span class="params"> obj </span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">	F.prototype = obj;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> F();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Array-sort的模拟"><a href="#Array-sort的模拟" class="headerlink" title="Array.sort的模拟"></a>Array.sort的模拟</h2></div>
 
     <div class="post-sidebar">
   <div class="toggle-btn" id="toggle-btn">
@@ -249,7 +256,7 @@
     <div class="post-toc">
       
       
-        <p class="post-toc-empty">此文章未包含目录</p>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#new的模拟"><span class="nav-text">new的模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind的模拟"><span class="nav-text">bind的模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-create的模拟"><span class="nav-text">Object.create的模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-sort的模拟"><span class="nav-text">Array.sort的模拟</span></a></li></ol></div>
       
     </div>
   </section>
@@ -278,8 +285,8 @@
       
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/20/JS中new的模拟/"
-           data-title="JS中new的模拟" data-url="http://yoursite.com/2016/11/20/JS中new的模拟/">
+      <div class="ds-thread" data-thread-key="2016/11/20/JS中常用方法的模拟/"
+           data-title="JS中常用方法的模拟" data-url="http://yoursite.com/2016/11/20/JS中常用方法的模拟/">
       </div>
     
   </div>

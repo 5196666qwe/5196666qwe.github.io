@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="前几天看到一个题，大概是这样的
+1234567new Promise((resolve, reject) =&amp;gt; &amp;#123;        resolve(1)    &amp;#125;)    .then(&quot;2&quot;)    .then((value) =&amp;gt; &amp;#123;        console.log(value);    &amp;#125;);
+我开始想可能是undefined，因为the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从一个坑开始的promise">
+<meta property="og:url" content="http://yoursite.com/2017/03/17/从零开始的promise/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="前几天看到一个题，大概是这样的
+1234567new Promise((resolve, reject) =&amp;gt; &amp;#123;        resolve(1)    &amp;#125;)    .then(&quot;2&quot;)    .then((value) =&amp;gt; &amp;#123;        console.log(value);    &amp;#125;);
+我开始想可能是undefined，因为the">
+<meta property="og:image" content="http://yoursite.com/img/promise/promise1.png">
+<meta property="og:image" content="http://yoursite.com/img/promise/promise2.png">
+<meta property="og:updated_time" content="2017-04-13T06:59:04.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从一个坑开始的promise">
+<meta name="twitter:description" content="前几天看到一个题，大概是这样的
+1234567new Promise((resolve, reject) =&amp;gt; &amp;#123;        resolve(1)    &amp;#125;)    .then(&quot;2&quot;)    .then((value) =&amp;gt; &amp;#123;        console.log(value);    &amp;#125;);
+我开始想可能是undefined，因为the">
+<meta name="twitter:image" content="http://yoursite.com/img/promise/promise1.png">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> 从一个坑开始的promise </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="从一个坑开始的promise"> 从一个坑开始的promise </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-03-17T21:53:53+08:00" content="2017-03-17">
+              2017-03-17
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <a href="/2017/03/17/从零开始的promise/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/17/从零开始的promise/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>前几天看到一个题，大概是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        resolve(<span class="number">1</span>)</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="string">"2"</span>)</div><div class="line">    .then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>我开始想可能是<code>undefined</code>，因为<code>then</code>里面一般是函数且返回某个值或则<code>promise</code>，这个直接传了一个值，我想第二个是不接受的，所以拿到的应该是<code>undefined</code>.</p>
+<p>事实是我错了，这个是个<code>值穿透</code>，输出1。WTF。。。</p>
+<p>然而事情还没完，我又看到个题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        reject(<span class="string">'error 1'</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'error 2'</span>);</div><div class="line">&#125;).catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><code>reject</code>状态改变后，应该要被<code>catch</code>到，要输出<code>error 1</code>，答案确实是这样的。</p>
+<p>但是<code>then</code>抛出的异常哪里去了，是没执行那是咋地，我都有错误了，为什么没人阻止我呢。上网查了查，没说出个所以然。而且自己对<code>then</code>里面发生了什么？什么时候执行<code>then(onFulfilled)</code>里面这个<code>onFulfilled</code>？如果是异步的，又是怎么执行？如果说<code>then</code>里面返回一个<code>promise</code>状态是怎么传递的？这些我一概不知。索性花时间看看<code>promise</code>是怎么实现的(Stream，http看不懂，小小的promise还看不懂了？).</p>
+<p>对于任何一个通过<code>Promise/A+</code>测试集的<code>promise</code>库，我们挑一个来学习，没差别。这是一个<a href="https://zhuanlan.zhihu.com/p/25178630" target="_blank" rel="external">Promise 实现详解</a>,作者对<a href="https://github.com/calvinmetcalf/lie" target="_blank" rel="external">lie</a> (一个实现 Promise/A+ 规范的库)的实现进行了分析(点赞的人太少了)。方法讲的很到位，就是异步的流程从头到尾没讲清楚(作者说，怪我喽？)。我们来走一遍。</p>
+<h2 id="promise基本结构"><a href="#promise基本结构" class="headerlink" title="promise基本结构"></a>promise基本结构</h2><p><img src="/img/promise/promise1.png" alt="promise结构"></p>
+<ol>
+<li><code>new Promise((resolve,reject) =&gt; {...})</code>是一个拥有<code>value，state，queue</code>基本属性和<code>then,catch</code>方法的对象。<ol>
+<li>value    —–  用于存储<code>resolve(value)</code>中的<code>value</code>或者<code>reject(error)</code>中的<code>error</code></li>
+<li>state       —– 代表该<code>promise</code>当前状态，<strong>0(PENDING)</strong>，<strong>1(FULFILLED)</strong>，<strong>2(REJECTED)</strong>.</li>
+<li>queue    —–  一个存放<code>queueItem</code>对象的数组(一般情况下只放一个)。</li>
+</ol>
+</li>
+<li>每次<code>then，catch</code>都会生成一个新的<code>promise</code>(<strong>0状态</strong>).且返回该<code>promise</code></li>
+<li><code>queueItem</code>是一个存放<code>then</code>新生成的<code>promise</code>，以及装饰<code>then</code>参数<code>onFulfilled,onRejected</code>的对象。</li>
+<li>根据promise对象状态判断then(onFulfilled)，catch(onRejected)生成的对象是否会追加到父对象的queue中或者执行相应函数。<ol>
+<li>如果是同步，则执行onRejected or onRejected</li>
+<li>如果是异步，push.</li>
+</ol>
+</li>
+</ol>
+<h2 id="Promise实现原理"><a href="#Promise实现原理" class="headerlink" title="Promise实现原理"></a>Promise实现原理</h2><p><strong>当最外层的 promise 状态改变时，遍历它的 queue 数组调用对应的回调，设置子 promise 的 state 和 value 并遍历它的 queue 数组调用对应的回调，然后设置孙 promise 的 state 和 value 并遍历它的 queue 数组调用对应的回调……依次类推。</strong></p>
+<h2 id="同步和异步以及返回一个promise"><a href="#同步和异步以及返回一个promise" class="headerlink" title="同步和异步以及返回一个promise"></a>同步和异步以及返回一个promise</h2><p><img src="/img/promise/promise2.png" alt="promise流程"></p>
+<p>上面是我画的一张图，第一眼看过去，你没看不懂，没关系，看第二眼。第二眼看过去，还是看不懂，没关系，多看几眼。相信我，你是看不懂的。没事，给我这个图我也看不懂。但可以慢慢解释。</p>
+<p>一个同步例子为例.我们先看看这个流程是怎么走的。(比较繁琐，可以直接看总结。。总结比较短，好像也没啥信息量。)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">  resolve(<span class="number">1</span>)</div><div class="line">&#125;)</div><div class="line">.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">&#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'xxx'</span>);</div><div class="line">&#125;)</div><div class="line">.catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<ol>
+<li><p>首先<code>new</code>了一个<code>Promise</code>对象，状态为<code>0</code>，由于是同步，开始执行<code>resolve(1)</code>，改变自身状态<code>this.state</code>为<code>(1FULFILLED)</code>,<code>this.value</code>为<code>resolve(1)</code>的参数1，然后遍历<code>queue</code>，传入<code>value</code>。(但因为是同步，子 promise 还没 push 到父 queue 里面)，所以<code>forEach</code>不发生什么。第一阶段结束。</p>
+</li>
+<li><p>执行<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(1FULFILLED)</code>，执行<code>onFulfilled</code>(也就是第一个then的参数),<strong>参数为this.value</strong>，之后改变自身状态<code>this.state</code>为<code>1(PENDING)</code>，<code>this.value</code>为函数调用的返回值，然后遍历<code>queue</code>，传入<code>this.value</code>(但因为是同步，孙 promise 还没 push 到子 queue 里面)，所以<code>forEach</code>不发生什么。第二阶段结束。</p>
+</li>
+<li><p>执行第二个<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(1FULFILLED)</code>，执行<code>onFulfilled</code>,<strong>参数为上一个函数调用的返回值</strong>，根据函数调用的返回值，<strong>此时抛出一个异常。</strong>被<code>catch</code>到，之后改变自身状态<code>this.state</code>为<code>2(REJECTED)</code>，<code>this.value</code>为<code>error</code>,然后遍历<code>queue</code>，传入<code>error</code>(但因为是同步，孙孙promise还没push到孙queue里面)，所以<code>forEach</code>不发生什么。第三阶段结束。</p>
+</li>
+<li><p>执行<code>catch</code>函数，相当于执行<code>then(null,onRejected)</code>,新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态为<code>2(REJECTED</code>)的，执行<code>onRejected</code>(也就是catch的参数)，参数为<code>this.value</code>.改变自身状态,值，然后遍历<code>queue</code>.(但因为是同步，。。)，所以forEach不发生什么。结束了(好辛苦。。)。</p>
+<p> ​</p>
+</li>
+</ol>
+<p><strong>最最重要的异步</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            resolve(<span class="number">1</span>)</div><div class="line">        &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(value);</div><div class="line">        &#125;, <span class="number">2000</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+<ol>
+<li>首先new了一个Promise对象，状态为0，由于是异步，webAPIS处理SetTimeout(Node放进循环handles？)，也就是说resolve不立即执行(即不改变自身状态).第一阶段结束。</li>
+<li>执行then函数，新生成一个0状态的promise，判断此时this.state状态，此时为(0 PENDING)，则push一个queueItem(promise,onFulfilled,onRejected)对象进this.queue。返回新生成一个0状态的promise。</li>
+<li>执行then函数，新生成一个0状态的promise，判断此时this.state状态，此时为(0 PENDING)，则push一个queueItem(promise,onFulfilled,onRejected)对象进this.queue。返回新生成一个0状态的promise。</li>
+<li>此时1000ms到了以后，会触发setTimeout事件，此时回调函数会放到任务队列里面，js主线程从任务队列里提取任务(node主循环检查handles，判断时间是否到达，取出回调函数)，执行。也就是说resolve执行了(终于到了我？)，改变自身状态this.state为(PENDING),this.value为resolve(1)的参数1，然后遍历queue，传入value。(此时queue不为空，可以愉快的执行了)</li>
+<li>取出第一个then(onFulfilled)的onFulfilled，传进上面传进的参数，执行(此时是异部操作)。然后，设置自身的状态为this.state为(1FULFILLED),，this.value为函数调用返回的结果2，继续遍历自身的queue。直到queue.forEach为空。</li>
+</ol>
+<p><strong>总结:</strong></p>
+<ol>
+<li>所有promise始于new Promise()，<strong>终于queue.forEach(…).</strong></li>
+<li>第一个promise的状态(resolve是否立即执行)很重要，直接决定了剩余所有的then,catch是否要push的走向。</li>
+<li>无论是同步还是异步，then，catch总会在promise状态发生改变的时候执行(异步执行),并不断设置自身value，state。</li>
+</ol>
+<p>ps:</p>
+<p>如果<code>then</code>里面返回一个<code>Promise</code>，那么会加一层传递<code>then</code>设置<code>then</code>,比较复杂。</p>
+<p> 值穿透，lie实现是返回了this，而且是执行了一种情况。有兴趣可以看看。</p>
+<p>如果是第一个Promise抛出一个异常，那么会被catch到，then()单参数的onFulfilled确实是不执行(一个很特殊的例子。)</p>
+<p>作业:    把以下流程说清楚</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            resolve(<span class="number">1</span>)</div><div class="line">        &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(value);</div><div class="line">        &#125;, <span class="number">2000</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</div><div class="line">          reject(<span class="string">'error'</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;).catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>update:</p>
+<p>先思考一下这个输出什么。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</div><div class="line">    resolve()</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>)</div><div class="line">    resolve()</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">7</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">8</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>答案是 1,2,5,6,3,7,4,8.</p>
+<p>可以说明一个问题，then里面回调都是异步执行的(如果是同步会是12345678)。</p>
+<p>实际上<a href="https://github.com/calvinmetcalf/lie" target="_blank" rel="external">lie</a>是用<code>immediate</code>库(一个将同步转异步执行的库，不知道原理)实现的。</p>
+<p><strong>至于为什么是要异步执行的？</strong> <a href="https://www.zhihu.com/question/57071244" target="_blank" rel="external"> 看某乎讨论</a></p>
+<p>简单来说就是执行顺序会变成了不确定的，而且存在stackoverflow风险。</p>
+<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#promise基本结构"><span class="nav-text">promise基本结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise实现原理"><span class="nav-text">Promise实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步和异步以及返回一个promise"><span class="nav-text">同步和异步以及返回一个promise</span></a></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/17/从零开始的promise/"
+           data-title="从一个坑开始的promise" data-url="http://yoursite.com/2017/03/17/从零开始的promise/">
+      </div>
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
