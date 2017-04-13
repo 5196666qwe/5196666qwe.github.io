@@ -47,14 +47,14 @@
 我开始想可能是undefined，因为the">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从一个坑开始的promise">
-<meta property="og:url" content="http://yoursite.com/2017/03/17/从零开始的promise/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/04/13/从零开始的promise/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="前几天看到一个题，大概是这样的
 1234567new Promise((resolve, reject) =&amp;gt; &amp;#123;        resolve(1)    &amp;#125;)    .then(&quot;2&quot;)    .then((value) =&amp;gt; &amp;#123;        console.log(value);    &amp;#125;);
 我开始想可能是undefined，因为the">
 <meta property="og:image" content="http://yoursite.com/img/promise/promise1.png">
 <meta property="og:image" content="http://yoursite.com/img/promise/promise2.png">
-<meta property="og:updated_time" content="2017-04-13T06:59:04.121Z">
+<meta property="og:updated_time" content="2017-04-13T07:11:26.342Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从一个坑开始的promise">
 <meta name="twitter:description" content="前几天看到一个题，大概是这样的
@@ -140,8 +140,8 @@
         <div class="post-meta">
           <div class="post-time">
             发表于
-            <time  datetime="2017-03-17T21:53:53+08:00" content="2017-03-17">
-              2017-03-17
+            <time  datetime="2017-04-13T21:53:53+08:00" content="2017-04-13">
+              2017-04-13
             </time>
           </div>
 
@@ -164,8 +164,8 @@
           
             
               <span class="post-comments-count">
-                <a href="/2017/03/17/从零开始的promise/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/17/从零开始的promise/" itemprop="commentsCount"></span>
+                <a href="/2017/04/13/从零开始的promise/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/13/从零开始的promise/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -257,11 +257,11 @@
 <p><strong>最最重要的异步</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            resolve(<span class="number">1</span>)</div><div class="line">        &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(value);</div><div class="line">        &#125;, <span class="number">2000</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
 <ol>
-<li>首先new了一个Promise对象，状态为0，由于是异步，webAPIS处理SetTimeout(Node放进循环handles？)，也就是说resolve不立即执行(即不改变自身状态).第一阶段结束。</li>
-<li>执行then函数，新生成一个0状态的promise，判断此时this.state状态，此时为(0 PENDING)，则push一个queueItem(promise,onFulfilled,onRejected)对象进this.queue。返回新生成一个0状态的promise。</li>
-<li>执行then函数，新生成一个0状态的promise，判断此时this.state状态，此时为(0 PENDING)，则push一个queueItem(promise,onFulfilled,onRejected)对象进this.queue。返回新生成一个0状态的promise。</li>
-<li>此时1000ms到了以后，会触发setTimeout事件，此时回调函数会放到任务队列里面，js主线程从任务队列里提取任务(node主循环检查handles，判断时间是否到达，取出回调函数)，执行。也就是说resolve执行了(终于到了我？)，改变自身状态this.state为(PENDING),this.value为resolve(1)的参数1，然后遍历queue，传入value。(此时queue不为空，可以愉快的执行了)</li>
-<li>取出第一个then(onFulfilled)的onFulfilled，传进上面传进的参数，执行(此时是异部操作)。然后，设置自身的状态为this.state为(1FULFILLED),，this.value为函数调用返回的结果2，继续遍历自身的queue。直到queue.forEach为空。</li>
+<li>首先<code>new</code>了一个<code>Promise</code>对象，状态为0，由于是异步，webAPIS处理SetTimeout(Node放进循环handles？)，也就是说<code>resolve</code>不立即执行(即不改变自身状态).第一阶段结束。</li>
+<li>执行<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(0 PENDING)</code>，则<code>push</code>一个<code>queueItem(promise,onFulfilled,onRejected)</code>对象进<code>this.queue</code>。返回新生成一个0状态的<code>promise</code>。</li>
+<li>执行<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(0 PENDING)</code>，则<code>push</code>一个<code>queueItem(promise,onFulfilled,onRejected)</code>对象进<code>this.queue</code>。返回新生成一个0状态的<code>promise</code>。</li>
+<li>此时1000ms到了以后，会触发setTimeout事件，此时回调函数会放到任务队列里面，js主线程从任务队列里提取任务(node主循环检查handles，判断时间是否到达，取出回调函数)，执行。也就是说<code>resolve</code>执行了(终于到了我？)，改变自身状态<code>this.state</code>为<code>(PENDING)</code>,<code>this.value</code>为<code>resolve(1)</code>的参数1，然后遍历<code>queue</code>，传入<code>value</code>。(此时<code>queue</code>不为空，可以愉快的执行了)</li>
+<li>取出第一个<code>then(onFulfilled)</code>的<code>onFulfilled</code>，传进上面传进的参数，执行(此时是异部操作)。然后，设置自身的状态为<code>this.state为(1FULFILLED)</code>,<code>this.value</code>为函数调用返回的结果2，继续遍历自身的<code>queue</code>。直到<code>queue.forEach</code>为空。</li>
 </ol>
 <p><strong>总结:</strong></p>
 <ol>
@@ -324,8 +324,8 @@
       
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/17/从零开始的promise/"
-           data-title="从一个坑开始的promise" data-url="http://yoursite.com/2017/03/17/从零开始的promise/">
+      <div class="ds-thread" data-thread-key="2017/04/13/从零开始的promise/"
+           data-title="从一个坑开始的promise" data-url="http://yoursite.com/2017/04/13/从零开始的promise/">
       </div>
     
   </div>
