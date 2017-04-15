@@ -76,7 +76,7 @@ async 流程控制。可以控制并发数。
 
 
 eventproxy 流程控">
-<meta property="og:updated_time" content="2017-03-13T10:28:20.497Z">
+<meta property="og:updated_time" content="2017-04-13T07:32:53.023Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="node爬虫爬番剧">
 <meta name="twitter:description" content="工具准备superagent,cheerio,eventproxy,async，mongoose
@@ -297,17 +297,8 @@ eventproxy 流程控">
 <p>关于queue方法，有点坑，git上面api是没有这个result参数，</p>
 <p>我一想不科学啊，callback既然有，result肯定有，测试了一下果断有了。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> q = <span class="keyword">async</span>.queue(<span class="function"><span class="keyword">function</span>(<span class="params">topicUrl, callback</span>) </span>&#123;</div><div class="line">  	<span class="comment">//我们上面刚刚写的通用async有callback的fetch方法，毕竟每个页面获取的信息不同。analyzePage方法在下面。可不看。不重要。</span></div><div class="line">    fetch.fetchUrl(topicUrl,analyzePage,callback);</div><div class="line">&#125;, <span class="number">3</span>);</div><div class="line"></div><div class="line"><span class="comment">//订阅事件</span></div><div class="line">Emitter.on(<span class="string">"fet_all_urls"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line"></div><div class="line">	q.push(data, <span class="function"><span class="keyword">function</span>(<span class="params">err,result</span>) </span>&#123;</div><div class="line">		global.dbHelper.getModel(<span class="string">"dilis"</span>).create(&#123;</div><div class="line">			<span class="attr">name</span>:result[<span class="number">0</span>].name,</div><div class="line">			<span class="attr">movieurl</span>:result[<span class="number">0</span>].movieUrl,</div><div class="line">			<span class="attr">downurl</span>:result[<span class="number">0</span>].downUrl</div><div class="line">		&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">			<span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">			<span class="built_in">console</span>.log(<span class="string">"success"</span>);</div><div class="line">		&#125;);</div><div class="line">	&#125;);</div><div class="line">  </div><div class="line">  </div><div class="line">  <span class="comment">//分页面解析，返回anime对象</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">analyzePage</span>(<span class="params">page</span>) </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">var</span> $ = cheerio.load(page);</div><div class="line">	<span class="comment">//省略。。。</span></div><div class="line">	<span class="keyword">return</span> anime;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
-<li><p>使用<code>superagent</code>你遇到一些问题，有些编码是<code>gbk</code>的爬取会乱码，node默认是<code>utf-8</code>的，所以得用<code>superagent-charset</code>转换一下。</p>
-</li>
-<li><p>刚开始是用<code>promise</code>做的。第一个then获取所有连接，第二个then爬取信息，写进数据库。发现写进数据库的时候跑到一半总会出错误，不知道为什么，当时是用<code>mapLimit</code>做的，而且爬的是别的番剧网站，而且番剧连接分布在不同页面(好像是200多个页面,一个页面20个连接左右)，也就是说第一个 then 里面 一个mapLimit 形成多个异步事件， 第二个then里面 一个mapLimit 再形成多个异步事件，太多可能造成错误。我换成了50 个连接就能正确爬完。</p>
-<p>后来换成了两个queue工作， 就好很多了。</p>
-</li>
-<li><p>mongodb里面 “”空字符串、空格、$、/、\、\0（空字符）是不能作为key的。。有一次跑到一半就跪了。。</p>
 <p>​</p>
 <p>​</p>
-</li>
-</ol>
 </div>
 
     <div class="post-sidebar">
@@ -319,7 +310,7 @@ eventproxy 流程控">
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本准备"><span class="nav-text">基本准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始工作"><span class="nav-text">开始工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析页面。"><span class="nav-text">分析页面。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具类"><span class="nav-text">工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开工"><span class="nav-text">开工</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-text">总结：</span></a></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本准备"><span class="nav-text">基本准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始工作"><span class="nav-text">开始工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析页面。"><span class="nav-text">分析页面。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具类"><span class="nav-text">工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开工"><span class="nav-text">开工</span></a></li></ol></li></ol></div>
       
     </div>
   </section>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="那天又是在某乎上看到一个用pipe处理数组的。
+前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用pipe处理并发的可行性">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/利用pipe处理并发/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="那天又是在某乎上看到一个用pipe处理数组的。
+前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，">
+<meta property="og:image" content="http://yoursite.com/img/stream/stream.png">
+<meta property="og:updated_time" content="2017-04-15T03:35:50.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用pipe处理并发的可行性">
+<meta name="twitter:description" content="那天又是在某乎上看到一个用pipe处理数组的。
+前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，">
+<meta name="twitter:image" content="http://yoursite.com/img/stream/stream.png">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> 利用pipe处理并发的可行性 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="利用pipe处理并发的可行性"> 利用pipe处理并发的可行性 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-03-20T20:53:53+08:00" content="2017-03-20">
+              2017-03-20
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <a href="/2017/03/20/利用pipe处理并发/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/20/利用pipe处理并发/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>那天又是在某乎上看到一个用<code>pipe</code>处理数组的。</p>
+<p>前因是作者看到另外一篇文章说<code>JS</code>的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是节省了大量的内存资源和循环消耗的时间。于是乎作者用流写了一堆<code>Map/Filter/Reduce</code>什么的。。。</p>
+<p>看了之后也没在意，昨天晚上想起之前写爬虫的时候，一般都是利用两个<code>queue</code>来控制并发数。效果尚可，就是代码不好看。灵光一现，我艹，node自带了控制供需平衡的pipe，我为啥要用async来控制，而且代码还不好看。于是乎萌生了这个念头。废话不多说，看代码。</p>
+<p><strong>目标：爬取图片</strong></p>
+<p>网站在此，<a href="https://alpha.wallhaven.cc/" target="_blank" rel="external">wallhaven</a>，一个国外网站，个人非常喜欢，访问速度有点慢。</p>
+<p><strong>可读流，源头。获取全部url(50个链接，600张图片左右）</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>);</div><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</div><div class="line"><span class="keyword">const</span> stream = <span class="built_in">require</span>(<span class="string">'stream'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> wallhaven = <span class="string">'https://alpha.wallhaven.cc/latest?page='</span>;</div><div class="line"><span class="keyword">const</span> wallhavenPic = <span class="string">'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-'</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWallhavenUrls</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> rs = stream.Readable(&#123;</div><div class="line">        <span class="attr">objectMode</span>: <span class="literal">true</span></div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">50</span>; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">            rs.push(wallhaven + i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    rs.push(<span class="literal">null</span>);</div><div class="line">    <span class="keyword">return</span> rs;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>双工流，获取图片实际地址</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> options = &#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">headers</span>: &#123;</div><div class="line">        <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWallhavenPics</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> trans = stream.Transform(&#123;</div><div class="line">        <span class="attr">readableObjectMode</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">writableObjectMode</span>: <span class="literal">true</span></div><div class="line">    &#125;)</div><div class="line">    trans._transform = <span class="function"><span class="keyword">function</span>(<span class="params">chunk, enc, next</span>) </span>&#123;</div><div class="line">    	options.url = chunk;</div><div class="line">        request(options, <span class="function"><span class="keyword">function</span>(<span class="params">err, res, body</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (!err &amp;&amp; res.statusCode == <span class="number">200</span>) &#123;</div><div class="line">                <span class="keyword">var</span> page = res.text;</div><div class="line">                getPicUrl(body).map(<span class="function"><span class="keyword">function</span>(<span class="params">per</span>) </span>&#123;</div><div class="line">                    trans.push(wallhavenPic + per + <span class="string">".jpg"</span>);</div><div class="line">                &#125;);</div><div class="line">                next();</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> trans;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>可写流，写入图片</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadImg</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> ws = stream.Writable(&#123;</div><div class="line">        <span class="attr">objectMode</span>: <span class="literal">true</span></div><div class="line">    &#125;)</div><div class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;</div><div class="line">    ws._write = <span class="function"><span class="keyword">function</span>(<span class="params">chunk, enc, next</span>) </span>&#123;</div><div class="line">        request.head(chunk, <span class="function"><span class="keyword">function</span>(<span class="params">err, res, body</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(err);</div><div class="line">            request(chunk).on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (err) &#123;</div><div class="line">                    <span class="built_in">console</span>.log(<span class="string">'err'</span> + err)</div><div class="line">                &#125;</div><div class="line">            &#125;).pipe(fs.createWriteStream(<span class="string">'G://pics//'</span> + i++ + <span class="string">'.jpg'</span>));</div><div class="line">            next();</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> ws;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>一个工具方法，获取地址</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPicUrl</span>(<span class="params">page</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> urls = []</div><div class="line">    <span class="keyword">var</span> $ = cheerio.load(page);</div><div class="line">    $(<span class="string">'.thumb-listing-page'</span>).find(<span class="string">'.preview'</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        urls.push($(<span class="keyword">this</span>).attr(<span class="string">'href'</span>).substr(<span class="number">37</span>));</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> urls;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>最后把他们连接起来</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">getWallhavenUrls()</div><div class="line">    .pipe(getWallhavenPics())</div><div class="line">    .pipe(downloadImg())</div></pre></td></tr></table></figure>
+<p>cpu稳定在3%以下，mem稳定在30M以下，除了一些连接太慢，console了timeout，其他完美。最后看看成果 </p>
+<p><img src="/img/stream/stream.png" alt="stream"></p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <p class="post-toc-empty">此文章未包含目录</p>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/20/利用pipe处理并发/"
+           data-title="利用pipe处理并发的可行性" data-url="http://yoursite.com/2017/03/20/利用pipe处理并发/">
+      </div>
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
