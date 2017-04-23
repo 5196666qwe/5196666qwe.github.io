@@ -42,20 +42,20 @@
 <meta name="keywords" content="Node," />
 
 
-<meta name="description" content="那天又是在某乎上看到一个用pipe处理数组的。
-前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，">
+<meta name="description" content="以前在某处看到一个用pipe处理数组的。
+前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用pipe处理并发的可行性">
-<meta property="og:url" content="http://yoursite.com/2017/03/20/利用pipe处理并发/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/04/02/利用pipe处理并发/index.html">
 <meta property="og:site_name" content="ChenXing">
-<meta property="og:description" content="那天又是在某乎上看到一个用pipe处理数组的。
-前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，">
+<meta property="og:description" content="以前在某处看到一个用pipe处理数组的。
+前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是">
 <meta property="og:image" content="http://yoursite.com/img/stream/stream.png">
-<meta property="og:updated_time" content="2017-04-15T03:35:50.003Z">
+<meta property="og:updated_time" content="2017-04-23T14:03:22.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用pipe处理并发的可行性">
-<meta name="twitter:description" content="那天又是在某乎上看到一个用pipe处理数组的。
-前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，">
+<meta name="twitter:description" content="以前在某处看到一个用pipe处理数组的。
+前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是">
 <meta name="twitter:image" content="http://yoursite.com/img/stream/stream.png">
 
 
@@ -136,8 +136,8 @@
         <div class="post-meta">
           <div class="post-time">
             发表于
-            <time  datetime="2017-03-20T20:53:53+08:00" content="2017-03-20">
-              2017-03-20
+            <time  datetime="2017-04-02T20:53:53+08:00" content="2017-04-02">
+              2017-04-02
             </time>
           </div>
 
@@ -160,8 +160,8 @@
           
             
               <span class="post-comments-count">
-                <a href="/2017/03/20/利用pipe处理并发/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/20/利用pipe处理并发/" itemprop="commentsCount"></span>
+                <a href="/2017/04/02/利用pipe处理并发/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/02/利用pipe处理并发/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -209,7 +209,7 @@
 
   <div class="post-body">
 
-    <div class="content markdown-body"><p>那天又是在某乎上看到一个用<code>pipe</code>处理数组的。</p>
+    <div class="content markdown-body"><p>以前在某处看到一个用<code>pipe</code>处理数组的。</p>
 <p>前因是作者看到另外一篇文章说<code>JS</code>的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是节省了大量的内存资源和循环消耗的时间。于是乎作者用流写了一堆<code>Map/Filter/Reduce</code>什么的。。。</p>
 <p>看了之后也没在意，昨天晚上想起之前写爬虫的时候，一般都是利用两个<code>queue</code>来控制并发数。效果尚可，就是代码不好看。灵光一现，我艹，node自带了控制供需平衡的pipe，我为啥要用async来控制，而且代码还不好看。于是乎萌生了这个念头。废话不多说，看代码。</p>
 <p><strong>目标：爬取图片</strong></p>
@@ -266,8 +266,8 @@
       
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/20/利用pipe处理并发/"
-           data-title="利用pipe处理并发的可行性" data-url="http://yoursite.com/2017/03/20/利用pipe处理并发/">
+      <div class="ds-thread" data-thread-key="2017/04/02/利用pipe处理并发/"
+           data-title="利用pipe处理并发的可行性" data-url="http://yoursite.com/2017/04/02/利用pipe处理并发/">
       </div>
     
   </div>

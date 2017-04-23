@@ -172,21 +172,21 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2017/03/20/利用pipe处理并发/">利用pipe处理并发的可行性</a></h2>
+    <h2 class="title"><a href="/2017/03/20/async和koa2/">async和koa2</a></h2>
   </div>
 
   <div class="post-cont">
     <span class="post-time">
       发表于
-      <time datetime="2017-03-20T20:53:53+08:00" content="2017-03-20">
+      <time datetime="2017-03-20T21:53:53+08:00" content="2017-03-20">
         2017-03-20
       </time>
     </span>
     <div class="text">
-      <a href="/2017/03/20/利用pipe处理并发/">
+      <a href="/2017/03/20/async和koa2/">
         
-        那天又是在某乎上看到一个用pipe处理数组的。
-前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用
+        async123456789async function fn(args)&#123;	// ...&#125;// 等同于function fn(args)&#123;	return spawn(function*() &#123;	// ...	&#125;);&#125;
+都说async函数是
         ...
       </a>
     </div>
@@ -211,7 +211,60 @@
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2017/03/20/利用pipe处理并发/" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2017/03/20/async和koa2/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/03/18/从零开始的promise/">从零开始的promise</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-03-18T21:53:53+08:00" content="2017-03-18">
+        2017-03-18
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/03/18/从零开始的promise/">
+        
+        前几天看到一个题，大概是这样的
+1234567new Promise((resolve, reject) =&gt; &#123;        resolve(1)    &#125;)    .then("2")    .then((value) =&gt; &#123;        cons
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/03/18/从零开始的promise/" itemprop="url">
       more...
     </a>
   </div>
@@ -340,11 +393,11 @@ V8内存限制node基于V8构建，通过V8的方式进行分配跟管理js对�
     
       <a href="/tags#JavaScript">JavaScript</a>
     
+      <a href="/tags#Java">Java</a>
+    
       <a href="/tags#Python">Python</a>
     
       <a href="/tags#es6">es6</a>
-    
-      <a href="/tags#Java">Java</a>
     
       <a href="/tags#Git">Git</a>
     

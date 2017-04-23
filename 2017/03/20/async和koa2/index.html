@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Node," />
+
+
+<meta name="description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
+都说async函数是用spawn实现的。开始我是不相信的，持质疑态度。
+既然说有了质疑，就应该做个测试，证明这个观点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="async和koa2">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/async和koa2/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
+都说async函数是用spawn实现的。开始我是不相信的，持质疑态度。
+既然说有了质疑，就应该做个测试，证明这个观点。">
+<meta property="og:updated_time" content="2017-04-23T14:02:48.694Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="async和koa2">
+<meta name="twitter:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
+都说async函数是用spawn实现的。开始我是不相信的，持质疑态度。
+既然说有了质疑，就应该做个测试，证明这个观点。">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> async和koa2 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="async和koa2"> async和koa2 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-03-20T21:53:53+08:00" content="2017-03-20">
+              2017-03-20
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Node" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <a href="/2017/03/20/async和koa2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/20/async和koa2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 等同于</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> spawn(<span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>都说async函数是用spawn实现的。开始我是不相信的，持质疑态度。</p>
+<p>既然说有了质疑，就应该做个测试，证明这个观点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">spawn</span>(<span class="params">genF</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">		<span class="keyword">var</span> gen = genF();</div><div class="line">		<span class="function"><span class="keyword">function</span> <span class="title">step</span>(<span class="params">nextF</span>) </span>&#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">var</span> next = nextF();</div><div class="line">			&#125; <span class="keyword">catch</span>(e) &#123;</div><div class="line">				<span class="keyword">return</span> reject(e);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(next.done) &#123;</div><div class="line">				<span class="keyword">return</span> resolve(next.value);</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">				step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(v); &#125;);</div><div class="line">			&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">				step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.throw(e); &#125;);</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line">		step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(<span class="literal">undefined</span>); &#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>做个测试前，我们先看看<code>step</code>函数里面的<code>catch</code>是捕捉啥的？</p>
+<p>肯定是<code>nexf()</code>这个函数出错的，往上走会发现源头是<code>gen.next()</code>或则<code>gen.throw()</code>。</p>
+<ol>
+<li>gen没有next函数或则说压根不是函数——catch</li>
+<li><code>Promise.resolve(next.value)</code>状态为<code>REJECTED</code>会执行<code>gen.throw()</code>—-catch</li>
+</ol>
+<p><strong>第一种情况</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>上面这种直接抛出一个异常的代码，会被catch到</strong>，</p>
+<p>那要是异步的呢？<code>try/catch</code>捕捉不到的，程序要跪的。(一般也不会这么用)</p>
+<p>说到这里大家都明白了。也清楚了下面这段代码会出错的。也确实证明了<code>async</code>函数像是用<code>spawn</code>实现的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//异步----catch不到的。</span></div><div class="line"><span class="keyword">const</span> foo = <span class="keyword">async</span> () =&gt; &#123;</div><div class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span>&#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>);</div><div class="line">	&#125;, <span class="number">100</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo().catch(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>第二种情况</strong></p>
+<p>我们仔细看看这段代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">	step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(v); &#125;);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">	step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.throw(e); &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们都知道</p>
+<p>如果<code>next.value</code>是一个普通值，那么<code>resolve</code>函数会生成一个新的<code>promise</code>，并改变自己状态为<code>FULFILLED</code>,值为该<code>value</code>。</p>
+<p>如果<code>next.value</code>是一个<code>promise</code>，则直接返回该<code>promise</code>。</p>
+<p>那么说会有N种情况触发then第二个参数onRejected。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//next.value</span></div><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span>&#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>)</div><div class="line">&#125;)</div><div class="line">...</div><div class="line">new <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span>&#123;</div><div class="line">  reject(<span class="string">'出错了'</span>)</div><div class="line">&#125;)</div><div class="line"><span class="built_in">Promise</span>.reject(<span class="string">'出错了'</span>)</div></pre></td></tr></table></figure>
+<p>实际就一种情况—— <strong>next.value是状态为rejected的Promise</strong></p>
+<p>总结：</p>
+<ol>
+<li><code>async</code>好像是用<code>spawn</code>实现的(至少从各种结果，异常来看是差不多的)</li>
+<li><strong>async始于new Promise().终于reject(e)或则resolve(next.value)</strong><ol>
+<li>如果是reject(e)，说明有异常,也就是上面所说的两种情况。但无论是那一种情况，<strong>都会立即跳出该函数。等待处理。</strong></li>
+<li>如果是resolve()，说明整个流程顺序地顺利执行了。也就是我们期待的。</li>
+</ol>
+</li>
+</ol>
+<h2 id="koa2"><a href="#koa2" class="headerlink" title="koa2"></a>koa2</h2><p>koa2和express相比精简很多。主要的就四个文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Emitter</span> </span>&#123;</div><div class="line">  ...</div><div class="line">  listen() &#123;</div><div class="line">    debug(<span class="string">'listen'</span>);</div><div class="line">    <span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</div><div class="line">    <span class="keyword">return</span> server.listen.apply(server, <span class="built_in">arguments</span>);</div><div class="line">  &#125;</div><div class="line">  callback() &#123;</div><div class="line">    <span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.middleware);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.listeners(<span class="string">'error'</span>).length) <span class="keyword">this</span>.on(<span class="string">'error'</span>, <span class="keyword">this</span>.onerror);</div><div class="line"></div><div class="line">    <span class="keyword">const</span> handleRequest = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</div><div class="line">      res.statusCode = <span class="number">404</span>;</div><div class="line">      <span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</div><div class="line">      <span class="keyword">const</span> onerror = <span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err);</div><div class="line">      <span class="keyword">const</span> handleResponse = <span class="function"><span class="params">()</span> =&gt;</span> respond(ctx);</div><div class="line">      onFinished(res, onerror);</div><div class="line">      <span class="keyword">return</span> fn(ctx).then(handleResponse).catch(onerror);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> handleRequest;</div><div class="line">  &#125;</div><div class="line">   ....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Application</code>即我们<code>new</code>的<code>Koa</code>.</p>
+<p>可以清楚的看到，请求到来时候执行<strong>fn(ctx).then(handleResponse).catch(onerror);</strong></p>
+<p>这里的fn是组合了<code>middleware</code> 的函数(下面这段代码)。函数调用后<strong>总会返回一个Promise(不管是什么状态的)</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span> (<span class="params">middleware</span>) </span>&#123;</div><div class="line">  ....</div><div class="line">  return <span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;</div><div class="line">    <span class="comment">// last called middleware #</span></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span></div><div class="line">    <span class="keyword">return</span> dispatch(<span class="number">0</span>)</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (i &lt;= index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'next() called multiple times'</span>))</div><div class="line">       <span class="comment">// 当前执行第 i 个中间件</span></div><div class="line">      index = i</div><div class="line">      <span class="keyword">let</span> fn = middleware[i]</div><div class="line">      <span class="comment">// 所有的中间件执行完毕</span></div><div class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</div><div class="line">      <span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</div><div class="line">      </div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">         <span class="comment">// 执行当前的中间件</span></div><div class="line">      	<span class="comment">// 这里的fn也就是app.use(fn)中的fn</span></div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(context, <span class="function"><span class="keyword">function</span> <span class="title">next</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line">        &#125;))</div><div class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有个问题，这里的catch是catch啥的?</p>
+<p>因为fn是我们的中间件，一般是个普通函数，返回promise的函数或则async函数。</p>
+<p>所以说只能是普通函数抛出一个异常(如果是promise会被下面的catch到)</p>
+<p><strong>请求到来时最后会变成这种形式的</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span></div><div class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> respond(ctx))</div><div class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err))</div><div class="line"></div><div class="line"><span class="comment">//从上面可以看出会有三种不同的pormise。我们主要讨论第二种。</span></div><div class="line"><span class="comment">//fn即中间件</span></div><div class="line"><span class="built_in">Promise</span>.resolve(fn(context, <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line">&#125;))</div><div class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> respond(ctx))</div><div class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err))</div></pre></td></tr></table></figure>
+<p>不难发现，无论fn是否为普通函数且返回了什么，或则是返回promise的函数resolve什么，都是没有意义的，因为then都是不接受该参数的。它只会catch错误信息。</p>
+<p>(实际测试，有个问题我百思不解，fn正常执行也会触发catch？这他大爷的一下颠覆了我的世界观，但事实是respond(ctx)是返回一个boolean。。如果不返回一个reject状态的promise，catch是不可能执行的，，，，最后发现了这个catch是不执行的，执行的是ctx.onerror，但找不到代码在哪执行的)</p>
+<p><strong>详细谈一下fn返回promise的情况。</strong></p>
+<p>如果fn返回一个promise,那么Promise.resolve()则直接返回该promise</p>
+<p>比方说有个中间件是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">ctx</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(ctx.method, ctx.header.host + ctx.url)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"> ctx, next </span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params"> resolve, reject </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">        <span class="comment">// 执行中间件的操作</span></div><div class="line">        log( ctx )</div><div class="line"></div><div class="line">        resolve()</div><div class="line"></div><div class="line">        <span class="keyword">return</span> next()</div><div class="line"></div><div class="line">    &#125;).catch(<span class="function">(<span class="params"> err </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> next()</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么最终请求过来处理函数是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">     <span class="comment">// 执行中间件的操作</span></div><div class="line">     log( ctx )</div><div class="line">     resolve()</div><div class="line">     <span class="keyword">return</span> next()</div><div class="line">&#125;)</div><div class="line">.catch(<span class="function">(<span class="params"> err </span>) =&gt;</span> &#123;<span class="keyword">return</span> next()&#125;)</div><div class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> respond(ctx))</div><div class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err))</div></pre></td></tr></table></figure>
+<p>一般来说为了防止<code>log( ctx )</code>抛出异常，<code>next()</code>不执行。<strong>(resolver里面抛出异常会被直接catch到，然后改变状态，设置error，是直接跳过resolver后面代码的)</strong>我们会给中间件<code>promise</code>加一个<code>catch</code>.以便抛出异常后继续处理下一个中间件。</p>
+<p>这里的next是下一个中间件promise，中间件promise里面还有next，一层套一层。</p>
+<p>按promise特性，</p>
+<p>同步的resolve()，也不会立即执行then，catch(因为此时then，catch生成的promise还没push到queue里面)，会等到改变自身状态和值后，执行完了resolver后面代码(next执行)，最后执行then，catch等等。</p>
+<p>即便说是异步的resolve(),也会等到next()返回的promise里面的子子孙孙promise状态都改变完了，才最后执行then,catch等等。</p>
+<p>这就是传说中的洋葱体。。</p>
+<h3 id="总结：完全搞懂Promise很重要。"><a href="#总结：完全搞懂Promise很重要。" class="headerlink" title="总结：完全搞懂Promise很重要。"></a>总结：完全搞懂Promise很重要。</h3></div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#async"><span class="nav-text">async</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa2"><span class="nav-text">koa2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结：完全搞懂Promise很重要。"><span class="nav-text">总结：完全搞懂Promise很重要。</span></a></li></ol></li></ol></div>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#Node" rel="tag">#Node</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/20/async和koa2/"
+           data-title="async和koa2" data-url="http://yoursite.com/2017/03/20/async和koa2/">
+      </div>
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
