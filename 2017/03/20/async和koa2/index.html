@@ -43,21 +43,21 @@
 
 
 <meta name="description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
-阮大大说async函数是用spawn实现的。开始我是不相信的，持质疑态度。
-既然说有了质疑，就应该做个测试，证明这个观点">
+阮大大在es6里面给出了async函数的一种实现方式，是用下面的spawn实现的。
+123456789101112131">
 <meta property="og:type" content="article">
 <meta property="og:title" content="async和koa2">
 <meta property="og:url" content="http://yoursite.com/2017/03/20/async和koa2/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
-阮大大说async函数是用spawn实现的。开始我是不相信的，持质疑态度。
-既然说有了质疑，就应该做个测试，证明这个观点">
-<meta property="og:updated_time" content="2017-04-24T10:52:00.626Z">
+阮大大在es6里面给出了async函数的一种实现方式，是用下面的spawn实现的。
+123456789101112131">
+<meta property="og:updated_time" content="2017-05-10T09:13:06.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="async和koa2">
 <meta name="twitter:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
-阮大大说async函数是用spawn实现的。开始我是不相信的，持质疑态度。
-既然说有了质疑，就应该做个测试，证明这个观点">
+阮大大在es6里面给出了async函数的一种实现方式，是用下面的spawn实现的。
+123456789101112131">
 
 
 
@@ -211,10 +211,9 @@
   <div class="post-body">
 
     <div class="content markdown-body"><h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 等同于</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> spawn(<span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>阮大大说<code>async</code>函数是用<code>spawn</code>实现的。开始我是不相信的，持质疑态度。</p>
-<p>既然说有了质疑，就应该做个测试，证明这个观点。</p>
+<p>阮大大在es6里面给出了<code>async</code>函数的一种实现方式，是用下面的<code>spawn</code>实现的。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">spawn</span>(<span class="params">genF</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">		<span class="keyword">var</span> gen = genF();</div><div class="line">		<span class="function"><span class="keyword">function</span> <span class="title">step</span>(<span class="params">nextF</span>) </span>&#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">var</span> next = nextF();</div><div class="line">			&#125; <span class="keyword">catch</span>(e) &#123;</div><div class="line">				<span class="keyword">return</span> reject(e);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(next.done) &#123;</div><div class="line">				<span class="keyword">return</span> resolve(next.value);</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">				step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(v); &#125;);</div><div class="line">			&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">				step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.throw(e); &#125;);</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line">		step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(<span class="literal">undefined</span>); &#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>做个测试前，我们先看看<code>step</code>函数里面的<code>catch</code>是捕捉啥的？</p>
+<p>先看看<code>step</code>函数里面的<code>catch</code>是捕捉啥的？</p>
 <p>肯定是<code>nexf()</code>这个函数出错的，往上走会发现源头是<code>gen.next()</code>或则<code>gen.throw()</code>。</p>
 <ol>
 <li><code>gen</code>没有<code>next</code>函数或则说压根不是函数——catch</li>
@@ -269,7 +268,7 @@
 <p>同步的<code>resolve()</code>，也不会立即执行<code>then，catch</code>(因为此时then，catch生成的promise还没push到queue里面)，会等到改变自身状态和值后，执行完了resolver后面代码(next执行)，最后执行<code>then，catch</code>等等。</p>
 <p>即便说是异步的<code>resolve()</code>也会等到<code>next()</code>返回的<code>promise</code>里面的子子孙孙<code>promise</code>状态都改变完了，才最后执行<code>then,catch</code>等等。</p>
 <p>这就是传说中的洋葱体。。</p>
-<h3 id="总结：完全搞懂Promise很重要。"><a href="#总结：完全搞懂Promise很重要。" class="headerlink" title="总结：完全搞懂Promise很重要。"></a>总结：完全搞懂Promise很重要。</h3></div>
+<h3 id="总结：搞懂Promise很重要。"><a href="#总结：搞懂Promise很重要。" class="headerlink" title="总结：搞懂Promise很重要。"></a>总结：搞懂Promise很重要。</h3></div>
 
     <div class="post-sidebar">
   <div class="toggle-btn" id="toggle-btn">
@@ -280,7 +279,7 @@
     <div class="post-toc">
       
       
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#async"><span class="nav-text">async</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa2"><span class="nav-text">koa2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结：完全搞懂Promise很重要。"><span class="nav-text">总结：完全搞懂Promise很重要。</span></a></li></ol></li></ol></div>
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#async"><span class="nav-text">async</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa2"><span class="nav-text">koa2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结：搞懂Promise很重要。"><span class="nav-text">总结：搞懂Promise很重要。</span></a></li></ol></li></ol></div>
       
     </div>
   </section>
