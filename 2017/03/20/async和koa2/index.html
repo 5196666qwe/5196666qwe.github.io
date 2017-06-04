@@ -52,7 +52,7 @@
 <meta property="og:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
 阮大大在es6里面给出了async函数的一种实现方式，是用下面的spawn实现的。
 123456789101112131">
-<meta property="og:updated_time" content="2017-05-10T09:13:06.929Z">
+<meta property="og:updated_time" content="2017-06-04T05:37:17.188Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="async和koa2">
 <meta name="twitter:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
@@ -266,8 +266,7 @@
 <p>这里的<code>next</code>是下一个中间件<code>promise</code>，中间件<code>promise</code>里面可能还有<code>next</code>，一层套一层。</p>
 <p>按<code>promise</code>特性，</p>
 <p>同步的<code>resolve()</code>，也不会立即执行<code>then，catch</code>(因为此时then，catch生成的promise还没push到queue里面)，会等到改变自身状态和值后，执行完了resolver后面代码(next执行)，最后执行<code>then，catch</code>等等。</p>
-<p>即便说是异步的<code>resolve()</code>也会等到<code>next()</code>返回的<code>promise</code>里面的子子孙孙<code>promise</code>状态都改变完了，才最后执行<code>then,catch</code>等等。</p>
-<p>这就是传说中的洋葱体。。</p>
+<p>如果说是异步的<code>resolve()</code>，此时<code>resolve</code>立即返回，那么<code>next</code>会立即执行，这个时候，就得看<code>next</code>里面的<code>promise</code>的状态了，否则，<code>then</code>可能提前执行，进行响应。</p>
 <h3 id="总结：搞懂Promise很重要。"><a href="#总结：搞懂Promise很重要。" class="headerlink" title="总结：搞懂Promise很重要。"></a>总结：搞懂Promise很重要。</h3></div>
 
     <div class="post-sidebar">
