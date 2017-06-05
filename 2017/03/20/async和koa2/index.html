@@ -52,7 +52,7 @@
 <meta property="og:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
 阮大大在es6里面给出了async函数的一种实现方式，是用下面的spawn实现的。
 123456789101112131">
-<meta property="og:updated_time" content="2017-06-04T05:37:17.188Z">
+<meta property="og:updated_time" content="2017-06-05T08:54:46.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="async和koa2">
 <meta name="twitter:description" content="async123456789async function fn(args)&amp;#123;	// ...&amp;#125;// 等同于function fn(args)&amp;#123;	return spawn(function*() &amp;#123;	// ...	&amp;#125;);&amp;#125;
@@ -238,7 +238,7 @@
 <ol>
 <li><code>async</code>好像是用<code>spawn</code>实现的(至少从各种结果，异常来看是差不多的)</li>
 <li><strong>async始于new Promise().终于reject(e)或则resolve(next.value)</strong><ol>
-<li>如果是<code>reject(e)</code>，说明有异常,也就是上面所说的两种情况。但无论是那一种情况，<strong>都会立即跳出该函数。等待处理。</strong></li>
+<li>如果是<code>reject(e)</code>，说明有异常,也就是上面所说的两种情况。但无论是那一种情况，<strong>都会立即跳出该函数。等待处理。</strong>(这里有个意外，就是如果你外部对await进行try/catch了，就不会跳出。外部的try/catch会先于内部的try/catch对g.throw进行捕获)</li>
 <li>如果是<code>resolve()</code>，说明整个流程顺序地顺利执行了。也就是我们期待的。</li>
 </ol>
 </li>
