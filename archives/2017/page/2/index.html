@@ -172,7 +172,7 @@
 
 
   <div class="title-wrap" style="background: url() center / cover">
-    <h2 class="title"><a href="/2017/03/01/V8内存 /">V8内存</a></h2>
+    <h2 class="title"><a href="/2017/03/01/再谈谈闭包的一些事/">再谈谈闭包的一些事</a></h2>
   </div>
 
   <div class="post-cont">
@@ -183,10 +183,13 @@
       </time>
     </span>
     <div class="text">
-      <a href="/2017/03/01/V8内存 /">
+      <a href="/2017/03/01/再谈谈闭包的一些事/">
         
-        node是基于v8引擎，其内存管理方式与v8一致。下面简单介绍v8的相关内存特效。
-V8内存限制node基于V8构建，通过V8的方式进行分配跟管理js对象。V8对内存的使用有限制（老生代内存64位系统下约为1.4G，32位系统下约为0.7G，新生代内存64位系统下约为32MB，32系统下约为16MB
+        闭包：闭包至少在js是和[[scope]相关的，别的语言不知道怎么实现的。
+我记的以前学习闭包的时候云里雾里的，后来看了汤姆大叔的js豁然开朗.
+再来复习一下，大叔是这么阐述的：
+每一个函数是一个上下文，上下文可以抽象成拥有变量对象，this指针，作用域链的object。
+而我们所关心的闭包是作用域
         ...
       </a>
     </div>
@@ -211,7 +214,7 @@ V8内存限制node基于V8构建，通过V8的方式进行分配跟管理js对�
       </span>
     
 
-    <a class="read-more-btn" target="_blank" href="/2017/03/01/V8内存 /" itemprop="url">
+    <a class="read-more-btn" target="_blank" href="/2017/03/01/再谈谈闭包的一些事/" itemprop="url">
       more...
     </a>
   </div>
@@ -415,13 +418,13 @@ next(g)
     
       <a href="/tags#JavaScript">JavaScript</a>
     
-      <a href="/tags#Python">Python</a>
-    
       <a href="/tags#Java">Java</a>
     
-      <a href="/tags#Git">Git</a>
+      <a href="/tags#Python">Python</a>
     
       <a href="/tags#es6">es6</a>
+    
+      <a href="/tags#Git">Git</a>
     
       <a href="/tags#hexo">hexo</a>
     
