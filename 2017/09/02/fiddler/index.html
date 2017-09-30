@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="tools," />
+
+
+<meta name="description" content="Fiddler简介
+Fiddler是一个抓包工具。
+核心原理:     Http代理，客户端的所有请求都要先经过Fiddler，然后转发到相应的服务器，反之，服务器端的所有响应，也都会先经过Fiddler然后发送到客户端。
+12客户端　－－－ &amp;gt;request fiddler(proxy)  －－－&amp;gt; request(web server )	   &amp;lt;－－－  response">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fiddler抓包工具">
+<meta property="og:url" content="http://yoursite.com/2017/09/02/fiddler/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="Fiddler简介
+Fiddler是一个抓包工具。
+核心原理:     Http代理，客户端的所有请求都要先经过Fiddler，然后转发到相应的服务器，反之，服务器端的所有响应，也都会先经过Fiddler然后发送到客户端。
+12客户端　－－－ &amp;gt;request fiddler(proxy)  －－－&amp;gt; request(web server )	   &amp;lt;－－－  response">
+<meta property="og:updated_time" content="2017-09-30T05:40:21.263Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fiddler抓包工具">
+<meta name="twitter:description" content="Fiddler简介
+Fiddler是一个抓包工具。
+核心原理:     Http代理，客户端的所有请求都要先经过Fiddler，然后转发到相应的服务器，反之，服务器端的所有响应，也都会先经过Fiddler然后发送到客户端。
+12客户端　－－－ &amp;gt;request fiddler(proxy)  －－－&amp;gt; request(web server )	   &amp;lt;－－－  response">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> fiddler抓包工具 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="fiddler抓包工具"> fiddler抓包工具 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-09-02T21:53:53+08:00" content="2017-09-02">
+              2017-09-02
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#tools" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <a href="/2017/09/02/fiddler/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/02/fiddler/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p><strong>Fiddler简介</strong></p>
+<p><code>Fiddler</code>是一个抓包工具。</p>
+<p>核心原理:     Http代理，客户端的所有请求都要先经过<code>Fiddler</code>，然后转发到相应的服务器，反之，服务器端的所有响应，也都会先经过Fiddler然后发送到客户端。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">客户端　－－－ &gt;request fiddler(proxy)  －－－&gt; request(web server )</div><div class="line">	   &lt;－－－  response fiddler(proxy) &lt;－－－ response(web server )</div></pre></td></tr></table></figure>
+<p>启用 Fiddler 时，IE 的PROXY 设定会变成 127.0.0.1:8888.</p>
+<p><strong>Fiddler模式</strong></p>
+<ul>
+<li>流模式 <code>streaming</code><ul>
+<li>可实时把服务器数据返回给客户端</li>
+</ul>
+</li>
+<li>缓冲模式<code>buffering</code><ul>
+<li>http请求所有的数据都准备好之后才把数据返回给客户端</li>
+</ul>
+</li>
+</ul>
+<p><strong>菜单栏</strong></p>
+<p>说一下菜单栏几个比较有用的功能.</p>
+<ul>
+<li><code>replay</code>重新发送请求</li>
+<li><code>any process</code> 过滤进程请求好,一个锚点,拉倒对应程序即可监听该程序.</li>
+<li><code>find</code>查找回话</li>
+<li><code>textwizard</code> 编码 解码文本 内容<ul>
+<li>用途对<code>url form</code>参数进行解压编码,十分有用.</li>
+</ul>
+</li>
+</ul>
+<p><strong>底部状态栏</strong></p>
+<ul>
+<li>黑色面板,可以看成说<code>console</code>,输入<code>help</code>会打开浏览器获取帮助</li>
+<li><code>capturing fiddler</code>是否要启动<code>fiddler</code>代理</li>
+<li><code>web browsers</code>过滤请求来源</li>
+</ul>
+<p><strong>右侧监控面板</strong></p>
+<ul>
+<li><code>staistics</code> 数据统计 <ul>
+<li>客户端建立链接时间, 开始请求时间, 服务器返回响应时间…..RTT往返时间</li>
+</ul>
+</li>
+<li><code>inspectors</code> <ul>
+<li>对请求解包, 可看到各种请求信息.</li>
+</ul>
+</li>
+<li><code>autoResponder</code><ul>
+<li>文件代理, 可以不经过服务器而从本地返回. 适合定位文件</li>
+</ul>
+</li>
+<li><code>compose</code><ul>
+<li>可视化<code>curl</code>, 对<code>api</code>进行测试</li>
+</ul>
+</li>
+<li><code>log</code><ul>
+<li>操作日志</li>
+</ul>
+</li>
+<li><code>timeline</code> <ul>
+<li>网站性能分析,不大会用</li>
+</ul>
+</li>
+</ul>
+<p>还有一个实用的功能就上<code>host</code>配置,免去了本地更改<code>host</code>的痛苦.</p>
+<p>我上感觉爬虫的时候分析<code>post</code>请求的时候比较有用, 有些body编码简直了…直接就是乱码,这种情况一般就是gbk编码的..</p>
+<p>测试<code>api</code>一般用<code>httpie</code>,比<code>curl</code>好用多了.</p>
+<p><strong>手机抓包</strong></p>
+<p>需要安装证书，本人<code>小米手机</code> 上安装会失败，得手动安装。手动安装得需要密码，而这个密码是<strong>锁屏密码</strong> ，没有必须设置。设置后就会不会提示需要密码 了。</p>
+<p><code>Fiddler</code>抓取<code>HTTPS</code>流量的原理</p>
+<p><code>TLS</code>是一种端到端的传输层加密协议，是<code>HTTPS</code>协议的一个组成部分。访问<code>HTTPS</code>站点时，<code>HTTP</code>请求、响应都通过<code>TLS</code>协议在浏览器和服务器之间加密传输，并且通过数字证书技术保证数据的保密性和完整性；任何“中间人”、包括代{过}{滤}理服务器都只能转发数据，而无法窃听或者篡改数据。<br>要抓取<code>HTTPS</code>流量的明文内容，<code>Fiddler</code>必须解密<code>HTTPS</code>流量。但是，浏览器将会检查数字证书，并发现会话遭到窃听。为了骗过浏览器，<code>Fiddle</code>r通过使用另一个数字证书重新加密<code>HTTPS</code>流量。<code>Fiddler</code>被配置为解密<code>HTTPS</code>流量后，会自动生成一个名为<code>DO_NOT_TRUST_FiddlerRoot</code>的<code>CA</code>证书，并使用该<code>CA</code>颁发每个域名的<code>TLS</code>证书。若<code>DO_NOT_TRUST_FiddlerRoot</code>证书被列入浏览器或其他软件的信任<code>CA</code>名单内，则浏览器或其他软件就会认为<code>HTTPS</code>会话是可信任的、而不会再弹出“证书错误”警告。</p>
+<p>开启<code>HTTPS</code>流量解密功能后，<code>Fiddler</code>将会提示用户将D<code>O_NOT_TRUST_FiddlerRoot</code>证书列入<code>IE</code>浏览器的信任<code>CA</code>名单。用于调试客户端时，这已经足够了；<code>Firefox</code>用户也可以很方便的手动导入<code>DO_NOT_TRUST_FiddlerRoot</code>证书。但是，若要在服务器上抓取<code>ASP.Net</code>发出的<code>HTTPS</code>请求，这是不够的——你必须将<code>DO_NOT_TRUST_FiddlerRoot</code>证书导入“机器帐号”的信任<code>CA</code>名单。</p>
+<p><code>Tools - Fiddler Options - Connections</code>勾选<code>Allow remote computers to connect</code>即可。<br>如果是抓其他其他机器或移动设备，只需将<code>FiddlerRoot.cer</code>导入带抓包机器的信任<code>CA</code>名单，最后将代{过}{滤}理服务器设置成<code>Fiddler</code>所在<code>IP</code>的<code>8888</code>端口。</p>
+<p>知乎上有一篇对网易云进行抓包分析<code>api</code>的，可以自行搜索看看。</p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <p class="post-toc-empty">此文章未包含目录</p>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#tools" rel="tag">#tools</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/09/02/fiddler/"
+           data-title="fiddler抓包工具" data-url="http://yoursite.com/2017/09/02/fiddler/">
+      </div>
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
