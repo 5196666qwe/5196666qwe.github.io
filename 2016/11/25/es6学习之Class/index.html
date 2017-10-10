@@ -1,216 +1,232 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- content-Type -->
-<meta charset="utf-8">
-
-
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="language" content="en">
-<meta name="robots" content="all">
-
-
-<meta content="yes" name="apple-mobile-web-app-capable">
-<meta content="black" name="apple-mobile-web-app-status-bar-style">
-<meta content="telephone=no" name="format-detection">
-<meta content="email=no" name="format-detection">
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="es6 学习之 Class"/>
 
 
 
 
-
-<meta name="google-site-verification" content="xxxxxxxxxx" />
-
-
-
-
-<meta name="baidu-site-verification" content="xxxxxxxxxx" />
-
-
-
-
-
-
-
-<meta name="keywords" content="es6," />
-
-
-<meta name="description" content="##从函数到Class
-JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
-12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:&apos;">
-<meta property="og:type" content="article">
-<meta property="og:title" content="es6 学习之 Class">
-<meta property="og:url" content="http://yoursite.com/2016/11/25/es6学习之Class/index.html">
-<meta property="og:site_name" content="ChenXing">
-<meta property="og:description" content="##从函数到Class
-JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
-12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:&apos;">
-<meta property="og:updated_time" content="2017-01-04T11:43:51.690Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="es6 学习之 Class">
-<meta name="twitter:description" content="##从函数到Class
-JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
-12345678910111213function Person( name, age )&amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHello = function()&amp;#123;  return &apos;name:&apos;">
+  <meta name="keywords" content="es6, ChenXing" />
 
 
 
 
 
 
-  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+  <link rel="alternate" href="/default" title="ChenXing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2016/11/25/es6学习之Class/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
 
 
 
 
 
 
-<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+  
 
 
-<script>
+
+  <script id="baidu_push">
 (function(){
-  var bp = document.createElement('script');
-  bp.src = '//push.zhanzhang.baidu.com/push.js';
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(bp, s);
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
 })();
 </script>
 
-  <title> es6 学习之 Class </title>
+
+
+
+
+
+
+
+
+    <title> es6 学习之 Class - ChenXing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">ChenXing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">ChenXing</a>
+</div>
+
+<nav class="site-navbar">
   
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'xxxxxxxxxx', 'auto');
-  ga('send', 'pageview');
-</script>
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-</head>
-<body lang="zh-Hans">
-
-  <!--[if lte IE 9]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
-
-
-  <div class="another-theme layout">
-
-    
-<header class="header" id="header">
-
-  <div class="header-cont">
-    <div class="text-area">
+    <ul id="menu" class="menu">
       
-        <h1 class="title" data-text="es6 学习之 Class"> es6 学习之 Class </h1>
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
 
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
         
-        <div class="post-meta">
-          <div class="post-time">
-            发表于
-            <time  datetime="2016-11-25T11:25:55+08:00" content="2016-11-25">
-              2016-11-25
-            </time>
+          es6 学习之 Class
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-11-25
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/es6/">es6</a>
+            
           </div>
-
-          
-            <div class="post-category" >
-              
-                <span>
-                  <a href="/categories#es6" itemprop="url" rel="index">
-                    <span itemprop="name">es6</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </div>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <a href="/2016/11/25/es6学习之Class/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/25/es6学习之Class/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-        </div>
         
-      
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#constructor方法"><span class="toc-text">constructor方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Class表达式"><span class="toc-text">Class表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从es5继承到Class的继承"><span class="toc-text">从es5继承到Class的继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类的prototype属性和proto属性"><span class="toc-text">类的prototype属性和proto属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-get"><span class="toc-text">set,get</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法"><span class="toc-text">静态方法</span></a></li></ol>
     </div>
-    <!-- Navigation -->
-    
-    <nav class="navigation clearfix" id="navigation">
-      
-        
-        <a class="nav-link" href="/" rel="section">
-          首页
-        </a>
-      
-        
-        <a class="nav-link" href="/tags" rel="section">
-          标签
-        </a>
-      
-        
-        <a class="nav-link" href="/categories" rel="section">
-          分类
-        </a>
-      
-        
-        <a class="nav-link" href="/about" rel="section">
-          关于
-        </a>
-      
-    </nav>
-    
   </div>
-  <div class="mask"></div>
-</header>
 
 
-    <main class="container">
-
+    <div class="post-content">
       
-
-  <article class="post-article post-type-normal post" itemscope>
-
-  <div class="post-body">
-
-    <div class="content markdown-body"><p>##从函数到Class</p>
+        <p>##从函数到Class</p>
 <p>JavaScript语言的传统方法是通过构造函数，定义并生成新对象。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"> name, age </span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">  <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line">Person.prototype.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'name:'</span> + <span class="keyword">this</span>.name + <span class="string">' age:'</span> + <span class="keyword">this</span>.name ;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(<span class="string">'zjl'</span>,<span class="number">35</span>);</div><div class="line"><span class="keyword">typeof</span> Person <span class="comment">// 'function'</span></div><div class="line">Person.name <span class="comment">// 'Person'  </span></div><div class="line">Person === Person.prototype.constructor <span class="comment">//true</span></div><div class="line">p.sayHello === Person.prototype.sayHello <span class="comment">//true</span></div></pre></td></tr></table></figure>
 <p>Es6通过关键字<code>class</code>让对象的原型写法更清晰了，更像面向对象编程的语法。其他的没什么新鲜的</p>
@@ -240,111 +256,179 @@ JavaScript语言的传统方法是通过构造函数，定义并生成新对象�
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</div><div class="line">	<span class="keyword">constructor</span>() &#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	&#125;</div><div class="line">	get prop() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">'getter'</span>;</div><div class="line">	&#125;</div><div class="line">	set prop(value) &#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'setter: '</span>+value);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> inst = <span class="keyword">new</span> MyClass();</div><div class="line">inst.prop = <span class="number">123</span>;</div><div class="line"><span class="comment">// setter: 123</span></div><div class="line">inst.prop</div><div class="line"><span class="comment">// 'getter'</span></div></pre></td></tr></table></figure>
 <h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p>类相当于实例的原型，所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上<code>static</code>关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</div><div class="line"><span class="keyword">static</span> classMethod() &#123;</div><div class="line"><span class="keyword">return</span> <span class="string">'hello'</span>;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">Foo.classMethod() <span class="comment">// 'hello'</span></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</div><div class="line">foo.classMethod()</div><div class="line"><span class="comment">// TypeError: foo.classMethod is not a function</span></div></pre></td></tr></table></figure>
-</div>
 
-    <div class="post-sidebar">
-  <div class="toggle-btn" id="toggle-btn">
-    <i class="fa fa-reorder"></i>
-  </div>
-  <section class="post-toc-wrap" id="post-sidebar">
-    <h2 class="toc-title">内容目录</h2>
-    <div class="post-toc">
-      
-      
-        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#constructor方法"><span class="nav-text">constructor方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class表达式"><span class="nav-text">Class表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从es5继承到Class的继承"><span class="nav-text">从es5继承到Class的继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的prototype属性和proto属性"><span class="nav-text">类的prototype属性和proto属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-get"><span class="nav-text">set,get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态方法"><span class="nav-text">静态方法</span></a></li></ol></div>
       
     </div>
-  </section>
-</div>
 
+    
+      
+      
 
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yoursite.com">ChenXing</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://yoursite.com/2016/11/25/es6学习之Class/">http://yoursite.com/2016/11/25/es6学习之Class/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
   </div>
-
-  <footer class="post-footer">
-    
-      <div class="post-tags">
-        
-          <a href="/tags#es6" rel="tag">#es6</a>
-        
-      </div>
-    
-    
-
-  </footer>
-
-</article>
-
 
 
 
       
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/es6/">es6</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/12/15/(转载)何为 connect 中间件/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">(转载)何为 connect 中间件</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/22/Python中super函数/">
+        <span class="next-text nav-default">Python中super</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/25/es6学习之Class/"
-           data-title="es6 学习之 Class" data-url="http://yoursite.com/2016/11/25/es6学习之Class/">
-      </div>
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:750701913@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/5196666qwe" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     
   </div>
 
 
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
 
-
-    </main>
-
-    <footer class="footer clearfix">
-  <div class="copyright" >
-    <span>Copyright</span>
+  <span class="copyright-year">
     
     &copy; 
-    <span itemprop="copyrightYear">2017</span>
-    <span class="author" itemprop="copyrightHolder">ChenXing</span>
-  </div>
-
-  <div class="info">
-    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
-    <span id="busuanzi_container_site_pv">
-        总访问量<span id="busuanzi_value_site_pv"></span>次
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
     </span>
-  </div>
+    <span class="author">ChenXing</span>
+  </span>
+</div>
 
-</footer>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
 
 
-  </div>
 
-  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
-
+    
 
 
 
 
   
-    
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
 
 
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
 
-
-
-
-<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
-<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
-
-
-</body>
+  </body>
 </html>

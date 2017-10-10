@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="koa-router小笔记"/>
+
+
+
+
+  <meta name="keywords" content="Node, ChenXing" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ChenXing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/09/15/koa-router小笔记/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> koa-router小笔记 - ChenXing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">ChenXing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">ChenXing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          koa-router小笔记
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-09-15
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/Node/">Node</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#koa-router小笔记"><span class="toc-text">koa-router小笔记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Router结构"><span class="toc-text">Router结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析执行流程"><span class="toc-text">分析执行流程</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h3 id="koa-router小笔记"><a href="#koa-router小笔记" class="headerlink" title="koa-router小笔记"></a>koa-router小笔记</h3><p><strong>koa-compose</strong>的一个小知识 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span></div><div class="line">    <span class="keyword">return</span> dispatch(<span class="number">0</span>)</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (i &lt;= index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'next() called multiple times'</span>))</div><div class="line">      index = i</div><div class="line">      <span class="keyword">let</span> fn = middleware[i]</div><div class="line">      <span class="built_in">console</span>.log(i,index)</div><div class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</div><div class="line">      <span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(context, <span class="function"><span class="keyword">function</span> <span class="title">next</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line">        &#125;))</div><div class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>之前我看代码的时候就想不通，下面两句话是什么时候执行的？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (i === middleware.length) fn = next</div><div class="line"><span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</div></pre></td></tr></table></figure>
+<p>直到看了<code>koa-router</code>里面的<code>allowdmethods</code>之后才知道什么时候会执行</p>
+<p>正常我们<code>use</code>中间件，然后按中间件顺序是不会执行的，<strong>因为最后一个中间件没有next()</strong>,</p>
+<p>你可能想到了，我们故意给最后一个中间件添加<code>next()</code>, 即使它后面没有任何中间件。</p>
+<p>等下到<code>koa-router</code>的<code>allowmethod</code>的时候再谈谈这个。</p>
+<p>老惯例,先上一张图</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</div><div class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Koa()</div><div class="line"><span class="keyword">var</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 装载所有子路由</span></div><div class="line"><span class="keyword">var</span> router = <span class="keyword">new</span> Router()</div><div class="line"><span class="keyword">var</span> home = <span class="keyword">new</span> Router()</div><div class="line"></div><div class="line">router.get(<span class="string">'/'</span>,<span class="keyword">async</span>(ctx,next)=&gt;&#123;</div><div class="line">  ctx.body  = <span class="string">'hello world '</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// 子路由1</span></div><div class="line">home.get(<span class="string">'/hello'</span>, <span class="keyword">async</span>( ctx,next )=&gt;&#123;</div><div class="line">  <span class="keyword">return</span> next();</div><div class="line">&#125;, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>  (<span class="params">ctx</span>)</span>&#123;</div><div class="line">  ctx.body  = <span class="string">'home'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line">home.get(<span class="string">'/ '</span>, <span class="keyword">async</span>( ctx,next )=&gt;&#123;</div><div class="line">  <span class="keyword">return</span> next();</div><div class="line">&#125;, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>  (<span class="params">ctx</span>)</span>&#123;</div><div class="line">  ctx.body  = <span class="string">'hello home'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"></div><div class="line">router.use(<span class="string">'/home'</span>, home.routes())</div><div class="line"></div><div class="line">app.use(router.routes())</div><div class="line">app.use(router.allowedMethods())</div><div class="line"></div><div class="line">app.listen(<span class="number">3000</span>, () =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'[demo] route-use-middleware is starting at port 3000'</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>use对应的背后逻辑如下(没添加allowMethods方法)</p>
+<p><img src="/img/koa/koa-router.jpg" alt="koa-router"></p>
+<h3 id="Router结构"><a href="#Router结构" class="headerlink" title="Router结构"></a>Router结构</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Router(opts)&#123;</div><div class="line">	<span class="attr">opts</span> : opts || &#123;&#125;;</div><div class="line">	methods : opts.methods || [<span class="string">'head'</span>,<span class="string">'options'</span>,<span class="string">'get'</span>,<span class="string">'put'</span>,<span class="string">'patch'</span>,<span class="string">'post'</span>,<span class="string">'delete'</span>]</div><div class="line">	params : &#123;   &#125;</div><div class="line">	stack[ layer, layer, layer ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在我看来这个和<code>express</code>里面<code>router</code>是差不多的,看过源码的可能都会有个印象,就是<code>app = express()</code> 有个<code>_router</code>对象,它也有个<code>stack</code>用来<code>push</code>中间件,更巧的是里面也都是<code>layer</code>对象.</p>
+<p>回到<code>koa</code>的<code>router</code>上面来,通过<code>methods</code>插件.往<code>Router</code>对象身上注册一系列方法<code>get,post,put,head,delete</code>.</p>
+<p>调用这些方法则会<code>Router.stack.push(layer)</code>实际就是调用<code>register</code>注册<code>layer</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">methods.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">method</span>) </span>&#123;</div><div class="line">	Router.prototype.method = <span class="function"><span class="keyword">function</span> (<span class="params">name,path,middleware</span>) </span>&#123;</div><div class="line">		...</div><div class="line">		<span class="comment">//注册</span></div><div class="line">    	<span class="keyword">this</span>.register(path, [method], middleware, &#123;</div><div class="line">     		 <span class="attr">name</span>: name</div><div class="line">  	    &#125;);</div><div class="line">  		...</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们来看看<code>layer</code>长什么样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//layer对象</span></div><div class="line">Layer &#123;</div><div class="line">  <span class="attr">opts</span>:&#123; </div><div class="line">     <span class="attr">end</span>: <span class="literal">true</span>,</div><div class="line">     <span class="attr">name</span>: <span class="literal">null</span>,</div><div class="line">     <span class="attr">sensitive</span>: <span class="literal">false</span>,</div><div class="line">     <span class="attr">strict</span>: <span class="literal">false</span>,</div><div class="line">     <span class="attr">prefix</span>: <span class="string">''</span>,</div><div class="line">     <span class="attr">ignoreCaptures</span>: <span class="literal">undefined</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">name</span>: <span class="literal">null</span>,</div><div class="line">  <span class="attr">methods</span>: [ <span class="string">'HEAD'</span>, <span class="string">'GET'</span> ], <span class="comment">//当只有一个参数的时候添加head方法</span></div><div class="line">  paramNames: [],</div><div class="line">  <span class="attr">stack</span>: [ [AsyncFunction] ],   <span class="comment">//这里就是我们get,post,放置的async函数</span></div><div class="line">  path: <span class="string">'/'</span>,</div><div class="line">  <span class="attr">regexp</span>: &#123; /^(?:\/(?=$))?$/i keys: [] &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>routes方法</strong></p>
+<p><code>Router.routes</code>返回一个<code>dispatch</code>中间件，并设置<code>dispatch.router = this</code>，<strong>在响应请求的时候执行</strong>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">dispatch(ctx,next)&#123;</div><div class="line">	<span class="keyword">var</span> path = ctx.path;</div><div class="line">	<span class="keyword">var</span> matched = router.match(path,ctx.method)</div><div class="line"> 	<span class="keyword">var</span> matchedLayers = matched.pathAndMethod</div><div class="line">	...</div><div class="line">    if (!matched.route) <span class="keyword">return</span> next();</div><div class="line">  	layerChain = matchedLayers.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">memo, layer</span>) </span>&#123;</div><div class="line">      memo.push(<span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</div><div class="line">        ctx.captures = layer.captures(path, ctx.captures);</div><div class="line">        ctx.params = layer.params(path, ctx.captures, ctx.params);</div><div class="line">        <span class="keyword">return</span> next();</div><div class="line">      &#125;);</div><div class="line">      <span class="keyword">return</span> memo.concat(layer.stack);</div><div class="line">    &#125;, []);</div><div class="line">   <span class="keyword">return</span> compose(layerChain)(ctx, next);</div><div class="line">   <span class="comment">// layerChain = [fnc(ctx,next),layer.stack]</span></div><div class="line">   <span class="comment">//该中间件 compose(layerChain)(ctx,next)了，因为next是上级的next，也就是app use compose 里面的next= function next () &#123; return dispatch(i + 1)&#125; 所以暂时不会执行，</span></div><div class="line">   <span class="comment">// 接着执行layer.stack。 也就是 二级路由的compose, 等到 这里面所有路由执行完了, fn = next</span></div><div class="line">   <span class="comment">// 此时的next为 上级的next,也就是说开始执行 app use 别的中间件了</span></div><div class="line">   <span class="comment">//如果说!matched.route，则说明不匹配路由，则执行上级next()</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//metched是mathoded对象</span></div><div class="line">Router.prototype.match (path,method)&#123;</div><div class="line">  	<span class="keyword">var</span> layer = <span class="keyword">this</span>.stack</div><div class="line">	<span class="keyword">return</span> matched&#123;</div><div class="line">		<span class="comment">//放进 与 请求路径向匹配的layer </span></div><div class="line">		path:[layer],</div><div class="line">		<span class="comment">//layer method length 为空 或则methods有值存储</span></div><div class="line">		pathAndMethod:[layer],</div><div class="line">		<span class="attr">route</span>:<span class="literal">false</span>	 layer.method.length存在为<span class="literal">true</span></div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//matches对象</span></div><div class="line"><span class="comment">// 如果存在子路由和allowMethods ,如果allowMethod的path被匹配到,那么会match对象会有该allowMethod包装过的layer</span></div><div class="line">&#123; </div><div class="line">	<span class="attr">path</span>: [ Layer &#123;.. ],</div><div class="line">	<span class="attr">pathAndMethod</span>: [ Layer &#123;..],</div><div class="line">  	<span class="attr">route</span>: <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>use方法</strong></p>
+<p><code>use(path,router.routes(),router.allowedMethods)</code> 方法就是是把<code>routes</code>返回的<code>dispatch</code>中间件和 <code>allowdMethods</code>返回的中间件，生成<code>layer</code>然后<code>push</code>进自己的<code>stack</code>.</p>
+<p>(因为routes().router是自己，也就是layer不生成，allowdMethod生成)，而且会把路径加上<code>path</code>，形成多级路由。</p>
+<p><strong>use本质就是移花接木,跟着我念</strong></p>
+<p>就是把二级路由<code>stack[layer,layer]</code>添加到自己的<code>stack</code>里面. <code>allowMethods</code>包装的<code>layer</code>添加到自己的<code>stack</code>里面</p>
+<p>就是把二级路由<code>stack[layer,layer]</code>添加到自己的<code>stack</code>里面. <code>allowMethods</code>包装的<code>layer</code>添加到自己的<code>stack</code>里面</p>
+<p>就是把二级路由<code>stack[layer,layer]</code>添加到自己的<code>stack</code>里面. <code>allowMethods</code>包装的<code>layer</code>添加到自己的<code>stack</code>里面</p>
+<p><strong>allowmethods方法</strong></p>
+<p><code>allowdmethods</code>  返回一个中间件.</p>
+<p>这个中间件调用下一个中间件(一般为空，此时fn不存在)，<code>next().then()</code>也就是说这个<code>next()</code>返回<code>Promise.resolve().</code> </p>
+<p><strong>这个中间件是在路由不存在(这时候一点都不执行核心代码，浅略的过了一下)或则路由存在但是方法不匹配的时候执行</strong>。</p>
+<p>在这里面对<code>ctx.method</code>先进行判断，看是否是<code>Router</code>自身规定的<code>put,get,post</code>或则说与<code>path[x]=layer</code>路由方法不匹配时抛出异常。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">allowedMethods</span>(<span class="params">ctx, next</span>) </span>&#123;</div><div class="line">   <span class="keyword">return</span> next().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="comment">//处理判断方法逻辑</span></div><div class="line">   &#125;)</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有个地方我想不通,就是如果此时<code>allowMethods</code>后面没有任何中间件了,那么此时会是<code>next(),</code>会返回</p>
+<p><code>promise,resolve()</code>也就是说这个相当于同步的,那么说如果去掉这行<code>next()</code>也是可以的,干嘛要加?不懂…</p>
+<p><strong>all方法</strong></p>
+<p>也是注册一个<code>layer,</code>但是<code>[methods]</code>是<code>methods</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">register(path, [method], middleware, &#123;</div><div class="line">  <span class="attr">name</span>: name</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>route(name)根据给定的name，查找stack里面layer的name是此名字的，没有返回false，有返回该layer;</li>
+<li>url(name,params) 根据name，和params，首先获取route(name)会返回layer,layer存在 返回一个string,　layer不存在则抛出error</li>
+<li>todo </li>
+</ul>
+<h3 id="分析执行流程"><a href="#分析执行流程" class="headerlink" title="分析执行流程"></a>分析执行流程</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span> (<span class="params">middleware</span>) </span>&#123;</div><div class="line">  ...</div><div class="line">  return <span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;</div><div class="line">      ...</div><div class="line">    return dispatch(<span class="number">0</span>)</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</div><div class="line">      <span class="keyword">if</span> (!fn)<span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</div><div class="line">        ...</div><div class="line">      return <span class="built_in">Promise</span>.resolve(fn(context, <span class="function"><span class="keyword">function</span> <span class="title">next</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line">      &#125;))</div><div class="line">          ...</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假设说我们代码 是这样 的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="keyword">async</span>(ctx,next)=&gt;&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'middleware 1'</span>)</div><div class="line">  <span class="keyword">return</span> next();</div><div class="line">&#125;)</div><div class="line">app.use(router.routes())</div><div class="line">app.use(router.allowedMethods())</div></pre></td></tr></table></figure>
+<p>最开始<code>fn(ctx).then(handleResponse).catch(onerror)</code>,可以看到传进来参数是没有<code>next</code>的,</p>
+<ul>
+<li>第一步，执行第一个中间件<ul>
+<li>fn(context,next1) , 也就是async(ctx,next) , 请注意，此时<code>next1</code>是 （<strong>我特意用了next1</strong>）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">next1</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line"> &#125;)</div></pre></td></tr></table></figure>
+<ul>
+<li><p>第二步，router,routes()，<strong>此时，暂时暂停了第一个compose的自动执行</strong>，</p>
+<ul>
+<li><p>因为routes返回一个中间件，<strong>而且会根据路径和方法生成匹配的matched对象</strong>，</p>
+</li>
+<li><p>如果该对象的<code>route</code>不存在，那么<code>return next1()</code>，即下一个<code>allowedMethods</code>处理方法不匹配的逻辑中间件，</p>
+</li>
+<li><p>如果存在，则第二次<code>compose</code> 给ctx添加参数的中间件和匹配到该路由和方法的handle中间件(就是我们写的<code>async</code>方法)，<strong>compose(layerChain)(ctx, next1)</strong>, 里面的中间件大概是长这样的 </p>
+<ul>
+<li>[参数中间件，async, async, 参数中间件，async ]</li>
+</ul>
+</li>
+<li><p><strong>此时第二次compose的是传进来了next1这个参数，</strong> 这意味这开始执行第二个<code>compose</code>,也意味著当执行</p>
+<p>所有第二次的路由中间件后，就程序就差不多停止了，剩下的就交<code>then(handleResponse).catch(onerror)</code>了</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>这里有个神奇的东西，可以试试在路由最后的async里加上 next2() , 会发生意想不到的事。。。就是第一个compose又开始执行了。。。。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yoursite.com">ChenXing</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://yoursite.com/2017/09/15/koa-router小笔记/">http://yoursite.com/2017/09/15/koa-router小笔记/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Node/">Node</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2017/09/10/一些源码分析解析/">
+        <span class="next-text nav-default">一些npm包源码分析</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:750701913@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/5196666qwe" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">ChenXing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
