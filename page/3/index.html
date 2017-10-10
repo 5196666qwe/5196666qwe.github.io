@@ -1,1049 +1,585 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  <title>ChenXing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="~" />
+
+
+<meta property="og:type" content="website">
 <meta property="og:title" content="ChenXing">
 <meta property="og:url" content="http://yoursite.com/page/3/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ChenXing">
-  
-    <link rel="alternative" href="/atom.xml" title="ChenXing" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
-  
-</head>
-<body>
-<div id="container">
-  <div id="wrap">
-    <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">ChenXing</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
-          <input type="submit" value="" class="search-form-submit">
-          <input name=tn type=hidden value="bds">
-          <input name=cl type=hidden value="3">
-          <input name=ct type=hidden value="2097152">
-          <input type="hidden" name="si" value="yoursite.com">
-        </form>
-      </div>
-    </div>
-  </div>
-</header>
-    <div class="outer">
-      <section id="main">
-  
-    <article id="post-Python版的generator以及异步IO" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/10/Python版的generator以及异步IO/" class="article-date">
-  <time datetime="2017-01-10T05:59:55.000Z" itemprop="datePublished">2017-01-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/10/Python版的generator以及异步IO/">Python版的generator以及异步IO</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如果说你 es6 的 Generator 懂了，python 的 generator 就很容易</p>
-<p>下面是一些语法对照表</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">es6</th>
-<th style="text-align:center">python3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">yield</td>
-<td style="text-align:center">yield</td>
-</tr>
-<tr>
-<td style="text-align:center">yield*</td>
-<td style="text-align:center">yield from</td>
-</tr>
-<tr>
-<td style="text-align:center">g.next() or g.next(undefined)</td>
-<td style="text-align:center">next(g) or g.send(None)</td>
-</tr>
-<tr>
-<td style="text-align:center">g.next(‘xxx’)</td>
-<td style="text-align:center">g.send(‘xxx’)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="yield-和-yield-from"><a href="#yield-和-yield-from" class="headerlink" title="yield*  和 yield from"></a>yield*  和 yield from</h2><p><code>es6</code>里面在一个<code>generator</code>调用另一个<code>generator</code>,跟在 <code>yield*</code>后面的generator函数等同与一个<code>for…of</code>循环。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">function* foo() &#123;</div><div class="line">	yield <span class="string">'a'</span>;</div><div class="line">	yield <span class="string">'b'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function * bar() &#123;</div><div class="line">    yield <span class="string">'x'</span>;</div><div class="line">    yield* foo()</div><div class="line">    yield <span class="string">'y'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 等同于</span></div><div class="line">function * bar() &#123;</div><div class="line">    yield <span class="string">'x'</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="function">let v of <span class="title">foo</span><span class="params">()</span>) </span>&#123;</div><div class="line">        yield v;</div><div class="line">    &#125;</div><div class="line">    yield <span class="string">'y'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>而在<code>python</code>里面<code>yield from iterator</code>等同于</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> iterator:</div><div class="line">    <span class="keyword">yield</span> x</div></pre></td></tr></table></figure>
-<p>两者看起来有点类似。</p>
-<p>举个例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader</span><span class="params">()</span>:</span></div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</div><div class="line">		<span class="keyword">yield</span> <span class="string">'&lt;&lt; %s'</span> % i</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader_wrapper</span><span class="params">(g)</span>:</span></div><div class="line">	<span class="keyword">for</span> v <span class="keyword">in</span> g:</div><div class="line">		<span class="keyword">yield</span> v</div><div class="line"></div><div class="line">wrap = reader_wrapper(reader())</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> wrap:</div><div class="line">	print(i)</div><div class="line"><span class="comment"># 结果：</span></div><div class="line">&lt;&lt; <span class="number">0</span></div><div class="line">&lt;&lt; <span class="number">1</span></div><div class="line">&lt;&lt; <span class="number">2</span></div><div class="line">&lt;&lt; <span class="number">3</span></div></pre></td></tr></table></figure>
-<p>我们可以用<code>yield from</code>语句替代reader_wrapper(g)函数中的循环，如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader_wrapper</span><span class="params">(g)</span>:</span></div><div class="line">	<span class="keyword">yield</span> <span class="keyword">from</span> g</div></pre></td></tr></table></figure>
-<p>效果一样，且代码更简洁有没有。</p>
-<p><code>es6</code>里面<code>yield*</code>语句可以接受返回值，<code>python</code>也是可以接受返回值的。两者是一样的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader</span><span class="params">()</span>:</span></div><div class="line">	<span class="keyword">yield</span> <span class="number">1</span></div><div class="line">	<span class="keyword">return</span> <span class="string">'2'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reader_wrapper</span><span class="params">(g)</span>:</span></div><div class="line">	value = <span class="keyword">yield</span> <span class="keyword">from</span> g</div><div class="line">	print(value)</div><div class="line">	<span class="keyword">yield</span> <span class="string">'to do'</span></div><div class="line"></div><div class="line">wrap = reader_wrapper(reader())</div><div class="line"></div><div class="line">print(next(wrap)) </div><div class="line"><span class="comment">#打印出 1 也就是 reader 里面 yield 的 1</span></div><div class="line">next(wrap)</div><div class="line"><span class="comment">#此时执行到了 yield 'to do' 上面的print输出 2</span></div></pre></td></tr></table></figure>
-<p>值得注意的是：</p>
-<p>python中<code>for</code>循环调用generator时，发现拿不到generator的<code>return</code>语句的返回值。如果想要拿到返回值，必须捕获<code>StopIteration</code>错误，返回值包含在<code>StopIteration</code>的<code>value</code>中：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        <span class="keyword">yield</span> b</div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    print(<span class="string">'haha'</span>)</div><div class="line">    <span class="comment"># return 'done'</span></div><div class="line"></div><div class="line">g  = fib(<span class="number">6</span>)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">	<span class="keyword">try</span>:</div><div class="line">		x = next(g)</div><div class="line">		print(<span class="string">'g'</span>,x)</div><div class="line">	<span class="keyword">except</span> StopIteration <span class="keyword">as</span> e:</div><div class="line">		print(<span class="string">'Generator return value:'</span>, e.value)</div><div class="line">		<span class="keyword">break</span></div><div class="line"><span class="comment">#输出</span></div><div class="line">g: <span class="number">1</span></div><div class="line">g: <span class="number">1</span></div><div class="line">g: <span class="number">2</span></div><div class="line">g: <span class="number">3</span></div><div class="line">g: <span class="number">5</span></div><div class="line">g: <span class="number">8</span></div><div class="line">haha</div><div class="line">Generator <span class="keyword">return</span> value: <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="comment">#我把return注释以后你会发现返回的是None，如果你不try/except的话，next发现没有可以yield的话就会抛出异常。</span></div><div class="line"><span class="comment">#在这里还有一个好处就是你会发现print函数会执行，尽管后面没有yield了。</span></div></pre></td></tr></table></figure>
-<h2 id="next对比"><a href="#next对比" class="headerlink" title="next对比"></a>next对比</h2><p>上次我们提到了<code>es6</code>里面</p>
-<p><strong>yield 语句本身没有返回值，或者说总是返回 undefined,</strong></p>
-<p><strong>next 方法可以带一个参数，该参数就会被当作上一个 yield 语句的返回值。</strong></p>
-<p>python里面也是一样的。只不过把next方法带参数的<code>next(&#39;xxxx&#39;)</code>改为了<code>g.send(&#39;xxx&#39;)</code>。</p>
-<blockquote>
-<p>话说为什么python3里面要<code>next(g)</code>，和<code>es6</code>同步多好。</p>
-</blockquote>
-<p>不过两者有个区别：</p>
-<p><strong>es6，遍历器调用<code>next</code>方法会返回一个有着 <code>value</code>和<code>done</code>两个属性的对象。（我们都知道value是yield后面的值）</strong></p>
-<p><strong>python，<code>next(g)</code>或则说<code>g.send(&#39;xxx&#39;)</code>会直接返回<code>yield</code>后面的值</strong></p>
-<h2 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h2><p>如果你上面概念都理解了，那么下面这段代码就应该不难理解。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">()</span>:</span></div><div class="line">    r = <span class="string">''</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        n = <span class="keyword">yield</span> r</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> n:</div><div class="line">            <span class="keyword">return</span></div><div class="line">        print(<span class="string">'[CONSUMER] Consuming %s...'</span> % n)</div><div class="line">        r = <span class="string">'200 OK'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce</span><span class="params">(c)</span>:</span></div><div class="line">    c.send(<span class="keyword">None</span>)</div><div class="line">    n = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> n &lt; <span class="number">5</span>:</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">        print(<span class="string">'[PRODUCER] Producing %s...'</span> % n)</div><div class="line">        r = c.send(n)</div><div class="line">        print(<span class="string">'[PRODUCER] Consumer return: %s'</span> % r)</div><div class="line">    c.close()</div><div class="line"></div><div class="line">c = consumer()</div><div class="line">produce(c)</div></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[PRODUCER] Producing <span class="number">1.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">1.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">2.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">2.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">3.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">3.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">4.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">4.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div><div class="line">[PRODUCER] Producing <span class="number">5.</span>..</div><div class="line">[CONSUMER] Consuming <span class="number">5.</span>..</div><div class="line">[PRODUCER] Consumer <span class="keyword">return</span>: <span class="number">200</span> OK</div></pre></td></tr></table></figure>
-<p>注意到<code>consumer</code>函数是一个<code>generator</code>，把一个<code>consumer</code>传入<code>produce</code>后：</p>
-<ol>
-<li>首先调用<code>c.send(None)</code>启动生成器；</li>
-<li>然后，一旦生产了东西，通过<code>c.send(n)</code>切换到<code>consumer</code>执行；</li>
-<li><code>consumer</code>通过<code>yield</code>拿到消息，处理，又通过<code>yield</code>把结果传回；</li>
-<li><code>produce</code>拿到<code>consumer</code>处理的结果，继续生产下一条消息；</li>
-<li><code>produce</code>决定不生产了，通过<code>c.close()</code>关闭<code>consumer</code>，整个过程结束。</li>
-</ol>
-<p><strong>整个流程无锁，由一个线程执行，<code>produce</code>和<code>consumer</code>协作完成任务，所以称为“协程”</strong>，而非线程的抢占式多任务。</p>
-<p>在完整的下个定义之前，我们看个概念：子程序</p>
-<p><code>子程序</code>或者称为函数，在所有语言中都是层级调用，比如A调用B，B在执行过程中又调用了C，C执行完毕返回，B执行完毕返回，最后是A执行完毕。</p>
-<p>所以子程序调用是通过栈实现的，一个线程就是执行一个子程序。</p>
-<p>子程序调用总是一个入口，一次返回，调用顺序是明确的。而协程的调用和子程序不同。</p>
-<p>协程看上去也是子程序<strong>，但执行过程中，在子程序内部可中断，然后转而执行别的子程序，在适当的时候再返回来接着执行。</strong></p>
-<p>Python对协程的支持是通<code>generator</code>实现的。</p>
-<h2 id="asyncio"><a href="#asyncio" class="headerlink" title="asyncio"></a>asyncio</h2><p><code>asyncio</code>是Python 3.4版本引入的标准库，直接内置了对异步IO的支持。</p>
-<p><code>asyncio</code>的编程模型就是一个消息循环。我们从<code>asyncio</code>模块中直接获取一个<code>EventLoop</code>的引用，然后把需要执行的协程扔到<code>EventLoop</code>中执行，就实现了异步IO。</p>
-<p>用<code>asyncio</code>实现<code>Hello world</code>代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"></div><div class="line"><span class="meta">@asyncio.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line">    <span class="comment"># 异步调用asyncio.sleep(1):</span></div><div class="line">    r = <span class="keyword">yield</span> <span class="keyword">from</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">"Hello again!"</span>)</div><div class="line"></div><div class="line"><span class="comment"># 获取EventLoop:</span></div><div class="line">loop = asyncio.get_event_loop()</div><div class="line"><span class="comment"># 执行coroutine</span></div><div class="line">loop.run_until_complete(hello())</div><div class="line">loop.close()</div></pre></td></tr></table></figure>
-<p><code>@asyncio.coroutine</code>把一个generator标记为coroutine类型，然后，我们就把这个<code>coroutine</code>扔到<code>EventLoop</code>中执行。</p>
-<p><code>hello()</code>会首先打印出<code>Hello world!</code>，然后，<code>yield from</code>语法可以让我们方便地调用另一个<code>generator</code>。由于<code>asyncio.sleep()</code>也是一个<code>coroutine</code>，所以线程不会等待<code>asyncio.sleep()</code>，而是直接中断并执行下一个消息循环。当<code>asyncio.sleep()</code>返回时，线程就可以从<code>yield from</code>拿到返回值（此处是<code>None</code>），然后接着执行下一行语句。</p>
-<p>把<code>asyncio.sleep(1)</code>看成是一个耗时1秒的IO操作，在此期间，主线程并未等待，而是去执行<code>EventLoop</code>中其他可以执行的<code>coroutine</code>了，因此可以实现并发执行。</p>
-<p>我们用Task封装两个<code>coroutine</code>试试：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"></div><div class="line"><span class="meta">@asyncio.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'Hello world! (%s)'</span> % threading.currentThread())</div><div class="line">    <span class="keyword">yield</span> <span class="keyword">from</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">'Hello again! (%s)'</span> % threading.currentThread())</div><div class="line"></div><div class="line">loop = asyncio.get_event_loop()</div><div class="line">tasks = [hello(), hello()]</div><div class="line">loop.run_until_complete(asyncio.wait(tasks))</div><div class="line">loop.close()</div><div class="line"></div><div class="line"><span class="comment">#结果</span></div><div class="line">Hello world! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div><div class="line">Hello world! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div><div class="line">(暂停约<span class="number">1</span>秒)</div><div class="line">Hello again! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div><div class="line">Hello again! (&lt;_MainThread(MainThread, started <span class="number">140735195337472</span>)&gt;)</div></pre></td></tr></table></figure>
-<p>由打印的当前线程名称可以看出，两个<code>coroutine</code>是由同一个线程并发执行的。</p>
-<p>如果把<code>asyncio.sleep()</code>换成真正的IO操作，则多个<code>coroutine</code>就可以由一个线程并发执行。</p>
-<h2 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h2><p>用<code>asyncio</code>提供的<code>@asyncio.coroutine</code>可以把一个generator标记为coroutine类型，然后在coroutine内部用<code>yield from</code>调用另一个coroutine实现异步操作。</p>
-<p>为了简化并更好地标识异步IO，从Python 3.5开始引入了新的语法<code>async</code>和<code>await</code>，可以让coroutine的代码更简洁易读。</p>
-<p>请注意，<code>async</code>和<code>await</code>是针对coroutine的新语法，要使用新的语法，只需要做两步简单的替换：</p>
-<ol>
-<li>把<code>@asyncio.coroutine</code>替换为<code>async</code>；</li>
-<li>把<code>yield from</code>替换为<code>await</code>。</li>
-</ol>
-<p>让我们对比一下上一节的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@asyncio.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line">    r = <span class="keyword">yield</span> <span class="keyword">from</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">"Hello again!"</span>)</div></pre></td></tr></table></figure>
-<p>用新语法重新编写如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line">    r = <span class="keyword">await</span> asyncio.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">"Hello again!"</span>)</div></pre></td></tr></table></figure>
-<p>剩下的代码保持不变。</p>
-<p>注意：</p>
-<p>Python从3.5版本开始为<code>asyncio</code>提供了<code>async</code>和<code>await</code>的新语法；</p>
-<p>注意新语法只能用在Python 3.5以及后续版本，如果使用3.4版本，则仍需使用上一节的方案。</p>
-<h2 id="前方高能。。。"><a href="#前方高能。。。" class="headerlink" title="前方高能。。。"></a>前方高能。。。</h2><p>到这里你的大脑可能已经灌满了新的术语和概念，导致你想要从整体上把握所有这些东西是如何让你可以实现异步编程的稍微有些困难。为了帮助你让这一切更加具体化，这里有一个完整的（伪造的）异步编程的例子，将代码与事件循环及其相关的函数一一对应起来。这个例子里包含的几个协程，代表着火箭发射的倒计时，并且看起来是同时开始的。这是通过并发实现的异步编程；3个不同的协程将分别独立运行，并且都在同一个线程内完成。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> heapq</div><div class="line"><span class="keyword">import</span> types</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span>:</span></div><div class="line"></div><div class="line">    <span class="string">"""Represent how long a coroutine should before starting again.</span></div><div class="line"></div><div class="line">    Comparison operators are implemented for use by heapq. Two-item</div><div class="line">    tuples unfortunately don't work because when the datetime.datetime</div><div class="line">    instances are equal, comparison falls to the coroutine and they don't</div><div class="line">    implement comparison methods, triggering an exception.</div><div class="line"></div><div class="line">    Think of this as being like asyncio.Task/curio.Task.</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, wait_until, coro)</span>:</span></div><div class="line">        self.coro = coro</div><div class="line">        self.waiting_until = wait_until</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.waiting_until == other.waiting_until</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.waiting_until &lt; other.waiting_until</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SleepingLoop</span>:</span></div><div class="line"></div><div class="line">    <span class="string">"""An event loop focused on delaying execution of coroutines.</span></div><div class="line"></div><div class="line">    Think of this as being like asyncio.BaseEventLoop/curio.Kernel.</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *coros)</span>:</span></div><div class="line">        self._new = coros</div><div class="line">        self._waiting = []</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_until_complete</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment"># Start all the coroutines.</span></div><div class="line">        <span class="keyword">for</span> coro <span class="keyword">in</span> self._new:</div><div class="line">            wait_for = coro.send(<span class="keyword">None</span>)</div><div class="line">            heapq.heappush(self._waiting, Task(wait_for, coro))</div><div class="line">        <span class="comment"># Keep running until there is no more work to do.</span></div><div class="line">        <span class="keyword">while</span> self._waiting:</div><div class="line">            now = datetime.datetime.now()</div><div class="line">            <span class="comment"># Get the coroutine with the soonest resumption time.</span></div><div class="line">            task = heapq.heappop(self._waiting)</div><div class="line">            <span class="keyword">if</span> now &lt; task.waiting_until:</div><div class="line">                <span class="comment"># We're ahead of schedule; wait until it's time to resume.</span></div><div class="line">                delta = task.waiting_until - now</div><div class="line">                time.sleep(delta.total_seconds())</div><div class="line">                now = datetime.datetime.now()</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                <span class="comment"># It's time to resume the coroutine.</span></div><div class="line">                wait_until = task.coro.send(now)</div><div class="line">                heapq.heappush(self._waiting, Task(wait_until, task.coro))</div><div class="line">            <span class="keyword">except</span> StopIteration:</div><div class="line">                <span class="comment"># The coroutine is done.</span></div><div class="line">                <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="meta">@types.coroutine</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep</span><span class="params">(seconds)</span>:</span></div><div class="line">    <span class="string">"""Pause a coroutine for the specified number of seconds.</span></div><div class="line"></div><div class="line">    Think of this as being like asyncio.sleep()/curio.sleep().</div><div class="line">    """</div><div class="line">    now = datetime.datetime.now()</div><div class="line">    wait_until = now + datetime.timedelta(seconds=seconds)</div><div class="line">    <span class="comment"># Make all coroutines on the call stack pause; the need to use `yield`</span></div><div class="line">    <span class="comment"># necessitates this be generator-based and not an async-based coroutine.</span></div><div class="line">    actual = <span class="keyword">yield</span> wait_until</div><div class="line">    <span class="comment"># Resume the execution stack, sending back how long we actually waited.</span></div><div class="line">    <span class="keyword">return</span> actual - now</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(label, length, *, delay=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="string">"""Countdown a launch for `length` seconds, waiting `delay` seconds.</span></div><div class="line"></div><div class="line">    This is what a user would typically write.</div><div class="line">    """</div><div class="line">    print(label, <span class="string">'waiting'</span>, delay, <span class="string">'seconds before starting countdown'</span>)</div><div class="line">    delta = <span class="keyword">await</span> sleep(delay)</div><div class="line">    print(label, <span class="string">'starting after waiting'</span>, delta)</div><div class="line">    <span class="keyword">while</span> length:</div><div class="line">        print(label, <span class="string">'T-minus'</span>, length)</div><div class="line">        waited = <span class="keyword">await</span> sleep(<span class="number">1</span>)</div><div class="line">        length -= <span class="number">1</span></div><div class="line">    print(label, <span class="string">'lift-off!'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""Start the event loop, counting down 3 separate launches.</span></div><div class="line"></div><div class="line">    This is what a user would typically write.</div><div class="line">    """</div><div class="line">    loop = SleepingLoop(countdown(<span class="string">'A'</span>, <span class="number">5</span>), countdown(<span class="string">'B'</span>, <span class="number">3</span>, delay=<span class="number">2</span>),</div><div class="line">                        countdown(<span class="string">'C'</span>, <span class="number">4</span>, delay=<span class="number">1</span>))</div><div class="line">    start = datetime.datetime.now()</div><div class="line">    loop.run_until_complete()</div><div class="line">    print(<span class="string">'Total elapsed time is'</span>, datetime.datetime.now() - start)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
-<p>简单介绍一下是怎么实现的。</p>
-<p>通过<code>SleepingLoop</code>创建一个<code>EventLoop</code>,同时传进来三个协程<code>countdown</code>,最后通过<code>run_until_complete</code>完成任务。</p>
-<p>最关键的就是<code>run_until_complete</code>里面干了什么。。</p>
-<p>首先遍历<code>SleepingLoop</code>的tuple列表(里面放置了上面那个协程)，<code>SleepingLoop</code>刚开始时初始化了一个<code>_waiting</code>的<code>[]</code>，然后通过<code>heapq</code>模块push一个个<code>task</code>,<code>task</code>是包含协程和信息的对象。同时分别执行<code>coro.send(None)</code>完成第一阶段。</p>
-<p>紧接着创建一个循环，条件是<code>self._waiting</code>这个tuple列表是否为存在。</p>
-<p><code>pop</code>出<code>task</code>,执行<code>task.coro.send(now)</code>，然后再次<code>push</code>一个<code>task</code>即更新信息，如果这里的send抛出异常，则push不执行。也就是说这个过程一直是pop，push 直到 <code>self._waiting</code>空。</p>
-<p>循环结束。</p>
-<hr>
-<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
-<p>参考：</p>
-<p><a href="http://blog.rainy.im/2016/03/10/how-the-heck-does-async-await-work-in-python-3-5/" target="_blank" rel="external">Python 3.5 协程究竟是个啥</a></p>
-<p><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143208573480558080fa77514407cb23834c78c6c7309000" target="_blank" rel="external">异步io</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/01/10/Python版的generator以及异步IO/" data-id="cj8lswfmp00125svbdiyucjyq" class="article-share-link" data-share="baidu" data-title="Python版的generator以及异步IO">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/01/10/Python版的generator以及异步IO/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-Python中的元类" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/07/Python中的元类/" class="article-date">
-  <time datetime="2017-01-07T06:59:55.000Z" itemprop="datePublished">2017-01-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/07/Python中的元类/">Python中的元类</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-Python中一切皆对象，包括类"><a href="#1-Python中一切皆对象，包括类" class="headerlink" title="1. Python中一切皆对象，包括类"></a>1. Python中一切皆对象，包括类</h2><p>这点和<code>java</code>一样，<code>java</code>里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据<code>Class</code>对象动态创建类。每个类都有与之对应的<code>Class</code>对象。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'hello world'</span>)</div><div class="line">foo = Foo()</div><div class="line">print(type(foo))            <span class="comment"># &lt;class '__main__.Foo'&gt;</span></div><div class="line">print(type(foo.hello))      <span class="comment"># &lt;class 'method'&gt;</span></div><div class="line">print(type(Foo))            <span class="comment"># &lt;class 'type'&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="2-类的创建过程"><a href="#2-类的创建过程" class="headerlink" title="2. 类的创建过程"></a>2. 类的创建过程</h2><p>在上边的例子中，类Foo的创建过程中会执行class语句，此时需要首先确定元类（元类定制类的创建行为）。元类的确定过程如下：</p>
-<ul>
-<li>确定类Foo的父类是否有参数metaclass，如果没有则：</li>
-<li>确定类Foo的父类的父类是否有参数metaclass，如果没有则：</li>
-<li>使用默认元类type。</li>
-</ul>
-<p>上边的例子中，前2项都不符合，则直接使用默认元类type。即上边的语句相当于：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"hello world"</span>)</div><div class="line"></div><div class="line">Foo = type(<span class="string">"Foo"</span>, (object,), &#123;<span class="string">"hello"</span>: hello&#125;)</div></pre></td></tr></table></figure>
-<p>要创建一个class对象，<code>type()</code>函数依次传入3个参数：</p>
-<ol>
-<li>class的名称；</li>
-<li>继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法；</li>
-<li>class的方法名称与函数绑定，这里我们把函数<code>hello</code>绑定到方法名<code>hello</code>上。</li>
-</ol>
-<p>通过<code>type()</code>函数创建的类和直接写class是完全一样的，因为Python解释器遇到class定义时，仅仅是扫描一下class定义的语法，然后调用<code>type()</code>函数创建出class。</p>
-<p>正常情况下，我们都用<code>class Xxx...</code>来定义类，但是，<code>type()</code>函数也允许我们动态创建出类来，也就是说，动态语言本身支持运行期动态创建类，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。</p>
-<h2 id="3-自定义元类"><a href="#3-自定义元类" class="headerlink" title="3. 自定义元类"></a>3. 自定义元类</h2><p>再一次说明实例、类和元类之间的关系：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>foo.__class__     <span class="comment"># &lt;class 'Foo'&gt;</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Foo.__class__     <span class="comment"># &lt;class 'type'&gt;</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type.__class__    <span class="comment"># &lt;class 'type'&gt;</span></div></pre></td></tr></table></figure>
-<p>foo是Foo的实例，Foo是type的实例，type的类又是type。type是默认的元类。那么如何自定义元类呢？</p>
-<p>除了使用<code>type()</code>动态创建类以外，要控制类的创建行为，还可以使用<strong>metaclass</strong>。</p>
-<p>metaclass，直译为元类，简单的解释就是：</p>
-<p>当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。</p>
-<p>但是如果我们想创建出类呢？那就必须根据<strong>metaclass</strong>创建出类，所以：先定义<strong>metaclass</strong>，然后创建类。</p>
-<p>连接起来就是：先定义<strong>metaclass</strong>，就可以创建类，最后创建实例。</p>
-<p><strong>你可以在metaclass中放置些什么代码呢？</strong></p>
-<p><strong>答案就是：可以创建一个类的东西。那么什么可以用来创建一个类呢？type，或者任何使用到type或者子类化type的东东都可以。</strong></p>
-<p>我们先看一个简单的例子，这个metaclass可以给我们自定义的MyList增加一个<code>add</code>方法：</p>
-<p>定义<code>ListMetaclass</code>，按照默认习惯，metaclass的类名总是以Metaclass结尾，以便清楚地表示这是一个metaclass：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># __new__ 是在__init__之前被调用的特殊方法</span></div><div class="line"><span class="comment"># __new__是用来创建对象并返回之的方法</span></div><div class="line"><span class="comment"># 而__init__只是用来将传入的参数初始化给对象</span></div><div class="line"><span class="comment"># 你很少用到__new__，除非你希望能够控制对象的创建</span></div><div class="line"><span class="comment"># 这里，创建的对象是类，我们希望能够自定义它，所以我们这里改写__new__</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListMetaclass</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        attrs[<span class="string">'add'</span>] = <span class="keyword">lambda</span> self, value: self.append(value)</div><div class="line">        <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div></pre></td></tr></table></figure>
-<p>有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数<code>metaclass</code>：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyList</span><span class="params">(list, metaclass=ListMetaclass)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
-<p><code>__new__()</code>方法接收到的参数依次是：</p>
-<ol>
-<li>当前准备创建的类的对象；</li>
-<li>类的名字；</li>
-<li>类继承的父类集合；</li>
-<li>类的方法集合。</li>
-</ol>
-<p>测试一下<code>MyList</code>是否可以调用<code>add()</code>方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>L = MyList()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>L.add(<span class="number">1</span>)</div><div class="line">&gt;&gt; L</div><div class="line">[<span class="number">1</span>]</div></pre></td></tr></table></figure>
-<h2 id="4-简易orm"><a href="#4-简易orm" class="headerlink" title="4. 简易orm"></a>4. 简易orm</h2><p>比方说我们想定义一个<code>User</code>类来操作对应的数据库表<code>User</code>，我们期待写出这样的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Model)</span>:</span></div><div class="line">    <span class="comment"># 定义类的属性到列的映射：</span></div><div class="line">    id = IntegerField(<span class="string">'id'</span>)</div><div class="line">    name = StringField(<span class="string">'username'</span>)</div><div class="line">    email = StringField(<span class="string">'email'</span>)</div><div class="line">    password = StringField(<span class="string">'password'</span>)</div><div class="line"><span class="comment"># 创建一个实例：</span></div><div class="line">u = User(id=<span class="number">12345</span>, name=<span class="string">'Michael'</span>, email=<span class="string">'test@orm.org'</span>, password=<span class="string">'my-pwd'</span>)</div><div class="line"><span class="comment"># 保存到数据库：</span></div><div class="line">u.save()</div></pre></td></tr></table></figure>
-<p>父类<code>Model</code>和属性类型<code>StringField</code>、<code>IntegerField</code>是由ORM框架提供的，剩下的魔术方法比如<code>save()</code>全部由metaclass自动完成。虽然metaclass的编写会比较复杂，但ORM的使用者用起来却异常简单。</p>
-<p>首先定义<code>Filed</code>类，它负责保存数据库表的字段名和字段类型。 可看可不看，无伤大雅。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Field</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, column_type)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.column_type = column_type</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;%s:%s&gt;'</span> % (self.__class__.__name__, self.name)</div><div class="line">  </div><div class="line"><span class="comment">#两个派生类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringField</span><span class="params">(Field)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">        super(StringField, self).__init__(name, <span class="string">'varchar(100)'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntegerField</span><span class="params">(Field)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">        super(IntegerField, self).__init__(name, <span class="string">'bigint'</span>)</div></pre></td></tr></table></figure>
-<p>编写复杂的<code>ModelMetaclass</code>了：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ModelMetaclass</span><span class="params">(type)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        <span class="keyword">if</span> name==<span class="string">'Model'</span>:</div><div class="line">            <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div><div class="line">        print(<span class="string">'Found model: %s'</span> % name)</div><div class="line">        mappings = dict()</div><div class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> attrs.items():</div><div class="line">            <span class="keyword">if</span> isinstance(v, Field):</div><div class="line">                print(<span class="string">'Found mapping: %s ==&gt; %s'</span> % (k, v))</div><div class="line">                mappings[k] = v</div><div class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> mappings.keys():</div><div class="line">            attrs.pop(k)</div><div class="line">        attrs[<span class="string">'__mappings__'</span>] = mappings <span class="comment"># 保存属性和列的映射关系</span></div><div class="line">        attrs[<span class="string">'__table__'</span>] = name <span class="comment"># 假设表名和类名一致</span></div><div class="line">        <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div></pre></td></tr></table></figure>
-<p>以及基类<code>Model</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span><span class="params">(dict, metaclass=ModelMetaclass)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, **kw)</span>:</span></div><div class="line">        super(Model, self).__init__(**kw)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, key)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self[key]</div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">r"'Model' object has no attribute '%s'"</span> % key)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">        self[key] = value</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self)</span>:</span></div><div class="line">        fields = []</div><div class="line">        params = []</div><div class="line">        args = []</div><div class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.__mappings__.items():</div><div class="line">            fields.append(v.name)</div><div class="line">            params.append(<span class="string">'?'</span>)</div><div class="line">            args.append(getattr(self, k, <span class="keyword">None</span>))</div><div class="line">        sql = <span class="string">'insert into %s (%s) values (%s)'</span> % (self.__table__, <span class="string">','</span>.join(fields), <span class="string">','</span>.join(params))</div><div class="line">        print(<span class="string">'SQL: %s'</span> % sql)</div><div class="line">        print(<span class="string">'ARGS: %s'</span> % str(args))</div></pre></td></tr></table></figure>
-<p>走一下流程，首先先不管ModelMetaclass 这个元类是干嘛用。</p>
-<p><code>User</code>继承<code>Model</code>，<code>Model</code>继承<code>dict</code>，方便关系映射。</p>
-<p>所以在<code>Model</code>类中，就可以定义各种操作数据库的方法<code>save()</code>，<code>delete()</code>，<code>find()</code>，<code>update</code>等等。</p>
-<p>我们要让<code>save</code>方法生效，就必须先凑出<code>sql</code>语句，然后交给数据库去做，这里我们只凑出<code>sql</code>语句。</p>
-<p>凑出<code>sql</code>语句应该是很简单，遍历实例属性是不是差不多了。</p>
-<p>但是像表名，字段属性名，这些是所有sql语句应有的，我们不可能每次写一个方法，都去获取这些数据。</p>
-<p>自然而然，我们想到可以在类初始的时候获取这些数据，放到<code>__new__</code>构造器里面应该是可以的。但是这个<code>__new__</code>显然不是通用的，而且意图也不明显。</p>
-<p>所以 所以我可以想到可以使用 上面讲过的元类。</p>
-<p>最后看这个元类做了什么。</p>
-<p>在<code>ModelMetaclass</code>中，一共做了几件事情：</p>
-<ol>
-<li>排除掉对<code>Model</code>类的修改；</li>
-<li>在当前类（比如<code>User</code>）中查找定义的类的所有属性，如果找到一个Field属性，就把它保存到一个<code>__mappings__</code>的dict中，同时从类属性中删除该Field属性，否则，容易造成运行时错误（<strong>实例的属性会遮盖类的同名属性</strong>）；</li>
-<li>把表名保存到<code>__table__</code>中，这里简化为表名默认为类名。</li>
-</ol>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000" target="_blank" rel="external">元类</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/23887627" target="_blank" rel="external">Python进阶：一步步理解Python中的元类metaclass</a></p>
-<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/01/07/Python中的元类/" data-id="cj8lswfmr00165svbx7odhk5a" class="article-share-link" data-share="baidu" data-title="Python中的元类">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/01/07/Python中的元类/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-(自备)异步流程控制模块Async" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/20/(自备)异步流程控制模块Async/" class="article-date">
-  <time datetime="2016-12-20T13:53:53.000Z" itemprop="datePublished">2016-12-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node/">Node</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/20/(自备)异步流程控制模块Async/">(自备)异步流程控制模块Async</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>async模块在流程控制方面给我们带来了比较全面的解决办法</p>
-<p>串行控制： series、waterfall、compose;</p>
-<p>并行控制：parallel、parallelLimit、queue;</p>
-<p>循环控制：whilst、doWhilst、until、doUntil、forever;</p>
-<p>其他控制：apply、applyEach、iterator、auto;</p>
-<h2 id="1-series-tasks-callback"><a href="#1-series-tasks-callback" class="headerlink" title="1.series(tasks,callback);"></a>1.series(tasks,callback);</h2><p> 串行执行，一个函数数组中的每个函数，每一个函数执行完成之后才能执行下一个函数。</p>
-<ul>
-<li>如果任何一个函数向它的回调函数中传了一个error，则后面的函数都不会被执行，并且会立刻将该error以及已经执行了的函数的结果，传给series中最后那个callback。</li>
-<li>当所有的函数执行完后（没有出错），则会把每个函数传给其回调函数的结果合并为一个数组，传给series最后的那个callback。</li>
-<li>还可以json的形式来提供tasks。每一个属性都会被当作函数来执行，并且结果也会以json形式传给series最后的那个callback。这种方式可读性更高一些。</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">async.series(&#123;</div><div class="line">    one: function(callback)&#123;</div><div class="line">        callback(null, 1);</div><div class="line">    &#125;,</div><div class="line">    two: function(callback)&#123;</div><div class="line">        callback(null, 2);</div><div class="line">    &#125;</div><div class="line">&#125;,function(err, results) &#123;</div><div class="line"> 	if (err) throw err;</div><div class="line">  	console.log(results);</div><div class="line">&#125;);</div><div class="line">#results &#123;one:1,two:2&#125;</div><div class="line"></div><div class="line">async.series([</div><div class="line">   function(callback)&#123;</div><div class="line">      callback(null, 1);</div><div class="line">    &#125;,</div><div class="line">   function(callback)&#123;</div><div class="line">      callback(null, 2);</div><div class="line">    &#125;</div><div class="line">],function(err, results) &#123;</div><div class="line">    console.log(results);</div><div class="line">&#125;);</div><div class="line">#results [1,2]</div></pre></td></tr></table></figure>
-<h2 id="2-waterfall-tasks-callback"><a href="#2-waterfall-tasks-callback" class="headerlink" title="2..waterfall(tasks, [callback])"></a>2..waterfall(tasks, [callback])</h2><p>waterfall和series函数有很多相似之处，都是按顺序依次执行一组函数，不同之处是waterfall每个函数产生的值，都将传给下一个函数，而series则没有这个功能，<br>如果中途出错，后面的函数将不会被执行。错误信息将传给waterfall最终的callback。之前产生的结果被丢弃。<br>示例如下：</p>
-<p>“另外需要注意的是waterfall的tasks参数只能是数组类型。”</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">'async'</span>);</div><div class="line"><span class="keyword">async</span>.waterfall([  </div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123; </div><div class="line">      <span class="comment">//task1 </span></div><div class="line">      callback(<span class="literal">null</span>,<span class="number">1</span>);       </div><div class="line">    &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">data,callback</span>)</span>&#123;</div><div class="line">      <span class="comment">//task1 </span></div><div class="line">      callback(<span class="literal">null</span>,<span class="number">2</span>); </div><div class="line">    &#125; </div><div class="line">],<span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>)</span>&#123;  </div><div class="line">    <span class="built_in">console</span>.log(results);  <span class="comment">//2</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//当回调函数的第一个参数是非空值， 会输出第一个函数的参数</span></div><div class="line"></div><div class="line"><span class="keyword">async</span>.waterfall([</div><div class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123; </div><div class="line">      callback(<span class="string">'test'</span>,<span class="number">1</span>);</div><div class="line">  &#125;,     </div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">data,callback</span>)</span>&#123;</div><div class="line">      callback(<span class="literal">null</span>,<span class="number">2</span>); </div><div class="line">    &#125; </div><div class="line">],<span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(results);   <span class="comment">//1 </span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h2 id="3-parallel-tasks-callback"><a href="#3-parallel-tasks-callback" class="headerlink" title="3.parallel(tasks, [callback])"></a>3.parallel(tasks, [callback])</h2><ul>
-<li><p>parallel函数是并行执行多个函数，每个函数都是立即执行，不需要等待其它函数先执行。 传给最终callback的数组中的数据按照tasks中声明的顺序，而不是执行完成的顺序</p>
-</li>
-<li><p>如果某个函数出错，则立刻将err和已经执行完的函数的结果值传给parallel最终的callback。其它未执行完的函数的值不会传到最终数据，但要占个位置。</p>
-</li>
-<li><p>tasks参数可以是一个数组或是json对象，和series函数一样，tasks参数类型不同，返回的results格式会不一样。</p>
-<p>示例如下：</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span>.parallel([</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">        callback(<span class="literal">null</span>, <span class="string">'one'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">        callback(<span class="literal">null</span>, <span class="string">'two'</span>);</div><div class="line">    &#125;</div><div class="line">],</div><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params">err, results</span>)</span>&#123;</div><div class="line"> </div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//如果是异步操作比如下面这样那么时间不会叠加</span></div><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            callback(<span class="literal">null</span>, <span class="string">'one'</span>)</div><div class="line">        &#125;,<span class="number">1000</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            callback(<span class="literal">null</span>, <span class="string">'two'</span>)</div><div class="line">        &#125;,<span class="number">1000</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h2 id="4-parallelLimit-tasks-limit-callback"><a href="#4-parallelLimit-tasks-limit-callback" class="headerlink" title="4..parallelLimit(tasks, limit, [callback])"></a>4..parallelLimit(tasks, limit, [callback])</h2><p><code>parallelLimit</code>函数和<code>parallel</code>类似，但是它多了一个参数<code>limit</code>。 <code>limit</code>参数限制任务只能同时并发一定数量，而不是无限制并发，示例如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span>.parallelLimit([</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">        callback(<span class="literal">null</span>, <span class="string">'one'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">        callback(<span class="literal">null</span>, <span class="string">'two'</span>);</div><div class="line">    &#125;</div><div class="line">],<span class="number">2</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err, results</span>)</span>&#123;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h2 id="5-whilst-test-fn-callback"><a href="#5-whilst-test-fn-callback" class="headerlink" title="5.whilst(test, fn, callback)"></a>5.whilst(test, fn, callback)</h2><p>相当于<code>while</code>，该函数的功能比较简单，条件变量通常定义在外面，可供每个函数访问。</p>
-<p>在循环中，异步调用时产生的值实际上被丢弃了，因为最后那个<code>callback</code>只能传入错误信息<br><code>test</code>参数是一个返回布尔值结果的函数，通过返回值来决定循环是否继续，作用等同于while循环停止的条件。<br><code>fn</code>参数就是我们要异步执行的作业，每次fn执行完毕后才会进入下一次循环。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> count1 = <span class="number">0</span>;</div><div class="line"><span class="keyword">async</span>.whilst(</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> count1 &lt; <span class="number">3</span> &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123;</div><div class="line">    	<span class="built_in">console</span>.log(count1);</div><div class="line">        count1++;</div><div class="line">        setTimeout(callback, <span class="number">1000</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
-<h2 id="6-doWhilst-fn-test-callback"><a href="#6-doWhilst-fn-test-callback" class="headerlink" title="6.doWhilst(fn, test, callback)"></a>6.doWhilst(fn, test, callback)</h2><p>相当于<code>do…while</code>,较<code>whilst</code>而言，<code>doWhilst</code>交换了<code>fn,test</code>的参数位置，先执行一次循环，再做<code>test</code>判断。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> count = <span class="number">0</span>;</div><div class="line"><span class="keyword">async</span>.doWhilst(</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">        count++;</div><div class="line">        setTimeout(callback, <span class="number">1000</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> count &lt; <span class="number">5</span>; &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;&#125;）</div></pre></td></tr></table></figure>
-<h2 id="7-until-test-fn-callback"><a href="#7-until-test-fn-callback" class="headerlink" title="7.until(test, fn, callback)"></a>7.until(test, fn, callback)</h2><p>until与whilst正好相反，当test条件函数返回值为false时继续循环，与true时跳出。其它特性一致。示例如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> count = <span class="number">5</span>;</div><div class="line"><span class="keyword">async</span>.until(</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> count &lt; <span class="number">0</span>; &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">        count--;</div><div class="line">        setTimeout(callback, <span class="number">1000</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
-<h2 id="8-doUntil-fn-test-callback"><a href="#8-doUntil-fn-test-callback" class="headerlink" title="8.doUntil(fn, test, callback)"></a>8.doUntil(fn, test, callback)</h2><p>doUntil与doWhilst正好相反，当test为false时循环，与true时跳出。其它特性一致。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> count = <span class="number">5</span>;</div><div class="line"><span class="keyword">async</span>.doUntil(</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">        count--;</div><div class="line">        setTimeout(callback, <span class="number">1000</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> count &lt; <span class="number">0</span>; &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
-<h2 id="9-forever-fn-errback"><a href="#9-forever-fn-errback" class="headerlink" title="9.forever(fn, errback);"></a>9.forever(fn, errback);</h2><p>forever函数比较特殊，它的功能是无论条件如何，函数都一直循环执行，只有出现程序执行的过程中出现错误时循环才会停止，callback才会被调用。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span>.forever(</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">next</span>) </span>&#123;</div><div class="line">&#125;,</div><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h2 id="10-compose-fn1-fn2…"><a href="#10-compose-fn1-fn2…" class="headerlink" title="10.compose(fn1, fn2…);"></a>10.compose(fn1, fn2…);</h2><p>使用compose可以创建一个异步函数的集合函数，将传入的多个异步函数包含在其中，当我们执行这个集合函数时，会依次执行每一个异步函数，每个函数会消费上一次函数的返回值。</p>
-<p>我们可以使用compose把异步函数f、g、h，组合成f(g(h()))的形式，通过callback得到返回值，请看示例：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">n, callback</span>) </span>&#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        callback(<span class="literal">null</span>, n + <span class="number">1</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params">n, callback</span>) </span>&#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        callback(<span class="literal">null</span>, n * <span class="number">3</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> demo = <span class="keyword">async</span>.compose(fn2, fn1);</div><div class="line">demo(<span class="number">4</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</div><div class="line">	<span class="comment">//4是第一个函数的n</span></div><div class="line">	<span class="built_in">console</span>.log(result) <span class="comment">// 15</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h2 id="11-auto-tasks-callback"><a href="#11-auto-tasks-callback" class="headerlink" title="11.auto(tasks, [callback]);"></a>11.auto(tasks, [callback]);</h2><p>用来处理有依赖关系的多个任务的执行<br>比如某些任务之间彼此独立，可以并行执行；但某些任务依赖于其它某些任务，只能等那些任务完成后才能执行。</p>
-<ul>
-<li>虽然我们可以使用parallel和series结合起来实现该功能，但如果任务之间关系复杂，则代码会相当复杂，以后如果想添加一个新任务，也会很麻烦</li>
-<li>如果有任务中途出错，则会把该错误传给最终callback，所有任务（包括已经执行完的）产生的数据将被忽略。</li>
-<li>如果不关心错误和最终数据，可以不用写最后那个callback。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">- 我要写一个程序，它要完成以下几件事：</div><div class="line">- <span class="number">1.</span> 从某处取得数据</div><div class="line">- <span class="number">1.</span> 在硬盘上建立一个新的目录</div><div class="line">- <span class="number">1.</span> 将数据写入到目录下某文件</div><div class="line">- <span class="number">1.</span> 发送邮件，将文件以附件形式发送给其它人。</div><div class="line">      *</div><div class="line">- 分析该任务，可以知道<span class="number">1</span>与<span class="number">2</span>可以并行执行，<span class="number">3</span>需要等<span class="number">1</span>和<span class="number">2</span>完成，<span class="number">4</span>要等<span class="number">3</span>完成。</div><div class="line">- 可以按以下方式来使用auto函数。</div><div class="line"></div><div class="line"><span class="keyword">async</span>.auto(&#123;</div><div class="line">    <span class="attr">getData</span>: <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'1.1: got data'</span>);</div><div class="line">             callback(<span class="literal">null</span>, <span class="string">'mydata'</span>);</div><div class="line">        &#125;, <span class="number">300</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">makeFolder</span>: <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'1.2: made folder'</span>);</div><div class="line">            callback(<span class="literal">null</span>, <span class="string">'myfolder'</span>);</div><div class="line">        &#125;, <span class="number">200</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">writeFile</span>: [<span class="string">'getData'</span>, <span class="string">'makeFolder'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'2.1: wrote file'</span>);</div><div class="line">            callback(<span class="literal">null</span>, <span class="string">'myfile'</span>);</div><div class="line">        &#125;, <span class="number">300</span>);</div><div class="line">    &#125;],</div><div class="line">    <span class="attr">emailFiles</span>: [<span class="string">'writeFile'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">callback, results</span>) </span>&#123;</div><div class="line">         <span class="built_in">console</span>.log(<span class="string">"2.2: emailed file:"</span> + results.writeFile);</div><div class="line">        callback(<span class="literal">null</span>, results.writeFile);</div><div class="line">    &#125;]</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, results</span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span>(err)&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'err'</span> + err);</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">console</span>.log(results);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>结果</p>
-<pre><code>results =  {
-    1.2: made folder
-    1.1: got data
-    2.1: wrote file
-    2.2: emailed filemyfile
-    { makeFolder: &apos;myfolder&apos;,
-      getData: &apos;mydata&apos;,
-      writeFile: &apos;myfile&apos;,
-      emailFiles: &apos;myfile&apos; }
-}
-</code></pre><p>示例中writeFile依赖getData和makeFolder,     emailLink依赖writeFile。</p>
-<h2 id="12-queue-worker-concurrency"><a href="#12-queue-worker-concurrency" class="headerlink" title="12.queue(worker, concurrency);"></a>12.queue(worker, concurrency);</h2><p>queue相当于一个加强版的parallel，主要是限制了worker数量，不再一次性全部执行。当worker数量不够用时，新加入的任务将会排队等候，直到有新的worker可用。<br>它有多个点可供回调，如无等候任务时(empty)、全部执行完时(drain)等。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个queue，设worker数量为2</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> q = <span class="keyword">async</span>.queue(<span class="function"><span class="keyword">function</span>(<span class="params">task, callback</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'worker is processing task: '</span>+ task.name);</div><div class="line">    task.run(callback);</div><div class="line">&#125;, <span class="number">2</span>);</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 监听：如果某次push操作后，任务数将达到或超过worker数量时，将调用该函数</div><div class="line"> */</div><div class="line">q.saturated = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'all workers to be used'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 监听：当最后一个任务交给worker时，将调用该函数</div><div class="line"> */</div><div class="line">q.empty = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'no more tasks waiting'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 监听：当所有任务都执行完以后，将调用该函数</div><div class="line"> */</div><div class="line">q.drain = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">'all tasks have been processed'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* 独立加入2个任务</div><div class="line">*/</div><div class="line">q.push(&#123;<span class="attr">name</span>:<span class="string">'t1'</span>, <span class="attr">run</span>: <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">'t1 is running, waiting tasks: '</span> + q.length());</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    	callback(<span class="literal">null</span>,<span class="string">"t1"</span>)</div><div class="line">    &#125;,<span class="number">4000</span>);</div><div class="line">&#125;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">'t1 executed'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">q.push(&#123;</div><div class="line">	<span class="attr">name</span>:<span class="string">'t2'</span>,</div><div class="line">	<span class="attr">run</span>: <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'t2 is running, waiting tasks: '</span>, q.length());</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    	callback(<span class="literal">null</span>,<span class="string">"t2"</span>)</div><div class="line">    &#125;,<span class="number">2000</span>);</div><div class="line">&#125;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'t2 executed'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">&gt; all workers to be used</div><div class="line">&gt; worker is processing task: t1</div><div class="line">&gt; t1 is running, waiting tasks: <span class="number">1</span></div><div class="line">&gt; no more tasks waiting</div><div class="line">&gt; worker is processing task: t2</div><div class="line">&gt; t2 is running, waiting tasks:  <span class="number">0</span></div><div class="line">&gt; t2 executed</div><div class="line">&gt; t1 executed</div><div class="line">&gt; all tasks have been processed</div></pre></td></tr></table></figure>
-<h2 id="13-apply-function-arguments"><a href="#13-apply-function-arguments" class="headerlink" title="13.apply(function, arguments..)"></a>13.apply(function, arguments..)</h2><p>apply是一个非常好用的函数，可以让我们给一个函数预绑定多个参数并生成一个可直接调用的新函数，简化代码。示例如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123; </div><div class="line">    test(<span class="number">3</span>, callback); </div><div class="line">&#125;;</div><div class="line"></div><div class="line">等价于</div><div class="line"><span class="keyword">async</span>.apply(test, <span class="number">3</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log = <span class="keyword">async</span>.apply(<span class="built_in">console</span>.log,<span class="string">"==="</span>)</div><div class="line"><span class="built_in">console</span>.log(<span class="number">123</span>)</div><div class="line"></div><div class="line">===<span class="number">123</span></div></pre></td></tr></table></figure>
-<h2 id="14-iterator-tasks"><a href="#14-iterator-tasks" class="headerlink" title="14.iterator(tasks)"></a>14.iterator(tasks)</h2><p>将一组函数包装成为一个iterator，可通过next()得到以下一个函数为起点的新的iterator。该函数通常由async在内部使用，但如果需要时，也可在我们的代码中使用它。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> iter = <span class="keyword">async</span>.iterator([</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'111'</span>) &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'222'</span>) &#125;,</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'333'</span>) &#125;</div><div class="line">]);</div><div class="line">iter();</div></pre></td></tr></table></figure>
-<p>直接调用()，会执行当前函数，并返回一个由下个函数为起点的新的iterator。调用next()，不会执行当前函数，直接返回由下个函数为起点的新iterator。</p>
-<p>对于同一个iterator，多次调用next()，不会影响自己。如果只剩下一个元素，调用next()会返回null。</p>
-<h2 id="15-each-eachSeries-eachLimit"><a href="#15-each-eachSeries-eachLimit" class="headerlink" title="15.each,eachSeries,eachLimit"></a>15.each,eachSeries,eachLimit</h2><p> 如果想对同一个集合中的所有元素都执行同一个异步操作，可以利用each函数</p>
-<p>async提供了三种方式：（如果中途出错，则错误将上传给最终的callback处理。其它已经启动的任务继续执行，未启动的忽略。）</p>
-<ol>
-<li><strong>each(arr, iterator(item, callback), callback(err))</strong></li>
-</ol>
-<p>集合中所有元素并行执行</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [&#123;<span class="attr">name</span>:<span class="string">'Jack'</span>, <span class="attr">delay</span>: <span class="number">200</span>&#125;,</div><div class="line">           &#123;<span class="attr">name</span>:<span class="string">'Mike'</span>, <span class="attr">delay</span>: <span class="number">100</span>&#125;,</div><div class="line">           &#123;<span class="attr">name</span>:<span class="string">'Freewind'</span>, <span class="attr">delay</span>: <span class="number">300</span>&#125;];</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 所有操作并发执行，且全部未出错，最终得到的err为undefined。注意最终callback只有一个参数err。</div><div class="line"> */</div><div class="line"><span class="comment">// 1.1</span></div><div class="line"><span class="keyword">async</span>.each(arr, <span class="function"><span class="keyword">function</span>(<span class="params">item, callback</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.1 enter: '</span> + item.name);</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        log(<span class="string">'1.1 handle: '</span> + item.name);</div><div class="line">        callback(<span class="literal">null</span>, item.name);</div><div class="line">    &#125;, item.delay);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.1 err: '</span> + err);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//1.1 enter: Jack</span></div><div class="line"><span class="comment">//1.1 enter: Mike</span></div><div class="line"><span class="comment">//1.1 enter: Freewind</span></div><div class="line"><span class="comment">//1.1 handle: Mike</span></div><div class="line"><span class="comment">//1.1 handle: Jack</span></div><div class="line"><span class="comment">//1.1 handle: Freewind</span></div><div class="line"><span class="comment">//1.1 err: null</span></div></pre></td></tr></table></figure>
-<p>2.<strong>eachSeries(arr, iterator(item, callback), callback(err))</strong></p>
-<p>一个一个顺序执行</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span>.eachSeries(arr, <span class="function"><span class="keyword">function</span>(<span class="params">item, callback</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.2 enter: '</span> + item.name);</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'1.2 handle: '</span> + item.name);</div><div class="line">        callback(<span class="literal">null</span>, item.name);</div><div class="line">    &#125;, item.delay);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.2 err: '</span> + err);</div><div class="line">&#125;);</div><div class="line"><span class="comment">//1.2 enter: Jack</span></div><div class="line"><span class="comment">//1.2 handle: Jack</span></div><div class="line"><span class="comment">//1.2 enter: Mike</span></div><div class="line"><span class="comment">//1.2 handle: Mike</span></div><div class="line"><span class="comment">//1.2 enter: Freewind</span></div><div class="line"><span class="comment">//1.2 handle: Freewind</span></div><div class="line"><span class="comment">//1.2 err: nul</span></div></pre></td></tr></table></figure>
-<p>3.<strong>eachLimit(arr, num，iterator(item, callback), callback(err))</strong></p>
-<p>分批执行，同一批内并行，批与批之间按顺序</p>
-<p>第二个参数是每一批的个数。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span>.eachLimit(arr, <span class="number">2</span>, <span class="function"><span class="keyword">function</span>(<span class="params">item, callback</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.3 enter: '</span> + item.name);</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'1.3 handle: '</span> + item.name);</div><div class="line">        callback(<span class="literal">null</span>, item.name);</div><div class="line">    &#125;, item.delay);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.3 err: '</span> + err);</div><div class="line">&#125;);</div><div class="line"><span class="comment">//1.3 enter: Jack</span></div><div class="line"><span class="comment">//1.3 enter: Mike</span></div><div class="line"><span class="comment">//1.3 handle: Mike</span></div><div class="line"><span class="comment">//1.3 enter: Freewind</span></div><div class="line"><span class="comment">//1.3 handle: Jack</span></div><div class="line"><span class="comment">//1.3 handle: Freewind</span></div><div class="line"><span class="comment">//1.3 err: null</span></div></pre></td></tr></table></figure>
-<p>一个例子,<strong>解决异步嵌套循环,循环嵌套异步</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">'async'</span>);  </div><div class="line"><span class="comment">//初始化  </span></div><div class="line"><span class="keyword">var</span> async_lists = [&#123; <span class="attr">aa</span>: <span class="number">11</span>, <span class="attr">bb</span>: <span class="number">21</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">31</span>, <span class="attr">bb</span>: <span class="number">41</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">51</span>, <span class="attr">bb</span>: <span class="number">61</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">71</span>, <span class="attr">bb</span>: <span class="number">81</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">91</span>, <span class="attr">bb</span>: <span class="number">91</span> &#125;];  </div><div class="line"><span class="keyword">var</span> task = [];  </div><div class="line">task.push(<span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;  </div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个task任务'</span>);  </div><div class="line">  <span class="comment">//循环  </span></div><div class="line">  <span class="keyword">async</span>.eachSeries(async_lists, <span class="function"><span class="keyword">function</span> (<span class="params">async_list, cb</span>) </span>&#123;  </div><div class="line">    task_a(async_list, cb)  </div><div class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(err);  </div><div class="line">    <span class="comment">//重新赋值  </span></div><div class="line">    async_lists = [&#123; <span class="attr">aa</span>: <span class="number">12</span>, <span class="attr">bb</span>: <span class="number">22</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">32</span>, <span class="attr">bb</span>: <span class="number">42</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">52</span>, <span class="attr">bb</span>: <span class="number">62</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">72</span>, <span class="attr">bb</span>: <span class="number">82</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">92</span>, <span class="attr">bb</span>: <span class="number">92</span> &#125;];  </div><div class="line">    callback()  </div><div class="line">  &#125;);  </div><div class="line">&#125;)  </div><div class="line">task.push(<span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;  </div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'第二个task任务'</span>);  </div><div class="line">  <span class="keyword">async</span>.eachSeries(async_lists, <span class="function"><span class="keyword">function</span> (<span class="params">async_list, cb</span>) </span>&#123;  </div><div class="line">    task_a(async_list, cb)  </div><div class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(err);  </div><div class="line">    async_lists = [&#123; <span class="attr">aa</span>: <span class="number">13</span>, <span class="attr">bb</span>: <span class="number">23</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">33</span>, <span class="attr">bb</span>: <span class="number">43</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">53</span>, <span class="attr">bb</span>: <span class="number">63</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">73</span>, <span class="attr">bb</span>: <span class="number">83</span> &#125;, &#123; <span class="attr">aa</span>: <span class="number">93</span>, <span class="attr">bb</span>: <span class="number">93</span> &#125;];  </div><div class="line">    callback()  </div><div class="line">  &#125;);  </div><div class="line">&#125;)  </div><div class="line">task.push(<span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;  </div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'第三个task任务'</span>);  </div><div class="line">  <span class="keyword">async</span>.eachSeries(async_lists, <span class="function"><span class="keyword">function</span> (<span class="params">async_list, cb</span>) </span>&#123;  </div><div class="line">    task_a(async_list, cb)  </div><div class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(err);  </div><div class="line">    callback()  </div><div class="line">  &#125;);  </div><div class="line">&#125;)  </div><div class="line">  </div><div class="line"><span class="comment">//最外层流程控制  </span></div><div class="line"><span class="keyword">async</span>.waterfall(task, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;  </div><div class="line">  <span class="keyword">if</span> (err) <span class="keyword">return</span> <span class="built_in">console</span>.log(err);  </div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'成功'</span>);  </div><div class="line">&#125;)  </div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">task_a</span>(<span class="params">async_list, cb</span>) </span>&#123;  </div><div class="line">  <span class="keyword">var</span> task2 = [];  </div><div class="line">  task2.push(<span class="function"><span class="keyword">function</span> (<span class="params">cb</span>) </span>&#123;  </div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'第一次 : '</span>, async_list);  </div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">  </div><div class="line">      cb()  </div><div class="line">    &#125;, <span class="number">1000</span>);  </div><div class="line">  &#125;)  </div><div class="line">  task2.push(<span class="function"><span class="keyword">function</span> (<span class="params">cb</span>) </span>&#123;  </div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'第二次 : '</span>, async_list);  </div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'---------------------------'</span>);  </div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">  </div><div class="line">      cb()  </div><div class="line">    &#125;, <span class="number">1000</span>);  </div><div class="line">  &#125;)  </div><div class="line">  <span class="comment">//循环内流程控制  </span></div><div class="line">  <span class="keyword">async</span>.waterfall(task2, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;  </div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);  </div><div class="line">    cb();  </div><div class="line">  &#125;)  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="16-filter-reject"><a href="#16-filter-reject" class="headerlink" title="16.filter_reject"></a>16.<strong>filter_reject</strong></h2><p>使用异步操作对集合中的元素进行筛选。需要注意的是，iterator的callback只有一个参数，只能接收true或false。</p>
-<p>对于出错，该函数没有做出任何处理，直接由nodejs抛出。所以需要注意对Error的处理。</p>
-<p> async提供了两种方式：</p>
-<ol>
-<li><p><strong>filter(arr, iterator(item, callback(null,test)), callback(err,results))</strong></p>
-<p><strong>并行执行：</strong></p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 并行执行，对arr进行筛选。</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</div><div class="line"><span class="keyword">async</span>.filter(arr, <span class="function"><span class="keyword">function</span>(<span class="params">item, callback</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.1 enter: '</span> + item);</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'1.1 test: '</span> + item);</div><div class="line">        callback(<span class="literal">null</span>,item&gt;=<span class="number">3</span>);</div><div class="line">    &#125;, <span class="number">200</span>);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.1 results: '</span>, results);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<ol>
-<li><strong>顺序执行：filterSereis</strong></li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span>.filterSeries(arr, <span class="function"><span class="keyword">function</span>(<span class="params">item, callback</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.3 enter: '</span> + item);</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'1.3 handle: '</span> + item);</div><div class="line">        callback(<span class="literal">null</span>,item&gt;=<span class="number">3</span>);</div><div class="line">    &#125;, <span class="number">200</span>);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'1.3 results: '</span>, results);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>一个简单的例子,获取当前目录下所有文件:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">'async'</span>);</div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> concatenation = <span class="string">''</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> dirContents = fs.readdirSync(<span class="string">'.'</span>);</div><div class="line"></div><div class="line"><span class="keyword">async</span>.filter(dirContents, isFilename, <span class="function"><span class="keyword">function</span> (<span class="params">err,filenames</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(filenames);</div><div class="line">    <span class="keyword">async</span>.eachSeries(filenames, readAndConcat, onComplete);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isFilename</span>(<span class="params">filename, callback</span>) </span>&#123;</div><div class="line">    fs.stat(filename, <span class="function"><span class="keyword">function</span> (<span class="params">err, stat</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">        callback(<span class="literal">null</span>,stat.isFile());</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">readAndConcat</span>(<span class="params">filename, callback</span>) </span>&#123;</div><div class="line">    fs.readFile(filename, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, fileContents</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(err);</div><div class="line">        concatenation += fileContents;</div><div class="line">        callback(<span class="literal">null</span>,<span class="number">1</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">onComplete</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">    <span class="built_in">console</span>.log(concatenation);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/12/20/(自备)异步流程控制模块Async/" data-id="cj8lswfm400085svb65jes8zx" class="article-share-link" data-share="baidu" data-title="(自备)异步流程控制模块Async">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2016/12/20/(自备)异步流程控制模块Async/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-(转载)何为 connect 中间件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/15/(转载)何为 connect 中间件/" class="article-date">
-  <time datetime="2016-12-15T02:53:53.000Z" itemprop="datePublished">2016-12-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node/">Node</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/15/(转载)何为 connect 中间件/">(转载)何为 connect 中间件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://github.com/alsotang/node-lessons/blob/master/lesson18/README.md" target="_blank" rel="external">何为 connect 中间件</a></p>
-<h1 id="《何为-connect-中间件》"><a href="#《何为-connect-中间件》" class="headerlink" title="《何为 connect 中间件》"></a>《何为 connect 中间件》</h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
-<li>理解中间件的概念</li>
-<li>了解 Connect 的实现</li>
-</ol>
-<h2 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h2><ol>
-<li>原生 httpServer 遇到的问题</li>
-<li>中间件思想</li>
-<li>Connect 实现</li>
-<li>Express 简介</li>
-</ol>
-<p>这是从 httpServer 到 Express 的升级过程。</p>
-<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><p>Nodejs 的经典 httpServer 代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = http.createServer(requestHandler);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestHandler</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  res.end(<span class="string">'hello visitor!'</span>);</div><div class="line">&#125;</div><div class="line">server.listen(<span class="number">3000</span>);</div></pre></td></tr></table></figure>
-<p>里面的函数 <code>requestHandler</code> 就是所有http请求的响应函数，即所有的请求都经过这个函数的处理，是所有请求的入口函数。</p>
-<p>通过 requestHandler 函数我们能写一些简单的 http 逻辑，比如上面的例子，所有请求都返回 <code>hello visitor!</code>。</p>
-<p>然而，我们的业务逻辑不可能这么简单。例如：需要实现一个接口，要做的是当请求过来时，先判断来源的请求是否包含请求体，然后判断请求体中的id是不是在数据库中存在，最后若存在则返回true，不存在则返回false。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> 检测请求中请求体是否存在，若存在则解析请求体；</div><div class="line"><span class="number">1.</span> 查看请求体中的id是否存在，若存在则去数据库查询；</div><div class="line"><span class="number">1.</span> 根据数据库结果返回约定的值；</div></pre></td></tr></table></figure>
-<p>我们首先想到的，抽离函数，每个逻辑一个函数，简单好实现低耦合好维护。</p>
-<p>实现代码:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseBody</span>(<span class="params">req, callback</span>) </span>&#123;</div><div class="line">  <span class="comment">//根据http协议从req中解析body</span></div><div class="line">  callback(<span class="literal">null</span>, body);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkIdInDatabase</span>(<span class="params">body, callback</span>) </span>&#123;</div><div class="line">  <span class="comment">//根据body.id在Database中检测，返回结果</span></div><div class="line">  callback(<span class="literal">null</span>, dbResult);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">returnResult</span>(<span class="params">dbResult, res</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (dbResult &amp;&amp; dbResult.length &gt; <span class="number">0</span>) &#123;</div><div class="line">    res.end(<span class="string">'true'</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    res.end(<span class="string">'false'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestHandler</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  parseBody(req, <span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>&#123;</div><div class="line">    checkIdInDatabase(body, <span class="function"><span class="keyword">function</span>(<span class="params">err, dbResult</span>) </span>&#123;</div><div class="line">      returnResult(dbResult, res);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的解决方案解决了包含三个步骤的业务问题，出现了3个 <code>});</code> 还有3个 <code>err</code> 需要处理，上面的写法可以得达到预期效果。</p>
-<p>然而，业务逻辑越来越复杂，会出发展成30个回调逻辑，那么就出现了30个 <code>});</code> 及30个 <code>err</code>异常。更严重的是，到时候写代码根本看不清自己写的逻辑在30层中的哪一层，极其容易出现 <strong>多次返回</strong> 或返回地方不对等问题，这就是 <strong>回调金字塔</strong> 问题了。</p>
-<p>大多数同学应该能想到解决回调金字塔的办法，朴灵的《深入浅出Node.js》里讲到的三种方法。下面列举了这三种方法加上ES6新增的Generator，共四种解决办法。</p>
-<ul>
-<li><a href="https://github.com/JacksonTian/eventproxy" target="_blank" rel="external">EventProxy</a> —— 事件发布订阅模式(第四课讲到)</li>
-<li><a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="external">BlueBird</a> —— Promise方案(第十七课讲到)</li>
-<li><a href="https://github.com/caolan/async" target="_blank" rel="external">Async</a> —— 异步流程控制库(第五课讲到)</li>
-<li><a href="http://es6.ruanyifeng.com/#docs/generator" target="_blank" rel="external">Generator</a> —— ES6原生Generator</li>
-</ul>
-<p>理论上，这四种都能解决回调金字塔问题。而Connect和Express用的是 <code>类似异步流程控制的思想</code> 。</p>
-<p>关于异步流程控制库下面简要介绍下，或移步<a href="https://github.com/alsotang/node-lessons/tree/master/lesson5" target="_blank" rel="external">@第五课</a>。 异步流程控制库首先要求用户传入待执行的函数列表，记为funlist。流程控制库的任务是让这些函数 <strong>顺序执行</strong> 。</p>
-<p>callback是控制顺序执行的关键，funlist里的函数每当调用callback会执行下一个funlist里的函数</p>
-<p>我们动手实现一个类似的链式调用，其中 <code>funlist</code> 更名为 <code>middlewares</code>、<code>callback</code> 更名为 <code>next</code>，码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> middlewares = [</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fun1</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    parseBody(req, <span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</div><div class="line">      req.body = body;</div><div class="line">      next();</div><div class="line">    &#125;);</div><div class="line">  &#125;,</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fun2</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    checkIdInDatabase(req.body.id, <span class="function"><span class="keyword">function</span>(<span class="params">err, rows</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</div><div class="line">      res.dbResult = rows;</div><div class="line">      next();</div><div class="line">    &#125;);</div><div class="line">  &#125;,</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fun3</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (res.dbResult &amp;&amp; res.dbResult.length &gt; <span class="number">0</span>) &#123;</div><div class="line">      res.end(<span class="string">'true'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">      res.end(<span class="string">'false'</span>);</div><div class="line">    &#125;</div><div class="line">    next();</div><div class="line">  &#125;</div><div class="line">]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestHandler</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> i=<span class="number">0</span>;</div><div class="line"></div><div class="line">  <span class="comment">//由middlewares链式调用</span></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">      <span class="keyword">return</span> res.end(<span class="string">'error:'</span>, err.toString());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (i&lt;middlewares.length) &#123;</div><div class="line">      middlewares[i++](req, res, next);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span> ;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//触发第一个middleware</span></div><div class="line">  next();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面用middlewares+next完成了业务逻辑的 <code>链式调用</code>，而middlewares里的每个函数，都是一个 <code>中间件</code>。</p>
-<p>整体思路是：</p>
-<ol>
-<li>将所有 <code>处理逻辑函数(中间件)</code> 存储在一个list中；</li>
-<li>请求到达时 <code>循环调用</code> list中的 <code>处理逻辑函数(中间件)</code>；</li>
-</ol>
-<h1 id="Connect的实现"><a href="#Connect的实现" class="headerlink" title="Connect的实现"></a><a href="https://github.com/senchalabs/connect" target="_blank" rel="external">Connect</a>的实现</h1><p>Connect的思想跟上面阐述的思想基本一样，先将处理逻辑存起来，然后循环调用。</p>
-<p>Connect中主要有五个函数 PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/senchalabs/connect/blob/master/index.js" target="_blank" rel="external">源码</a>看下面的函数介绍。</p>
-<table>
-<thead>
-<tr>
-<th>函数名</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>createServer</td>
-<td>包装httpServer形成app</td>
-</tr>
-<tr>
-<td>listen</td>
-<td>监听端口函数</td>
-</tr>
-<tr>
-<td>use</td>
-<td>向middlewares里面放入业务逻辑</td>
-</tr>
-<tr>
-<td>handle</td>
-<td>上一章的requestHandler函数增强版</td>
-</tr>
-<tr>
-<td>call</td>
-<td>业务逻辑的真正执行者</td>
-</tr>
-</tbody>
-</table>
-<h2 id="createServer"><a href="#createServer" class="headerlink" title="createServer()"></a>createServer()</h2><p><strong>输入</strong>:</p>
-<p>无</p>
-<p><strong>执行过程</strong>:</p>
-<ol>
-<li>app是一个函数对象(包含handle方法)</li>
-<li>app具有Event所有属性(详见<a href="https://github.com/jaredhanson/utils-merge" target="_blank" rel="external">utils-merge</a>，十行代码)</li>
-<li>app有route属性(路由)、和stack属性(用于存储中间件，类似上面的<a href="https://github.com/alsotang/node-lessons/blob/master/lesson18/README.md#middlewares" target="_blank" rel="external">middlewares</a>)</li>
-</ol>
-<p><strong>输出</strong>:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">     app is <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;...&#125;;</div><div class="line">      |</div><div class="line">  +---+---+</div><div class="line">  |  has  |</div><div class="line">route   stack</div></pre></td></tr></table></figure>
-<h2 id="app-use-route-fn"><a href="#app-use-route-fn" class="headerlink" title="app.use(route, fn)"></a>app.use(route, fn)</h2><p>作用是向stack中添加 <code>逻辑处理函数</code> (中间件)。</p>
-<p><strong>输入</strong>:</p>
-<ol>
-<li>route 可省略，默认’/‘</li>
-<li>fn 具体的业务处理逻辑</li>
-</ol>
-<p><strong>tips:</strong></p>
-<p>上面的fn表示处理逻辑，它可以是</p>
-<ol>
-<li>一个普通的 <code>function(req,res[,next]){}</code>；</li>
-<li>一个<a href="https://lodejs.org/api/http.html#http_class_http_server" target="_blank" rel="external">httpServer</a>；</li>
-<li>另一个connect的app对象(<strong>sub app特性</strong>)；</li>
-</ol>
-<p>由于它们的本质都是 <code>处理逻辑</code>，都可以用一个 <code>function(req,res,next){}</code>将它们概括起来，Connect把他们都转化为这个函数，然后把它们存起来。</p>
-<p>如何将这三种分别转换为 function(req, res, next) {}的形式呢？</p>
-<ol>
-<li>不用转换；</li>
-<li>httpServer的定义是“对事件’request’后handler的对象”，我们可以从httpServer.listeners(‘request’)中得到这个函数；</li>
-<li>另一个connect对象，而connect()返回的app就是function(req, res, out) {}；</li>
-</ol>
-<p><strong>执行过程</strong>:</p>
-<ol>
-<li>将三种<code>处理逻辑</code>统一转换为<code>function(req,res,next){}</code>的形式表示。</li>
-<li>把这个<code>处理逻辑</code>与route一起，放入<code>stack</code>中(存储处理逻辑，route用来匹配路由)</li>
-</ol>
-<p>核心代码片段</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//route是路由路径，handle是一个`function(req, res, next) &#123;...&#125;`形式的业务逻辑</span></div><div class="line"><span class="keyword">this</span>.stack.push(&#123; <span class="attr">route</span>: path, <span class="attr">handle</span>: handle &#125;);</div></pre></td></tr></table></figure>
-<p><strong>返回</strong>:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回自己，可以完成链式调用</span></div><div class="line"><span class="keyword">return</span> <span class="keyword">this</span>;</div></pre></td></tr></table></figure>
-<p><strong>总结:</strong>:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = connect();</div><div class="line">app.use(<span class="string">'/api'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;&#125;);</div></pre></td></tr></table></figure>
-<p>等价于</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = connect();</div><div class="line">app.stack.push(&#123;<span class="attr">route</span>: <span class="string">'/api'</span>, <span class="attr">handle</span>: <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;&#125;&#125;);</div></pre></td></tr></table></figure>
-<p>最后，app.stack里 <strong>顺序存储</strong> 了所有的 <strong>逻辑处理函数</strong> (中间件)。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.stack = [function1, function2, function3, ... function30];</div></pre></td></tr></table></figure>
-<h2 id="app-handle-req-res-out"><a href="#app-handle-req-res-out" class="headerlink" title="app.handle(req, res, out)"></a>app.handle(req, res, out)</h2><p>这个函数就是请求到达时，负责 <code>顺序调用</code> 我们存储在stack中的 <code>逻辑处理函数</code> (中间件)函数，类似上一章的requestHandler。</p>
-<p><strong>输入:</strong></p>
-<ol>
-<li>req是Nodejs本身的可读流，不做过多介绍</li>
-<li>res是Nodejs本身的可写流，不做过多介绍</li>
-<li>out是为了Connect的 <strong>sub app特性</strong> 而设计的参数，这个特性可以暂时忽略，这个参数我们暂时不关心</li>
-</ol>
-<p><strong>处理过程:</strong></p>
-<p>可以回头看一下上面的<a href="https://github.com/alsotang/node-lessons/blob/master/lesson18/README.md#middlewares" target="_blank" rel="external">requestHandler函数</a>，handle的实现是这个函数的增强版</p>
-<ol>
-<li>取得stack(存储<code>逻辑处理函数</code>列表)，index(列表下标)</li>
-<li>构建next函数，next的作用是执行下一个<code>逻辑处理函数</code></li>
-<li>触发第一个next，触发链式调用</li>
-</ol>
-<p><strong>next函数实现:</strong></p>
-<p>next函数实现在handle函数体内，用来<code>顺序执行处理逻辑</code>，它是异步流程控制库的核心，不明白它的作用请看<a href="https://github.com/alsotang/node-lessons/blob/master/lesson18/README.md#next" target="_blank" rel="external">上面的异步流程控制库简介</a></p>
-<p>path是请求路径，route是<code>逻辑处理函数</code>自带的属性。</p>
-<ol>
-<li>取得下一个<code>逻辑处理函数</code>;</li>
-<li>若路由不匹配，跳过此逻辑;</li>
-<li>若路由匹配<a href="https://github.com/alsotang/node-lessons/blob/master/lesson18/README.md#call" target="_blank" rel="external">下面的call</a>执行匹配到的<code>逻辑处理函数</code></li>
-</ol>
-<p>tips: 跟上一章最后的代码一样，每个<code>逻辑处理函数</code>调用<code>next</code>来让后面的函数执行，存储在stack中的函数就实现了<code>链式调用</code>。不一定所有的函数都在返回的时候才调用<code>next</code>，为了不影响效率，有的函数可能先调用next，然而自己还没有返回，继续做自己的事情。</p>
-<p>核心代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//取下一个逻辑逻辑处理函数</span></div><div class="line"><span class="number">1</span>:  <span class="keyword">var</span> layer = stack[index++];</div><div class="line"><span class="comment">//不匹配时跳过</span></div><div class="line"><span class="number">2</span>:  <span class="keyword">if</span> (path.toLowerCase().substr(<span class="number">0</span>, route.length) !== route.toLowerCase()) &#123;</div><div class="line">      <span class="keyword">return</span> next(err);</div><div class="line">    &#125;</div><div class="line"><span class="comment">//匹配时执行</span></div><div class="line"><span class="number">3</span>:  call(layer.handle, route, err, req, res, next);</div></pre></td></tr></table></figure>
-<p><strong>返回:</strong></p>
-<p>无</p>
-<p><strong>总结:</strong></p>
-<p>画图总结</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">request come</div><div class="line">     |</div><div class="line">     v</div><div class="line">middleware1 :  不匹配路由，skip</div><div class="line">     |</div><div class="line">     v</div><div class="line">middleware2 :  匹配路由，执行</div><div class="line">     |</div><div class="line">     v</div><div class="line">middleware3 :  匹配路由，执行</div><div class="line">     |</div><div class="line">     v</div><div class="line">middleware4 :  不匹配路由，skip</div><div class="line">     |</div><div class="line">     v</div><div class="line">    end</div></pre></td></tr></table></figure>
-<h2 id="call-handle-route-err-req-res-next"><a href="#call-handle-route-err-req-res-next" class="headerlink" title="call(handle, route, err, req, res, next)"></a>call(handle, route, err, req, res, next)</h2><blockquote>
-<p>这里有个比较有趣的知识，<code>console.log(Function.length)</code>会返回函数定义的参数个数。值跟在函数体内执行<code>arguments.length</code>一样。</p>
-</blockquote>
-<p>Connect中规定<code>function(err, req, res, next) {}</code>形式为错误处理函数，<code>function(req, res, next) {}</code>为正常的业务逻辑处理函数。那么，可以根据Function.length以判断它是否为错误处理函数。</p>
-<p><strong>输入:</strong></p>
-<table>
-<thead>
-<tr>
-<th>参数名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>handle</td>
-<td>逻辑处理函数</td>
-</tr>
-<tr>
-<td>route</td>
-<td>路由</td>
-</tr>
-<tr>
-<td>err</td>
-<td>是否发生过错误</td>
-</tr>
-<tr>
-<td>req</td>
-<td>Nodejs对象</td>
-</tr>
-<tr>
-<td>res</td>
-<td>Nodejs对象</td>
-</tr>
-<tr>
-<td>next</td>
-<td>next函数</td>
-</tr>
-</tbody>
-</table>
-<p><strong>处理过程:</strong></p>
-<ol>
-<li>是否有错误，本次handle是否是错误处理函数;</li>
-<li>若有错误且handle为错误处理函数，则执行handle，本函数返回;</li>
-<li>若没错误且handle不是错误处理函数，则执行handle，本函数返回;</li>
-<li>如果上面两个都不满足，不执行handle，本函数调用next，返回;</li>
-</ol>
-<p><strong>返回:</strong></p>
-<p>无</p>
-<p><strong>总结:</strong></p>
-<p>call函数是一个执行者，根据当前<code>错误情况</code>和<code>handle类型</code>决定<code>是否执行</code>当前的handle。</p>
-<h2 id="listen"><a href="#listen" class="headerlink" title="listen"></a>listen</h2><p>创建一个httpServer，将Connect自己的业务逻辑作为requestHandler，监听端口</p>
-<p>代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> server = http.createServer(<span class="keyword">this</span>);</div><div class="line"><span class="keyword">return</span> server.listen.apply(server, <span class="built_in">arguments</span>);</div></pre></td></tr></table></figure>
-<h2 id="图解Connect"><a href="#图解Connect" class="headerlink" title="图解Connect"></a>图解Connect</h2><p>Connect将中间件存储在app.stack中，通过构造handle中的next函数在请求到来时依次调用这些中间件。</p>
-<p>图形总结</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">request               app(out)</div><div class="line">   |                          yes</div><div class="line">   +------------------&gt;match?-----&gt;middleware1</div><div class="line">                         | no          |</div><div class="line">                         v             |</div><div class="line">                        next&lt;----------+</div><div class="line">                         |</div><div class="line">                         v    yes</div><div class="line">                      match?------&gt;middleware2</div><div class="line">                         | no          |</div><div class="line">                         v             |</div><div class="line">                        next&lt;----------+</div><div class="line">                         |</div><div class="line">                         v    yes</div><div class="line">                      match?------&gt;middleware3</div><div class="line">                         | no          |</div><div class="line">                         v             |</div><div class="line">                        out&lt;-----------+</div><div class="line">                         |</div><div class="line">   +---------------------+</div><div class="line">   |</div><div class="line">   v</div><div class="line">  end(response在处理过程中已经返回了)</div></pre></td></tr></table></figure>
-<h2 id="Connect的subapp特性"><a href="#Connect的subapp特性" class="headerlink" title="Connect的subapp特性"></a>Connect的subapp特性</h2><p>我们再看看Connect是怎么实现subapp的，比较有趣。</p>
-<p>什么是subapp?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sub_app = connect();</div><div class="line"><span class="keyword">var</span> app = connect();</div><div class="line"></div><div class="line">app.use(<span class="string">'/route1'</span>, sub_app);</div><div class="line"><span class="comment">// request path: '/route1/route2'</span></div><div class="line"><span class="comment">// 由app接收到请求后，切割 path为'/route2'转交给sub_app的处理逻辑处理</span></div><div class="line"><span class="comment">// 再由sub_app返回到app，由app继续向下执行处理逻辑</span></div></pre></td></tr></table></figure>
-<p>结合上面的函数画图</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">request               app(out1)                 sub_app(out2)</div><div class="line">   |</div><div class="line">   +---------------&gt;middleware1     +------------&gt;middleware1</div><div class="line">                         |          |                 |</div><div class="line">                        next        |                next</div><div class="line">                         |          |                 |</div><div class="line">                         v          |                 v</div><div class="line">                    middleware2-----+            middleware2</div><div class="line">                                                      |</div><div class="line">                       next&lt;--------+                next</div><div class="line">                         |          |                 |</div><div class="line">                         v          |                 v</div><div class="line">                     middleware3    |            middleware3</div><div class="line">                         |          |                 |</div><div class="line">                         v          |                 v</div><div class="line">                        out1        |                out2</div><div class="line">                         |          |                 |</div><div class="line">   +---------------------+          +-----------------+</div><div class="line">   |</div><div class="line">   v</div><div class="line">  end(response在处理过程中已经返回了)</div></pre></td></tr></table></figure>
-<p>完成上面的sub_app只需要做到两点：</p>
-<ol>
-<li>从app的调用链进入到sub_app的调用链中;</li>
-<li>从sub_app的逻辑回到app的调用链中;</li>
-</ol>
-<p>connect在handle函数中的第三个参数<code>out</code>为这个特性实现提供可能。<code>out</code>的特点是<code>在middlewares链式调用完成以后调用</code>。<strong>那么将app的next作为sub_app的out传入sub_app的handle中</strong>可以做到sub_app自己的业务逻辑处理完后调用<code>out</code>，即处理权回到了本app的<code>next</code>手里。</p>
-<p>上面图中的<code>sub_app.out2===app.next</code>，所以能完成逻辑的交接和sub app调用。</p>
-<h1 id="Express"><a href="#Express" class="headerlink" title="Express"></a><a href="https://github.com/strongloop/express" target="_blank" rel="external">Express</a></h1><p>大家都知道Express是Connect的升级版。</p>
-<p>Express不只是Connect的升级版，它还封装了很多对象来方便业务逻辑处理。Express里的Router是Connect的升级版。</p>
-<p>Express大概可以分为几个模块</p>
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>router</td>
-<td>路由模块是Connect升级版</td>
-</tr>
-<tr>
-<td>request</td>
-<td>经过Express封装的req对象</td>
-</tr>
-<tr>
-<td>response</td>
-<td>经过Express封装的res对象</td>
-</tr>
-<tr>
-<td>application</td>
-<td>app上面的各种默认设置</td>
-</tr>
-</tbody>
-</table>
-<p>简要介绍一下每个模块</p>
-<h2 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h2><p>在Connect中间件特性的基础上，加入了如下特性，是Connect的升级版</p>
-<ol>
-<li>正则匹配route;</li>
-<li>进行将http的方法在route中分解开;</li>
-</ol>
-<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><p>在Request中集成了http.IncomingMessage(可读流+事件)，并在其上增加了新的属性，方便使用，我们最常用的应该是 req.param。</p>
-<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><p>在Response中集成了http.ServerResponse(可写流+事件)，并在其上增加了很多方便返回的函数，有我们熟悉的res.json、 res.render、res.redirect、res.sendFile等等。</p>
-<p>我们可以拓展它写一个res.sendPersonInfoById。</p>
-<blockquote>
-<p>关于流的题外话：req.pipe(res)的形式可以“完成发什么就返回什么”，而req.pipe(mylogic).pipe(res)可以添加自己的逻辑， 我们的业务逻辑是把流读为String/Object再进行逻辑处理，处理完再推送给另一个stream，有没有可能在流的层面进行逻辑解 耦提供服务呢？求大神解答了…至少这种写法在大流量、逻辑简单的情况下是有用的。</p>
-</blockquote>
-<h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><p>除了上面的三个模块以外，还需要有个地方存储整个app的属性、设置等。比较常用的是app.engine函数设置模板引擎。</p>
-<h2 id="Express小结"><a href="#Express小结" class="headerlink" title="Express小结"></a>Express小结</h2><p>Express是一个中间件机制的httpServer框架，它本身实现了中间件机制，它也包含了中间件。比如3.x版本的Express 本身自带bodyParser、cookieSession等中间件，而在4.x中去掉了。包括TJ也写了很多中间件，比如node-querystring、 connect-redis等。</p>
-<p>实现业务逻辑解耦时，中间件是从纵向的方面进行的逻辑分解，前面的中间件处理的结果可以给后面用，比如bodyParser把解析 body的结果放在req.body中，后面的逻辑都可以从req.body中取值。由于中间件是顺序执行的，errHandler一般都放在最后，而log类的中间件则放在比较前面。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Connect用流程控制库的回调函数及中间件的思想来解耦回调逻辑； <a href="https://github.com/koajs/koa" target="_blank" rel="external">Koa</a>用Generator方法解决回调问题；</p>
-<p>我们应该也可以用事件、Promise的方式实现；</p>
-<p>PS: 用事件来实现的话还挺期待的，能形成网状的相互调用。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/12/15/(转载)何为 connect 中间件/" data-id="cj8lswfm8000b5svbwq7xeb14" class="article-share-link" data-share="baidu" data-title="(转载)何为 connect 中间件">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2016/12/15/(转载)何为 connect 中间件/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-  
-    <article id="post-es6学习之Class" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/25/es6学习之Class/" class="article-date">
-  <time datetime="2016-11-25T03:25:55.000Z" itemprop="datePublished">2016-11-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/es6/">es6</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/25/es6学习之Class/">es6 学习之 Class</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##从函数到Class</p>
-<p>JavaScript语言的传统方法是通过构造函数，定义并生成新对象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"> name, age </span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">  <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line">Person.prototype.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'name:'</span> + <span class="keyword">this</span>.name + <span class="string">' age:'</span> + <span class="keyword">this</span>.name ;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(<span class="string">'zjl'</span>,<span class="number">35</span>);</div><div class="line"><span class="keyword">typeof</span> Person <span class="comment">// 'function'</span></div><div class="line">Person.name <span class="comment">// 'Person'  </span></div><div class="line">Person === Person.prototype.constructor <span class="comment">//true</span></div><div class="line">p.sayHello === Person.prototype.sayHello <span class="comment">//true</span></div></pre></td></tr></table></figure>
-<p>Es6通过关键字<code>class</code>让对象的原型写法更清晰了，更像面向对象编程的语法。其他的没什么新鲜的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(name,age)&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//定义类的方法，不用加上function，方法之间不需要逗号分隔，加了会报错</span></div><div class="line">  sayHello()&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'name:'</span> + <span class="keyword">this</span>.name + <span class="string">' age:'</span> + <span class="keyword">this</span>.name;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//使用的时候也是使用new命令</span></div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(<span class="string">'zjl'</span>,<span class="number">35</span>);</div><div class="line"><span class="keyword">typeof</span> Person <span class="comment">// 'function'</span></div><div class="line">Person.name  <span class="comment">// 'Person'</span></div><div class="line">Person === Person.prototype.constructor <span class="comment">//true</span></div><div class="line">p.sayHello === Person.prototype.sayHello <span class="comment">//true</span></div></pre></td></tr></table></figure>
-<p>你可以发现类的<strong>数据类型就是函数，类本身也是指向构造函数的，往类上加的方法就是往原型上加方法。</strong></p>
-<h2 id="constructor方法"><a href="#constructor方法" class="headerlink" title="constructor方法"></a>constructor方法</h2><p><code>constructor</code>方法是类的默认方法，通过<code>new</code>命令生成对象实例时，自动调用该方法。</p>
-<p>一个类必须有 <code>constructor</code>方法，如果没有显式定义，一个空的<code>constructor</code>方法会被默认添加。</p>
-<p><code>constructor</code>方法默认返回实例对象（即 this ），完全可以指定返回另外一个对象。</p>
-<p><strong>不使用<code>new</code>命令而像函数调用一个类会报错。</strong></p>
-<h2 id="Class表达式"><a href="#Class表达式" class="headerlink" title="Class表达式"></a>Class表达式</h2><p>与函数一样，Class也可以使用表达式的形式定义。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> person = <span class="keyword">new</span> <span class="class"><span class="keyword">class</span> </span>&#123;</div><div class="line">	<span class="keyword">constructor</span>(name) &#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	sayName() &#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</div><div class="line">	&#125;</div><div class="line">&#125;(<span class="string">'张三'</span>);</div><div class="line">person.sayName(); <span class="comment">// "张三"</span></div></pre></td></tr></table></figure>
-<h2 id="从es5继承到Class的继承"><a href="#从es5继承到Class的继承" class="headerlink" title="从es5继承到Class的继承"></a>从es5继承到Class的继承</h2><p>es5继承的演变之路</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">P</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">//继承一</span></div><div class="line">C.prototype = P.prototype</div><div class="line"><span class="comment">//缺点：引用同一个对象，会互相影响</span></div><div class="line"></div><div class="line"><span class="comment">//继承二</span></div><div class="line">C.prototype = <span class="keyword">new</span> P();</div><div class="line"><span class="comment">//缺点: 比如你P里面有大量的东西。this之类的，那么new就很浪费内存</span></div><div class="line"></div><div class="line"><span class="comment">//继承三</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">F.prototype = P.prototype;</div><div class="line">C.prototype = <span class="keyword">new</span> F();</div><div class="line"></div><div class="line"><span class="comment">//这个就等价与下面的</span></div><div class="line">C.prototype = <span class="built_in">Object</span>.create(P.prototype);</div><div class="line"><span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">o</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">  F.prototype = o;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//按照国际惯例 constructor 是要修正的 </span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//继承四</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">Child,Parent</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">    F.prototype = Parent.prototype;</div><div class="line">    Child.prototype = <span class="keyword">new</span> F();</div><div class="line">    Child.prototype.constructor = Child;</div><div class="line">  	<span class="comment">//子类可以通过Child.super.constructor.apply(this,[父类属性或方法])</span></div><div class="line">    Child.super = Child.base = Parent.prototype;</div><div class="line">    <span class="keyword">if</span>(Parent.prototype.constructor == <span class="built_in">Object</span>.prototype.constructor)&#123;</div><div class="line">        Parent.prototype.constructor = Parent;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>Class</code>之间可以通过 <code>extends</code> 关键字实现继承，这比ES5的通过修改原型链实现继承，要清晰和方便很多。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span></span>&#123; <span class="comment">//这和java是一样的。</span></div><div class="line">  <span class="keyword">constructor</span>(name,age,sex)&#123;</div><div class="line">    <span class="keyword">super</span>(name,age);  <span class="comment">//super() 代表父类构造函数</span></div><div class="line">    <span class="keyword">this</span>.sex = sex;  </div><div class="line">  &#125;</div><div class="line">   sayHello()&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'sex:'</span> + <span class="keyword">this</span>.sex + <span class="keyword">super</span>.sayHello(); <span class="comment">//super代表父类对象</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>子类必须在<code>constructor</code>方法中调用<code>super</code>方法，否则新建实例时会报错。这是因为子类没有自己的 this 对象，而是继承父类的 this 对象，然后对其进行加工。如果不调用<code>super</code>方法，子类就得不到 this 对象。</p>
-<p>ES5的继承，实质是先创造子类的实例对象<code>this</code>，然后再将父类的方法添加到<code>this</code>上面（<code>Parent.apply(this)</code>）。ES6的继承机制完全不同，实质是先创造父类的实例对象<code>this</code>（所以必须先调用 <code>super</code> 方法），然后再用子类的构造函数修改 <code>this</code> 。</p>
-<p>如果子类没有定义<code>constructor</code>方法，这个方法会被默认添加。也就是说，不管有没有显式定义，任何一个子类都有<code>constructor</code>方法。</p>
-<h2 id="类的prototype属性和proto属性"><a href="#类的prototype属性和proto属性" class="headerlink" title="类的prototype属性和proto属性"></a>类的prototype属性和<strong>proto</strong>属性</h2><p>我们都知道每个对象都有<code>__proto__</code>属性，指向对应构造函数的prototype属性。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;</div><div class="line">&#125;</div><div class="line">B.__proto__ === A <span class="comment">// true</span></div><div class="line">B.prototype.__proto__ === A.prototype <span class="comment">// true</span></div></pre></td></tr></table></figure>
-<p>上面代码中，子类 B 的 <code>__proto__</code>属性指向父类 A ，子类 B 的<code>prototype</code>属性的 <code>__proto__</code>属性指向父类 A 的<code>prototype</code>属性。</p>
-<p>这样的结果是因为，类的继承是按照下面的模式实现的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="comment">// B的实例继承A的实例</span></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(B.prototype, A.prototype);</div><div class="line"><span class="comment">// B继承A的静态属性</span></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(B, A);</div></pre></td></tr></table></figure>
-<p><code>Object.setPrototypeOf</code>方法的实现。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.setPrototypeOf = <span class="function"><span class="keyword">function</span> (<span class="params">obj, proto</span>) </span>&#123;</div><div class="line">	obj.__proto__ = proto;</div><div class="line">	<span class="keyword">return</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="set-get"><a href="#set-get" class="headerlink" title="set,get"></a>set,get</h2><p>与ES5一样，在Class内部可以使用<strong>get</strong>和<strong>set</strong>关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</div><div class="line">	<span class="keyword">constructor</span>() &#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	&#125;</div><div class="line">	get prop() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">'getter'</span>;</div><div class="line">	&#125;</div><div class="line">	set prop(value) &#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'setter: '</span>+value);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> inst = <span class="keyword">new</span> MyClass();</div><div class="line">inst.prop = <span class="number">123</span>;</div><div class="line"><span class="comment">// setter: 123</span></div><div class="line">inst.prop</div><div class="line"><span class="comment">// 'getter'</span></div></pre></td></tr></table></figure>
-<h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p>类相当于实例的原型，所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上<code>static</code>关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</div><div class="line"><span class="keyword">static</span> classMethod() &#123;</div><div class="line"><span class="keyword">return</span> <span class="string">'hello'</span>;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">Foo.classMethod() <span class="comment">// 'hello'</span></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</div><div class="line">foo.classMethod()</div><div class="line"><span class="comment">// TypeError: foo.classMethod is not a function</span></div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/11/25/es6学习之Class/" data-id="cj8lswfmx001c5svbjt1keyc1" class="article-share-link" data-share="baidu" data-title="es6 学习之 Class">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2016/11/25/es6学习之Class/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
 
 
-  <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-  </nav>
-</section>
-      
-      <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node/">Node</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/es6/">es6</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 17.5px;">JavaScript</a> <a href="/tags/Node/" style="font-size: 20px;">Node</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/tools/" style="font-size: 12.5px;">tools</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/09/15/koa-router小笔记/">koa-router小笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/10/一些源码分析解析/">一些npm包源码分析</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/02/fiddler/">fiddler抓包工具</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/02/这些年我用过的软件/">那些年我用过的软件</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/02/利用pipe处理并发/">利用pipe处理并发的可行性</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
-    <div class="widget">
-      <ul>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-      
-    </div>
-    <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 ChenXing<br>
-      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
-      .
-      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
-    </div>
-  </div>
-</footer>
-  </div>
-  <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-  <!-- totop start -->
-<div id="totop">
-<a title="totop"><img src="/img/scrollup.png"/></a>
-</div>
-
-<!-- totop end -->
-
-<!-- 多说公共js代码 start -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"reqianduan"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共js代码 end -->
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
 
-<!-- 百度分享 start -->
-
-<div id="article-share-box" class="article-share-box">
-  <div id="bdshare" class="bdsharebuttonbox article-share-links">
-    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
-    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
-    <a class="article-share-more" data-cmd="more" title="更多"></a>
-  </div>
-</div>
 <script>
-  function SetShareData(cmd, config) {
-    if (shareDataTitle && shareDataUrl) {
-      config.bdText = shareDataTitle;
-      config.bdUrl = shareDataUrl;
-    }
-    return config;
-  }
-  window._bd_share_config={
-    "common":{onBeforeClick: SetShareData},
-    "share":{"bdCustomStyle":"/css/bdshare.css"}
-  };
-  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
 </script>
 
-<!-- 百度分享 end -->
+  <title> ChenXing </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="ChenXing">ChenXing</h1>
+        <h3 class="description" data-text=""></h3>
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+<div class="index-content">
+
+  <div class="posts-list">
+    <div>
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/01/10/Python版的generator以及异步IO/">Python版的generator以及异步IO</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-01-10T13:59:55+08:00" content="2017-01-10">
+        2017-01-10
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/01/10/Python版的generator以及异步IO/">
+        
+        如果说你 es6 的 Generator 懂了，python 的 generator 就很容易
+下面是一些语法对照表
+
+
+
+es6
+python3
 
 
 
 
-<script src="/js/script.js"></script>
+yield
+yield
+
+
+yield*
+yield from
+
+
+g.next() or g.next(undefined)
+next(g) 
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Python" itemprop="url" rel="index">
+              <span itemprop="name">Python</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/01/10/Python版的generator以及异步IO/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/01/07/Python中的元类/">Python中的元类</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-01-07T14:59:55+08:00" content="2017-01-07">
+        2017-01-07
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/01/07/Python中的元类/">
+        
+        1. Python中一切皆对象，包括类这点和java一样，java里面一切皆对象，类也是对象(没毛病)。我们都知道反射里面我们都是根据Class对象动态创建类。每个类都有与之对应的Class对象。
+1234567class Foo(object):    def hello(self):      
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Python" itemprop="url" rel="index">
+              <span itemprop="name">Python</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/01/07/Python中的元类/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/12/20/(自备)异步流程控制模块Async/">(自备)异步流程控制模块Async</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-12-20T21:53:53+08:00" content="2016-12-20">
+        2016-12-20
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/12/20/(自备)异步流程控制模块Async/">
+        
+        async模块在流程控制方面给我们带来了比较全面的解决办法
+串行控制： series、waterfall、compose;
+并行控制：parallel、parallelLimit、queue;
+循环控制：whilst、doWhilst、until、doUntil、forever;
+其他控制：appl
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/12/20/(自备)异步流程控制模块Async/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/12/15/(转载)何为 connect 中间件/">(转载)何为 connect 中间件</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-12-15T10:53:53+08:00" content="2016-12-15">
+        2016-12-15
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/12/15/(转载)何为 connect 中间件/">
+        
+        何为 connect 中间件
+《何为 connect 中间件》目标
+理解中间件的概念
+了解 Connect 的实现
+
+课程内容
+原生 httpServer 遇到的问题
+中间件思想
+Connect 实现
+Express 简介
+
+这是从 httpServer 到 Express 的升级过程。
+HTTPN
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/12/15/(转载)何为 connect 中间件/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2016/11/25/es6学习之Class/">es6 学习之 Class</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2016-11-25T11:25:55+08:00" content="2016-11-25">
+        2016-11-25
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2016/11/25/es6学习之Class/">
+        
+        ##从函数到Class
+JavaScript语言的传统方法是通过构造函数，定义并生成新对象。
+12345678910111213function Person( name, age )&#123;  this.name = name;  this.age = age;&#125;Person.pro
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#es6" itemprop="url" rel="index">
+              <span itemprop="name">es6</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2016/11/25/es6学习之Class/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+    </div>
+    
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+  </nav>
+
+
+  </div>
+
+  <div class="right-info">
+  <div class="featured-tags">
+    <h5>FEATURED TAGS</h5>
+    <div class="tags">
+    
+      <a href="/tags#Node">Node</a>
+    
+      <a href="/tags#JavaScript">JavaScript</a>
+    
+      <a href="/tags#Python">Python</a>
+    
+      <a href="/tags#Java">Java</a>
+    
+      <a href="/tags#es6">es6</a>
+    
+      <a href="/tags#tools">tools</a>
+    
+      <a href="/tags#hexo">hexo</a>
+    
+    </div>
+  </div>
+  <div class="about-me">
+    <h5>ABOUT ME</h5>
+    <img src="/img/author.png" alt="ChenXing" itemprop="image" />
+    <p class="description motion-element" itemprop="description"></p>
+
+    <div class="links-of-author clearfix">
+      
+        
+          <span class="links-of-author-item">
+            <a href="https://github.com/5196666qwe" target="_blank" class="github">
+              <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+            </a>
+          </span>
+        
+          <span class="links-of-author-item">
+            <a href="http://www.zhihu.com/people/?" target="_blank" class="zhihu">
+              <i class="fa fa-zhihu fa-stack-1x fa-inverse"></i>
+            </a>
+          </span>
+        
+          <span class="links-of-author-item">
+            <a href="http://weibo.com/?" target="_blank" class="weibo">
+              <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+            </a>
+          </span>
+        
+      
+    </div>
+  </div>
+  
+  <div class="friend-links">
+    <h5>FRIEND LINKS</h5>
+    
+      
+        <a href="http://www.cnbeta.com/" target="_blank" title="Cnbeta">Cnbeta</a>
+      
+    
+      
+        <a href="http://www.id97.com/" target="_blank" title="id">id</a>
+      
+    
+  <div>
+  
+</div>
+
 
 </div>
+
+
+
+      
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
 </body>
 </html>

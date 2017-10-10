@@ -1,12 +1,48 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  <title>打造轻量web框架02 | ChenXing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="Java," />
+
+
+<meta name="description" content="前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。
 先看看Js是怎么实现AOP，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="打造轻量web框架02">
@@ -21,84 +57,159 @@
 <meta name="twitter:description" content="前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。
 先看看Js是怎么实现AOP，">
 <meta name="twitter:image" content="http://yoursite.com/img/java_web/java_web2.png">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> 打造轻量web框架02 </title>
   
-    <link rel="alternative" href="/atom.xml" title="ChenXing" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
-  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
 </head>
-<body>
-<div id="container">
-  <div id="wrap">
-    <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">ChenXing</a>
-      </h1>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="打造轻量web框架02"> 打造轻量web框架02 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2016-10-15T23:50:50+08:00" content="2016-10-15">
+              2016-10-15
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#Java" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <a href="/2016/10/15/打造轻量web框架02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/15/打造轻量web框架02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+        </div>
+        
       
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
         
-          <a class="main-nav-link" href="/">Home</a>
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
         
-      </nav>
-      <nav id="sub-nav">
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
-          <input type="submit" value="" class="search-form-submit">
-          <input name=tn type=hidden value="bds">
-          <input name=cl type=hidden value="3">
-          <input name=ct type=hidden value="2097152">
-          <input type="hidden" name="si" value="yoursite.com">
-        </form>
-      </div>
-    </div>
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
   </div>
+  <div class="mask"></div>
 </header>
-    <div class="outer">
-      <section id="main"><article id="post-打造轻量web框架02" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/15/打造轻量web框架02/" class="article-date">
-  <time datetime="2016-10-15T15:50:50.000Z" itemprop="datePublished">2016-10-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      打造轻量web框架02
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    <main class="container">
+
       
-        <p>前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。</p>
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>前面我们完成了一个简单MVC框架了，已经能完成响应，依赖注入，返回渲染数据了，此外，还有一些非常好的特性没有提供，就是AOP。我们可以使用这个特性来实现一些横向拦截操作。比如性能分析，日志收集，安全控制。把这些功能抽离出来之后，再通过“动态织入”的方式掺入业务逻辑模块中。这样做的好处首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块。</p>
 <p>先看看Js是怎么实现AOP，然后我们再看看java是怎么苦逼实现的。最后我们来把这个特性揉进mvc里。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span> (<span class="params">beforefn</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> __self = <span class="keyword">this</span>; <span class="comment">// 保存原函数的引用</span></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 返回包含了原函数和新函数的"代理"函数</span></div><div class="line">        beforefn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>); <span class="comment">// 执行新函数，修正 this</span></div><div class="line">        <span class="keyword">return</span> __self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>); <span class="comment">// 执行原函数</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">Function</span>.prototype.after = <span class="function"><span class="keyword">function</span> (<span class="params">afterfn</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> __self = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ret = __self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">        afterfn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">&#125;;</div><div class="line">func = func.before(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line">&#125;).after(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">&#125;);</div><div class="line">func();</div></pre></td></tr></table></figure>
 <p>对，你没看错就是这么简单。</p>
@@ -172,212 +283,111 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 类操作助手类</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="comment">//加载所有包下的类放到set里面 可获取service controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassHelper</span> </span>&#123;</div><div class="line">	...</div><div class="line">   <span class="comment">//获取报名下所有superclss的 子类</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Class&lt;?&gt;&gt; getClassSetBySuper(Class&lt;?&gt; superClass) &#123;</div><div class="line">        Set&lt;Class&lt;?&gt;&gt; classSet = <span class="keyword">new</span> HashSet&lt;Class&lt;?&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (Class&lt;?&gt; cls : CLASS_SET) &#123;</div><div class="line">            <span class="keyword">if</span> (superClass.isAssignableFrom(superClass) &amp;&amp; !superClass.equals(cls)) &#123;</div><div class="line">                classSet.add(cls);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> classSet;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//获取带某注解的类</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Class&lt;?&gt;&gt; getClassSetByAnnotation(Class&lt;? extends Annotation&gt; annotationClass) &#123;</div><div class="line">        Set&lt;Class&lt;?&gt;&gt; classSet = <span class="keyword">new</span> HashSet&lt;Class&lt;?&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (Class&lt;?&gt; cls : CLASS_SET) &#123;</div><div class="line">            <span class="keyword">if</span> (cls.isAnnotationPresent(annotationClass)) &#123;</div><div class="line">                classSet.add(cls);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> classSet;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>最后的AopHelper类，看看它完成了什么工作，先获取切面class，以及对应的要增强所有的class，然后获取要增强class和对应增强的所有代理class。最后根据这个映射关系得到代理对象，替代原来对象即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">AopHelper</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER  = LoggerFactory.getLogger(AopHelper.class);</div><div class="line">	</div><div class="line">	<span class="keyword">static</span>&#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			<span class="comment">//获取切面类和切面类上面注解集合 比如（controller)  切面和对应增强的class类，一个切面可以增强n个类</span></div><div class="line">			Map&lt;Class&lt;?&gt;,Set&lt;Class&lt;?&gt;&gt;&gt; proxyMap = createProxyMap();</div><div class="line">			<span class="comment">//获取controller和该切面对象列表  比如(controllerraspect) 一个目标类可以被n个切面代理增强</span></div><div class="line">			Map&lt;Class&lt;?&gt;, List&lt;Proxy&gt;&gt; targetMap = createTargetMap(proxyMap);</div><div class="line">			<span class="keyword">for</span> ( Map.Entry&lt;Class&lt;?&gt;, List&lt;Proxy&gt;&gt; targetEntry : targetMap.entrySet())&#123;</div><div class="line">				Class&lt;?&gt; targetClass  = targetEntry.getKey();</div><div class="line">				List&lt;Proxy&gt; proxyList = targetEntry.getValue();</div><div class="line">													<span class="comment">// controller  切面对象</span></div><div class="line">				Object proxy = ProxyManager.createProxy(targetClass,proxyList);</div><div class="line">				BeanHelper.setBean(targetClass, proxy);</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">			LOGGER.error(<span class="string">"aop failure"</span>,e);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Class&lt;?&gt;, Set&lt;Class&lt;?&gt;&gt;&gt; createProxyMap() <span class="keyword">throws</span> Exception &#123;</div><div class="line">        Map&lt;Class&lt;?&gt;, Set&lt;Class&lt;?&gt;&gt;&gt; proxyMap = <span class="keyword">new</span> HashMap&lt;Class&lt;?&gt;, Set&lt;Class&lt;?&gt;&gt;&gt;();</div><div class="line">        <span class="comment">//获取所有 AspectProxy的子类 比如controllerAspect</span></div><div class="line">        Set&lt;Class&lt;?&gt;&gt; proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);</div><div class="line">        <span class="keyword">for</span> (Class&lt;?&gt; proxyClass : proxyClassSet) &#123;</div><div class="line">            <span class="keyword">if</span> (proxyClass.isAnnotationPresent(Aspect.class)) &#123;</div><div class="line">                Aspect aspect = proxyClass.getAnnotation(Aspect.class);</div><div class="line">                <span class="comment">//获取所有注解为aspect的value 也就是 注解Controller的类</span></div><div class="line">                Set&lt;Class&lt;?&gt;&gt; targetClassSet = createTargetClassSet(aspect);</div><div class="line">                			<span class="comment">// controlelraspect  List&lt;CustomerConstoller&gt;</span></div><div class="line">                proxyMap.put(proxyClass, targetClassSet);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> proxyMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Class&lt;?&gt;, List&lt;Proxy&gt;&gt; createTargetMap(Map&lt;Class&lt;?&gt;, Set&lt;Class&lt;?&gt;&gt;&gt; proxyMap) <span class="keyword">throws</span> Exception&#123;</div><div class="line">        Map&lt;Class&lt;?&gt;, List&lt;Proxy&gt;&gt; targetMap = <span class="keyword">new</span> HashMap&lt;Class&lt;?&gt;, List&lt;Proxy&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (Map.Entry&lt;Class&lt;?&gt;, Set&lt;Class&lt;?&gt;&gt;&gt; proxyEntry : proxyMap.entrySet()) &#123;</div><div class="line">            Class&lt;?&gt; proxyClass = proxyEntry.getKey();</div><div class="line">            Set&lt;Class&lt;?&gt;&gt; proxyClassSet = proxyEntry.getValue();</div><div class="line">            <span class="keyword">for</span> (Class&lt;?&gt; targetClass : proxyClassSet) &#123;</div><div class="line">                Proxy proxy = (Proxy) proxyClass.newInstance();</div><div class="line">                <span class="keyword">if</span> (targetMap.containsKey(targetClass)) &#123;</div><div class="line">                    targetMap.get(targetClass).add(proxy);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    List&lt;Proxy&gt; proxyList = <span class="keyword">new</span> ArrayList&lt;Proxy&gt;();</div><div class="line">                    proxyList.add(proxy);</div><div class="line">                    targetMap.put(targetClass, proxyList);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> targetMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//获取带Aspect类放到set里面</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Set&lt;Class&lt;?&gt;&gt; createTargetClassSet(Aspect aspect) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        Set&lt;Class&lt;?&gt;&gt; targetClassSet = <span class="keyword">new</span> HashSet&lt;Class&lt;?&gt;&gt;();</div><div class="line">        <span class="comment">//interface com.chenxing.online.annotation.Controller</span></div><div class="line">        Class&lt;? extends Annotation&gt; annotation = aspect.value();</div><div class="line">        <span class="keyword">if</span> (annotation != <span class="keyword">null</span> &amp;&amp; !annotation.equals(Aspect.class)) &#123;</div><div class="line">        	<span class="comment">//获取所有注解为controller的类</span></div><div class="line">            targetClassSet.addAll(ClassHelper.getClassSetByAnnotation(annotation));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> targetClassSet;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="keyword">new</span> AopHelper();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</div>
 
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK动态代理和CGlib"><span class="nav-text">JDK动态代理和CGlib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开工前的思考"><span class="nav-text">开工前的思考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义切面注解"><span class="nav-text">定义切面注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建代理框架"><span class="nav-text">搭建代理框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载AOP框架"><span class="nav-text">加载AOP框架</span></a></li></ol></li></ol></div>
       
     </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/10/15/打造轻量web框架02/" data-id="cj8lswfnt002g5svbtbm4hvuj" class="article-share-link" data-share="baidu" data-title="打造轻量web框架02">Share</a>
-      
+  </section>
+</div>
 
-      
-        <a href="http://yoursite.com/2016/10/15/打造轻量web框架02/#ds-thread" class="article-comment-link">Comments</a>
-      
 
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
   </div>
-  
+
+  <footer class="post-footer">
     
-<nav id="article-nav">
-  
-    <a href="/2016/11/10/JS 核心之 执行上下文(Execution Context)/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
+      <div class="post-tags">
         
-          JS 核心之执行上下文(Execution Context)
+          <a href="/tags#Java" rel="tag">#Java</a>
         
       </div>
-    </a>
-  
-  
-    <a href="/2016/10/15/打造轻量web框架01/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">打造轻量web框架</div>
-    </a>
-  
-</nav>
+    
+    
 
-  
+  </footer>
+
 </article>
 
 
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2016/10/15/打造轻量web框架02/" data-title="打造轻量web框架02" data-url="http://yoursite.com/2016/10/15/打造轻量web框架02/"></div>
-  </section>
-</section>
+
+
       
-      <aside id="sidebar">
-  
+  <div class="comments" id="comments">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node/">Node</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/es6/">es6</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">2</span></li></ul>
-    </div>
+      <div class="ds-thread" data-thread-key="2016/10/15/打造轻量web框架02/"
+           data-title="打造轻量web框架02" data-url="http://yoursite.com/2016/10/15/打造轻量web框架02/">
+      </div>
+    
   </div>
 
-  
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">2</span></li></ul>
-    </div>
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
   </div>
 
-  
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 17.5px;">JavaScript</a> <a href="/tags/Node/" style="font-size: 20px;">Node</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/tools/" style="font-size: 12.5px;">tools</a>
-    </div>
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
   </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/09/15/koa-router小笔记/">koa-router小笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/10/一些源码分析解析/">一些npm包源码分析</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/02/fiddler/">fiddler抓包工具</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/02/这些年我用过的软件/">那些年我用过的软件</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/02/利用pipe处理并发/">利用pipe处理并发的可行性</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
-    <div class="widget">
-      <ul>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-      
-    </div>
-    <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 ChenXing<br>
-      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
-      .
-      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
-    </div>
-  </div>
 </footer>
+
+
   </div>
-  <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-  <!-- totop start -->
-<div id="totop">
-<a title="totop"><img src="/img/scrollup.png"/></a>
-</div>
 
-<!-- totop end -->
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
 
-<!-- 多说公共js代码 start -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"reqianduan"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
+
+
+
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
   </script>
-<!-- 多说公共js代码 end -->
-
-
-<!-- 百度分享 start -->
-
-<div id="article-share-box" class="article-share-box">
-  <div id="bdshare" class="bdsharebuttonbox article-share-links">
-    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
-    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
-    <a class="article-share-more" data-cmd="more" title="更多"></a>
-  </div>
-</div>
-<script>
-  function SetShareData(cmd, config) {
-    if (shareDataTitle && shareDataUrl) {
-      config.bdText = shareDataTitle;
-      config.bdUrl = shareDataUrl;
-    }
-    return config;
-  }
-  window._bd_share_config={
-    "common":{onBeforeClick: SetShareData},
-    "share":{"bdCustomStyle":"/css/bdshare.css"}
-  };
-  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-
-<!-- 百度分享 end -->
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
+     
 
 
 
 
-<script src="/js/script.js"></script>
 
-</div>
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
 </body>
 </html>

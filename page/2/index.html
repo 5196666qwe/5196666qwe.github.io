@@ -1,839 +1,557 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  <title>ChenXing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="~" />
+
+
+<meta property="og:type" content="website">
 <meta property="og:title" content="ChenXing">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ChenXing">
-  
-    <link rel="alternative" href="/atom.xml" title="ChenXing" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
-  
-</head>
-<body>
-<div id="container">
-  <div id="wrap">
-    <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">ChenXing</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
-          <input type="submit" value="" class="search-form-submit">
-          <input name=tn type=hidden value="bds">
-          <input name=cl type=hidden value="3">
-          <input name=ct type=hidden value="2097152">
-          <input type="hidden" name="si" value="yoursite.com">
-        </form>
-      </div>
-    </div>
-  </div>
-</header>
-    <div class="outer">
-      <section id="main">
-  
-    <article id="post-async和koa2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/20/async和koa2/" class="article-date">
-  <time datetime="2017-03-20T13:53:53.000Z" itemprop="datePublished">2017-03-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node/">Node</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/20/async和koa2/">async和koa2</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 等同于</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> spawn(<span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>阮大大在es6里面给出了<code>async</code>函数的一种实现方式，是用下面的<code>spawn</code>实现的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">spawn</span>(<span class="params">genF</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">		<span class="keyword">var</span> gen = genF();</div><div class="line">		<span class="function"><span class="keyword">function</span> <span class="title">step</span>(<span class="params">nextF</span>) </span>&#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">var</span> next = nextF();</div><div class="line">			&#125; <span class="keyword">catch</span>(e) &#123;</div><div class="line">				<span class="keyword">return</span> reject(e);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(next.done) &#123;</div><div class="line">				<span class="keyword">return</span> resolve(next.value);</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">				step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(v); &#125;);</div><div class="line">			&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">				step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.throw(e); &#125;);</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line">		step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(<span class="literal">undefined</span>); &#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>先看看<code>step</code>函数里面的<code>catch</code>是捕捉啥的？</p>
-<p>肯定是<code>nexf()</code>这个函数出错的，往上走会发现源头是<code>gen.next()</code>或则<code>gen.throw()</code>。</p>
-<ol>
-<li><code>gen</code>没有<code>next</code>函数或则说压根不是函数——catch</li>
-<li><code>Promise.resolve(next.value)</code>状态为<code>REJECTED</code>会执行<code>gen.throw()</code>—-catch</li>
-</ol>
-<p><strong>第一种情况</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>上面这种直接抛出一个异常的代码，会被catch到</strong>，</p>
-<p>那要是异步的呢？<code>try/catch</code>捕捉不到的，程序要跪的。(一般也不会这么用)</p>
-<p>说到这里大家都明白了。也清楚了下面这段代码会出错的。也确实证明了<code>async</code>函数像是用<code>spawn</code>实现的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//异步----catch不到的。</span></div><div class="line"><span class="keyword">const</span> foo = <span class="keyword">async</span> () =&gt; &#123;</div><div class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span>&#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>);</div><div class="line">	&#125;, <span class="number">100</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo().catch(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p><strong>第二种情况</strong></p>
-<p>我们仔细看看这段代码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</div><div class="line">	step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.next(v); &#125;);</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">	step(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> gen.throw(e); &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>我们都知道</p>
-<p>如果<code>next.value</code>是一个普通值，那么<code>resolve</code>函数会生成一个新的<code>promise</code>，并改变自己状态为<code>FULFILLED</code>,值为该<code>value</code>。</p>
-<p>如果<code>next.value</code>是一个<code>promise</code>，则直接返回该<code>promise</code>。</p>
-<p>那么说会有N种情况触发then第二个参数onRejected。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//next.value</span></div><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span>&#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>)</div><div class="line">&#125;)</div><div class="line">...</div><div class="line">new <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span>&#123;</div><div class="line">  reject(<span class="string">'出错了'</span>)</div><div class="line">&#125;)</div><div class="line"><span class="built_in">Promise</span>.reject(<span class="string">'出错了'</span>)</div></pre></td></tr></table></figure>
-<p>实际就一种情况—— <strong>next.value是状态为rejected的Promise</strong></p>
-<p>总结：</p>
-<ol>
-<li><code>async</code>好像是用<code>spawn</code>实现的(至少从各种结果，异常来看是差不多的)</li>
-<li><strong>async始于new Promise().终于reject(e)或则resolve(next.value)</strong><ol>
-<li>如果是<code>reject(e)</code>，说明有异常,也就是上面所说的两种情况。但无论是那一种情况，<strong>都会立即跳出该函数。等待处理。</strong>(这里有个意外，就是如果你外部对await进行try/catch了，就不会跳出。外部的try/catch会先于内部的try/catch对g.throw进行捕获)</li>
-<li>如果是<code>resolve()</code>，说明整个流程顺序地顺利执行了。也就是我们期待的。</li>
-</ol>
-</li>
-</ol>
-<h2 id="koa2"><a href="#koa2" class="headerlink" title="koa2"></a>koa2</h2><p><code>koa2</code>和<code>express</code>相比精简很多。主要的就四个文件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Emitter</span> </span>&#123;</div><div class="line">  ...</div><div class="line">  listen() &#123;</div><div class="line">    debug(<span class="string">'listen'</span>);</div><div class="line">    <span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback());</div><div class="line">    <span class="keyword">return</span> server.listen.apply(server, <span class="built_in">arguments</span>);</div><div class="line">  &#125;</div><div class="line">  callback() &#123;</div><div class="line">    <span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.middleware);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.listeners(<span class="string">'error'</span>).length) <span class="keyword">this</span>.on(<span class="string">'error'</span>, <span class="keyword">this</span>.onerror);</div><div class="line"></div><div class="line">    <span class="keyword">const</span> handleRequest = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</div><div class="line">      res.statusCode = <span class="number">404</span>;</div><div class="line">      <span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</div><div class="line">      <span class="keyword">const</span> onerror = <span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err);</div><div class="line">      <span class="keyword">const</span> handleResponse = <span class="function"><span class="params">()</span> =&gt;</span> respond(ctx);</div><div class="line">      onFinished(res, onerror);</div><div class="line">      <span class="keyword">return</span> fn(ctx).then(handleResponse).catch(onerror);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> handleRequest;</div><div class="line">  &#125;</div><div class="line">   ....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>Application</code>即我们<code>new</code>的<code>Koa</code>.</p>
-<p>可以清楚的看到，请求到来时候执行<strong>fn(ctx).then(handleResponse).catch(onerror);</strong></p>
-<p>这里的<code>fn</code>是组合了<code>middleware</code> 的函数(下面这段代码)。函数调用后<strong>总会返回一个Promise(不管是什么状态的)</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span> (<span class="params">middleware</span>) </span>&#123;</div><div class="line">  ....</div><div class="line">  return <span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;</div><div class="line">    <span class="comment">// last called middleware #</span></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span></div><div class="line">    <span class="keyword">return</span> dispatch(<span class="number">0</span>)</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (i &lt;= index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'next() called multiple times'</span>))</div><div class="line">       <span class="comment">// 当前执行第 i 个中间件</span></div><div class="line">      index = i</div><div class="line">      <span class="keyword">let</span> fn = middleware[i]</div><div class="line">      <span class="comment">// 所有的中间件执行完毕</span></div><div class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</div><div class="line">      <span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</div><div class="line">      </div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">         <span class="comment">// 执行当前的中间件</span></div><div class="line">      	<span class="comment">// 这里的fn也就是app.use(fn)中的fn</span></div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(context, <span class="function"><span class="keyword">function</span> <span class="title">next</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line">        &#125;))</div><div class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>有个问题，这里的<code>catch</code>是<code>catch</code>啥的?</p>
-<p>因为<code>fn</code>是我们的中间件，一般是个普通函数，返回<code>promise</code>的函数或则<code>async</code>函数。</p>
-<p>所以说只能是普通函数抛出一个异常(如果是promise会被下面的catch到)</p>
-<p><strong>请求到来时最后会变成这种形式的</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span></div><div class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> respond(ctx))</div><div class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err))</div><div class="line"></div><div class="line"><span class="comment">//从上面可以看出会有三种不同的pormise。我们主要讨论第二种。</span></div><div class="line"><span class="comment">//fn即中间件</span></div><div class="line"><span class="built_in">Promise</span>.resolve(fn(context, <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> dispatch(i + <span class="number">1</span>)</div><div class="line">&#125;))</div><div class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> respond(ctx))</div><div class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err))</div></pre></td></tr></table></figure>
-<p>不难发现，无论<code>fn</code>是否为普通函数且返回了什么，或则是返回<code>promise</code>的函数<code>resolve</code>什么，都是没有意义的，因为<code>then</code>都是不接受该参数的。它只会<code>catch</code>错误信息。</p>
-<p>(实际测试，有个问题我百思不解，<code>fn</code>正常执行也会触发<code>catch</code>？这他大爷的一下颠覆了我的世界观，但事实是<code>respond(ctx)</code>是返回一个<code>boolean</code>。。如果不返回一个<code>reject</code>状态的<code>promise</code>，<code>catch</code>是不可能执行的，，，，最后发现了这个<code>catch</code>是不执行的，执行的是<code>ctx.onerror</code>，但找不到代码在哪执行的)</p>
-<p><strong>详细谈一下fn返回promise的情况。</strong></p>
-<p>如果<code>fn</code>返回一个<code>promise,</code>那么<code>Promise.resolve()</code>则直接返回该<code>promise</code></p>
-<p>比方说有个中间件是这样的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">ctx</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(ctx.method, ctx.header.host + ctx.url)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"> ctx, next </span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params"> resolve, reject </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">        <span class="comment">// 执行中间件的操作</span></div><div class="line">        log( ctx )</div><div class="line"></div><div class="line">        resolve()</div><div class="line"></div><div class="line">        <span class="keyword">return</span> next()</div><div class="line"></div><div class="line">    &#125;).catch(<span class="function">(<span class="params"> err </span>) =&gt;</span> &#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> next()</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>那么最终请求过来处理函数是这样的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">     <span class="comment">// 执行中间件的操作</span></div><div class="line">     log( ctx )</div><div class="line">     resolve()</div><div class="line">     <span class="keyword">return</span> next()</div><div class="line">&#125;)</div><div class="line">.catch(<span class="function">(<span class="params"> err </span>) =&gt;</span> &#123;<span class="keyword">return</span> next()&#125;)</div><div class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> respond(ctx))</div><div class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.onerror(err))</div></pre></td></tr></table></figure>
-<p>一般来说为了防止<code>log( ctx )</code>抛出异常，<code>next()</code>不执行。<strong>(resolver里面抛出异常会被直接catch到，然后改变状态，设置error，是直接跳过resolver后面代码的)</strong>我们会给中间件<code>promise</code>加一个<code>catch</code>.以便抛出异常后继续处理下一个中间件。</p>
-<p>这里的<code>next</code>是下一个中间件<code>promise</code>，中间件<code>promise</code>里面可能还有<code>next</code>，一层套一层。</p>
-<p>按<code>promise</code>特性，</p>
-<p>同步的<code>resolve()</code>，也不会立即执行<code>then，catch</code>(因为此时then，catch生成的promise还没push到queue里面)，会等到改变自身状态和值后，执行完了resolver后面代码(next执行)，最后执行<code>then，catch</code>等等。</p>
-<p>如果说是异步的<code>resolve()</code>，此时<code>resolve</code>立即返回，那么<code>next</code>会立即执行，这个时候，就得看<code>next</code>里面的<code>promise</code>的状态了，否则，<code>then</code>可能提前执行，进行响应。</p>
-<h3 id="总结：搞懂Promise很重要。"><a href="#总结：搞懂Promise很重要。" class="headerlink" title="总结：搞懂Promise很重要。"></a>总结：搞懂Promise很重要。</h3>
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/03/20/async和koa2/" data-id="cj8lswfmu00185svbtpv1vnxm" class="article-share-link" data-share="baidu" data-title="async和koa2">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/03/20/async和koa2/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-从零开始的promise" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/18/从零开始的promise/" class="article-date">
-  <time datetime="2017-03-18T13:53:53.000Z" itemprop="datePublished">2017-03-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node/">Node</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/18/从零开始的promise/">从零开始的promise</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前几天看到一个题，大概是这样的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        resolve(<span class="number">1</span>)</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="string">"2"</span>)</div><div class="line">    .then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
-<p>我开始想可能是<code>undefined</code>，因为<code>then</code>里面一般是函数且返回某个值或则<code>promise</code>，这个直接传了一个值，我想第二个是不接受的，所以拿到的应该是<code>undefined</code>.</p>
-<p>事实是我错了，这个是个<code>值穿透</code>，输出1。WTF。。。</p>
-<p>然而事情还没完，我又看到个题。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        reject(<span class="string">'error 1'</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'error 2'</span>);</div><div class="line">&#125;).catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p><code>reject</code>状态改变后，应该要被<code>catch</code>到，要输出<code>error 1</code>，答案确实是这样的。</p>
-<p>但是<code>then</code>抛出的异常哪里去了，是没执行那是咋地，我都有错误了，为什么没人阻止我呢。上网查了查，没说出个所以然。而且自己对<code>then</code>里面发生了什么？什么时候执行<code>then(onFulfilled)</code>里面这个<code>onFulfilled</code>？如果是异步的，又是怎么执行？如果说<code>then</code>里面返回一个<code>promise</code>状态是怎么传递的？这些我一概不知。索性花时间看看<code>promise</code>是怎么实现的(Stream，http看不懂，小小的promise还看不懂了？).</p>
-<p>对于任何一个通过<code>Promise/A+</code>测试集的<code>promise</code>库，我们挑一个来学习，没差别。这是一个<a href="https://zhuanlan.zhihu.com/p/25178630" target="_blank" rel="external">Promise 实现详解</a>,作者对<a href="https://github.com/calvinmetcalf/lie" target="_blank" rel="external">lie</a> (一个实现 Promise/A+ 规范的库)的实现进行了分析(点赞的人太少了)。方法讲的很到位，就是异步的流程从头到尾没讲清楚(作者说，怪我喽？)。我们来走一遍。</p>
-<h2 id="promise基本结构"><a href="#promise基本结构" class="headerlink" title="promise基本结构"></a>promise基本结构</h2><p><img src="/img/promise/promise1.png" alt="promise结构"></p>
-<ol>
-<li><code>new Promise((resolve,reject) =&gt; {...})</code>是一个拥有<code>value，state，queue</code>基本属性和<code>then,catch</code>方法的对象。<ol>
-<li>value    —–  用于存储<code>resolve(value)</code>中的<code>value</code>或者<code>reject(error)</code>中的<code>error</code></li>
-<li>state       —– 代表该<code>promise</code>当前状态，<strong>0(PENDING)</strong>，<strong>1(FULFILLED)</strong>，<strong>2(REJECTED)</strong>.</li>
-<li>queue    —–  一个存放<code>queueItem</code>对象的数组(一般情况下只放一个)。</li>
-</ol>
-</li>
-<li>每次<code>then，catch</code>都会生成一个新的<code>promise</code>(<strong>0状态</strong>).且返回该<code>promise</code></li>
-<li><code>queueItem</code>是一个存放<code>then</code>新生成的<code>promise</code>，以及装饰<code>then</code>参数<code>onFulfilled,onRejected</code>的对象。</li>
-<li>根据promise对象状态判断then(onFulfilled)，catch(onRejected)生成的对象是否会追加到父对象的queue中或者执行相应函数。<ol>
-<li>如果是同步，则执行onRejected or onRejected</li>
-<li>如果是异步，push.</li>
-</ol>
-</li>
-</ol>
-<h2 id="Promise实现原理"><a href="#Promise实现原理" class="headerlink" title="Promise实现原理"></a>Promise实现原理</h2><p><strong>当最外层的 promise 状态改变时，遍历它的 queue 数组调用对应的回调，设置子 promise 的 state 和 value 并遍历它的 queue 数组调用对应的回调，然后设置孙 promise 的 state 和 value 并遍历它的 queue 数组调用对应的回调……依次类推。</strong></p>
-<h2 id="同步和异步以及返回一个promise"><a href="#同步和异步以及返回一个promise" class="headerlink" title="同步和异步以及返回一个promise"></a>同步和异步以及返回一个promise</h2><p><img src="/img/promise/promise2.png" alt="promise流程"></p>
-<p>上面是我画的一张图，第一眼看过去，你没看懂，没关系，看第二眼。第二眼看过去，还是看不懂，没关系，多看几眼。相信我，你是看不懂的。没事，给我这个图我也看不懂。但可以慢慢解释。</p>
-<p>一个同步例子为例.我们先看看这个流程是怎么走的。(比较繁琐，可以直接看总结。。总结比较短，好像也没啥信息量。)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">  resolve(<span class="number">1</span>)</div><div class="line">&#125;)</div><div class="line">.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">&#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'xxx'</span>);</div><div class="line">&#125;)</div><div class="line">.catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<ol>
-<li><p>首先<code>new</code>了一个<code>Promise</code>对象，状态为<code>0</code>，由于是同步，开始执行<code>resolve(1)</code>，改变自身状态<code>this.state</code>为<code>(1FULFILLED)</code>,<code>this.value</code>为<code>resolve(1)</code>的参数1，然后遍历<code>queue</code>，传入<code>value</code>。(但因为是同步，子 promise 还没 push 到父 queue 里面)，所以<code>forEach</code>不发生什么。第一阶段结束。</p>
-</li>
-<li><p>执行<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(1FULFILLED)</code>，执行<code>onFulfilled</code>(也就是第一个then的参数),<strong>参数为this.value</strong>，之后改变新生成自身状态<code>this.state</code>为<code>1(FULFILLED)</code>，<code>this.value</code>为函数调用的返回值，然后遍历<code>queue</code>，传入<code>this.value</code>(但因为是同步，孙 promise 还没 push 到子 queue 里面)，所以<code>forEach</code>不发生什么。第二阶段结束。</p>
-</li>
-<li><p>执行第二个<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(1FULFILLED)</code>，执行<code>onFulfilled</code>,<strong>参数为上一个函数调用的返回值</strong>，根据函数调用的返回值，<strong>此时抛出一个异常。</strong>被<code>catch</code>到，之后改变自身状态<code>this.state</code>为<code>2(REJECTED)</code>，<code>this.value</code>为<code>error</code>,然后遍历<code>queue</code>，传入<code>error</code>(但因为是同步，孙孙promise还没push到孙queue里面)，所以<code>forEach</code>不发生什么。第三阶段结束。</p>
-</li>
-<li><p>执行<code>catch</code>函数，相当于执行<code>then(null,onRejected)</code>,新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态为<code>2(REJECTED</code>)的，执行<code>onRejected</code>(也就是catch的参数)，参数为<code>this.value</code>.改变自身状态,值，然后遍历<code>queue</code>.(但因为是同步，。。)，所以forEach不发生什么。结束了(好辛苦。。)。</p>
-<p> ​</p>
-</li>
-</ol>
-<p><strong>最最重要的异步</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            resolve(<span class="number">1</span>)</div><div class="line">        &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(value);</div><div class="line">        &#125;, <span class="number">2000</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
-<ol>
-<li>首先<code>new</code>了一个<code>Promise</code>对象，状态为0，由于是异步，webAPIS处理SetTimeout(Node放进循环handles？)，也就是说<code>resolve</code>不立即执行(即不改变自身状态).第一阶段结束。</li>
-<li>执行<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(0 PENDING)</code>，则<code>push</code>一个<code>queueItem(promise,onFulfilled,onRejected)</code>对象进<code>this.queue</code>。返回新生成一个0状态的<code>promise</code>。</li>
-<li>执行<code>then</code>函数，新生成一个0状态的<code>promise</code>，判断此时<code>this.state</code>状态，此时为<code>(0 PENDING)</code>，则<code>push</code>一个<code>queueItem(promise,onFulfilled,onRejected)</code>对象进<code>this.queue</code>。返回新生成一个0状态的<code>promise</code>。</li>
-<li>此时1000ms到了以后，会触发setTimeout事件，此时回调函数会放到任务队列里面，js主线程从任务队列里提取任务(node主循环检查handles，判断时间是否到达，取出回调函数)，执行。也就是说<code>resolve</code>执行了(终于到了我？)，改变自身状态<code>this.state</code>为<code>(PENDING)</code>,<code>this.value</code>为<code>resolve(1)</code>的参数1，然后遍历<code>queue</code>，传入<code>value</code>。(此时<code>queue</code>不为空，可以愉快的执行了)</li>
-<li>取出第一个<code>then(onFulfilled)</code>的<code>onFulfilled</code>，传进上面传进的参数，执行(此时是异部操作)。然后，设置自身的状态为<code>this.state为(1FULFILLED)</code>,<code>this.value</code>为函数调用返回的结果2，继续遍历自身的<code>queue</code>。直到<code>queue.forEach</code>为空。</li>
-</ol>
-<p><strong>总结:</strong></p>
-<ol>
-<li>所有<code>promise</code>始于<code>new Promise()</code>，<strong>终于queue.forEach(…).</strong></li>
-<li>第一个<code>promise</code>的状态(resolve是否立即执行)很重要，直接决定了剩余所有的<code>then,catch</code>是否要<code>push</code>的走向。</li>
-<li>无论是同步还是异步，<code>then，catch</code>总会在<code>promise</code>状态发生改变的时候执行(异步执行),并不断设置自身value，state。</li>
-</ol>
-<p>ps:</p>
-<p>如果<code>then</code>里面返回一个<code>Promise</code>，那么会加一层传递<code>then</code>设置<code>then</code>,比较复杂。</p>
-<p> 值穿透，<code>lie</code>实现是返回了<code>this</code>，而且只是实现了一种情况。有兴趣可以看看。</p>
-<p>如果是第一个<code>Promise</code>抛出一个异常，那么会被<code>catch</code>到，<code>then()</code>单参数的<code>onFulfilled</code>确实是不执行.</p>
-<p>作业:    把以下流程说清楚</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            resolve(<span class="number">1</span>)</div><div class="line">        &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(value);</div><div class="line">        &#125;, <span class="number">2000</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</div><div class="line">          reject(<span class="string">'error'</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;).catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(value);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
-<p><strong>update 0:</strong></p>
-<p>先思考一下这个输出什么。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</div><div class="line">    resolve()</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>)</div><div class="line">    resolve()</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">7</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">8</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>答案是 1,2,5,6,3,7,4,8.</p>
-<p>可以说明一个问题，then里面回调都是异步执行的(如果是同步会是12345678)。</p>
-<p>实际上<a href="https://github.com/calvinmetcalf/lie" target="_blank" rel="external">lie</a>是用<code>immediate</code>库(一个将同步转异步执行的库，不知道原理)实现的。</p>
-<p><strong>至于为什么是要异步执行的？</strong> <a href="https://www.zhihu.com/question/57071244" target="_blank" rel="external"> 看某乎讨论</a></p>
-<p>简单来说就是执行顺序会变成了不确定的，而且存在stackoverflow风险。</p>
-<p><strong>update 1:</strong></p>
-<p><code>lie</code>里面的实现和原生有个区别影响很大：</p>
-<blockquote>
-<p>原生：处于reject的promise如果不catch或则then(f1,f2)，那么会出错！而lie是不会报错的。。</p>
-<p>原生：处于reject的promise如果不catch或则then(f1,f2)，那么会出错！而lie是不会报错的。。</p>
-</blockquote>
-<p>这一点在<code>es7</code>的<code>asycn</code>函数里会存在一个问题，就是try/catch会理解不了.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> * <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="built_in">Promise</span>.reject(<span class="string">'ixl'</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//执行next后，会报错.</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> *<span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">try</span>&#123;</div><div class="line">     <span class="keyword">yield</span> <span class="built_in">Promise</span>.reject(<span class="string">'ixl'</span>)</div><div class="line">  &#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">    <span class="built_in">console</span>.log(e)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//也会报错</span></div><div class="line"></div><div class="line"><span class="comment">//Promise报的错不等同普通函数，这个会被正常捕获</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'zjl'</span>)&#125;</div><div class="line"><span class="function"><span class="keyword">function</span>*<span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">try</span>&#123;</div><div class="line">		<span class="keyword">yield</span> foo();</div><div class="line">	&#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">		<span class="built_in">console</span>.log(e)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>解决办法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//是让生成器自己抛出异常，让外部try/catch捕获或则内部捕获</span></div><div class="line"></div><div class="line"><span class="comment">//1.外部捕获</span></div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  	<span class="keyword">try</span>&#123;</div><div class="line">      <span class="keyword">yield</span> <span class="built_in">Promise</span>.reject(<span class="string">'ixl'</span>)</div><div class="line">  	&#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">      <span class="built_in">console</span>.log(e)</div><div class="line">  	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> g = fn()</div><div class="line">	<span class="keyword">var</span> next = g.next(<span class="literal">undefined</span>)</div><div class="line">	<span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">		g.throw(e)</div><div class="line">	&#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//2.内部捕获</span></div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">yield</span> <span class="built_in">Promise</span>.reject(<span class="string">'ixl'</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> g = fn()</div><div class="line">	<span class="keyword">var</span> next = g.next(<span class="literal">undefined</span>)</div><div class="line">	<span class="built_in">Promise</span>.resolve(next.value).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			g.throw(e)</div><div class="line">		&#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">			<span class="built_in">console</span>.log(e)</div><div class="line">		&#125;</div><div class="line">	&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>而实际上<code>async</code>里面就是使用内部捕获，这样带来的一个后果是会立即跳出函数，reject(e)。</p>
-<p>所以会对<code>await</code>进行<code>try/catch</code>，这样就不会阻碍进程运行。</p>
-<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/03/18/从零开始的promise/" data-id="cj8lswfnj001x5svb8kqwocfi" class="article-share-link" data-share="baidu" data-title="从零开始的promise">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/03/18/从零开始的promise/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-关于express我知道的不多" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/14/关于express我知道的不多/" class="article-date">
-  <time datetime="2017-03-14T13:53:53.000Z" itemprop="datePublished">2017-03-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node/">Node</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/14/关于express我知道的不多/">关于express我知道的不多</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这几天要开始看<code>koa</code>了，决定把<code>express</code>做个总结，以免以后忘了。</p>
-<p>首先<code>express</code>是<code>connect</code>的加强版，准确来说应该是<code>app._router</code>是<code>connect</code>的加强版。</p>
-<h2 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h2><p>我们先复习一下<code>connect</code>，</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//index.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createServer</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">app</span>(<span class="params">req, res, next</span>)</span>&#123; app.handle(req, res, next); &#125;</div><div class="line">  merge(app, proto);</div><div class="line">  merge(app, EventEmitter.prototype);</div><div class="line">  app.route = <span class="string">'/'</span>;</div><div class="line">  app.stack = [];</div><div class="line">  <span class="keyword">return</span> app;</div><div class="line">&#125;</div><div class="line"><span class="built_in">module</span>.exports = createServer;</div></pre></td></tr></table></figure>
-<ul>
-<li>返回的<code>app</code>就是 我们平时 <code>app()</code>，然后用它<code>use</code>各种中间件。至于<code>app</code> 的<code>handle</code>，<code>listen</code>，<code>use</code>属性是通过 <code>merge</code>方法(for in 遍历属性)来继承的。</li>
-<li><code>use</code>中间件的时候，所有的中间件都是以<code>{ route : path, handle: fn}</code> 这种对象<code>push</code>进 <code>app.stack</code> 里面的。</li>
-<li>请求到来的时候，<code>http.createServer(this)</code>,这里的<code>this</code>就是 app，所以请求到来时候，通过<code>app.handle</code>方法来处理的。具体什么时候请看<code>http</code>源码（反正我当初是没看懂）。</li>
-<li><code>handle</code>方法获取<code>req.url</code>，取出中间件 <code>layer= stack[index++]</code>进行首匹配，尾匹配，最后进行中间件的方法调用 。通过中间件显示调用<code>next</code>，进行下一次匹配。这也就是为什么我们没显示调用<code>next</code>，每次请求只能匹配第一个中间件。</li>
-</ul>
-<h2 id="express"><a href="#express" class="headerlink" title="express"></a>express</h2><p>有了预备知识，我们来看看<code>express</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//express.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createApplication</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> app = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    app.handle(req, res, next);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  mixin(app, EventEmitter.prototype, <span class="literal">false</span>);</div><div class="line">  mixin(app, proto, <span class="literal">false</span>);</div><div class="line"></div><div class="line">  app.request = &#123; <span class="attr">__proto__</span>: req, <span class="attr">app</span>: app &#125;;</div><div class="line">  app.response = &#123; <span class="attr">__proto__</span>: res, <span class="attr">app</span>: app &#125;;</div><div class="line">  app.init();</div><div class="line">  <span class="keyword">return</span> app;</div><div class="line">&#125;</div><div class="line">exports = <span class="built_in">module</span>.exports = createApplication;</div></pre></td></tr></table></figure>
-<ul>
-<li><p>同上 <code>app</code>就是我们平时使用的<code>express()</code>，然后通过它<code>use</code>中间件，<code>get，post</code>等等。至于<code>app</code>的<code>handle，listen，use</code>等等都是通过<code>mixin</code>方法(Object.defineProperty())来设置(继承)的。区别是加了一层属性检测。</p>
-</li>
-<li><p>我们都知道<code>EventEmitter</code>是自带<code>events</code>的，所以<code>app</code>的属性都是从<code>proto</code>来的。剩下的都是直接定义在<code>exports(createApplication)</code>上也就是我们经常用的<code>express.XXX()</code>上。</p>
-<p>(express4.0以后把若干中间件都给干掉了。。听说是为了两者独立更好的发展，所以让用户调用废弃属性时抛错并带上自定义的错误信息。。)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[<span class="string">'json'</span>, <span class="string">'urlencoded'</span>, <span class="string">'bodyParser'</span>, <span class="string">'compress'</span>, <span class="string">'cookieSession'</span>, <span class="string">'session'</span>, <span class="string">'logger'</span>, <span class="string">'cookieParser'</span>, <span class="string">'favicon'</span>, <span class="string">'responseTime'</span>, <span class="string">'errorHandler'</span>, <span class="string">'timeout'</span>, <span class="string">'methodOverride'</span>, <span class="string">'vhost'</span>, <span class="string">'csrf'</span>, <span class="string">'directory'</span>, <span class="string">'limit'</span>, <span class="string">'multipart'</span>, <span class="string">'staticCache'</span>, </div><div class="line">].forEach(<span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</div><div class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'xxx'</span>+name+<span class="string">'yyy'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">configurable</span>: <span class="literal">true</span></div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这里的<code>proto</code>就是<code>application</code>，看看我们<code>app</code>经常用的方法都干了什么(<strong>仔细看，好像少了什么</strong>)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//application.js</span></div><div class="line">app.init = <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">app.defaultConfiguration = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">app.lazyrouter = <span class="function"><span class="keyword">function</span> <span class="title">lazyrouter</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">app.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, callback</span>) </span>&#123;&#125;;</div><div class="line">app.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;&#125;;</div><div class="line">app.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;&#125;;</div><div class="line">app.engine = <span class="function"><span class="keyword">function</span> <span class="title">engine</span>(<span class="params">ext, fn</span>) </span>&#123;&#125;;</div><div class="line">app.param = <span class="function"><span class="keyword">function</span> <span class="title">param</span>(<span class="params">name, fn</span>) </span>&#123;&#125;;</div><div class="line">app.set = <span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">setting, val</span>) </span>&#123;&#125;;</div><div class="line">app.path = <span class="function"><span class="keyword">function</span> <span class="title">path</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">app.enabled = <span class="function"><span class="keyword">function</span> <span class="title">enabled</span>(<span class="params">setting</span>) </span>&#123;&#125;;</div><div class="line">app.disabled = <span class="function"><span class="keyword">function</span> <span class="title">disabled</span>(<span class="params">setting</span>) </span>&#123;&#125;;</div><div class="line">app.all = <span class="function"><span class="keyword">function</span> <span class="title">all</span>(<span class="params">path</span>) </span>&#123;&#125;;</div><div class="line">app.render = <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">name, options, callback</span>) </span>&#123;&#125;;</div><div class="line">app.listen = <span class="function"><span class="keyword">function</span> <span class="title">listen</span>(<span class="params"></span>) </span>&#123;&#125;</div></pre></td></tr></table></figure>
-<p>首先是<code>init</code>方法，上面 <code>createApplication</code>用到的，顾名思义用来初始化一些属性的,</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.init = <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.cache = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.engines = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.settings = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.defaultConfiguration();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>比较重要的<code>settings</code>属性，我们<code>set</code>方法设置属性的时候就是放在这里的。而且<code>get</code>方法单参数的时候，也是通过<code>set</code>方法返回相应属性的。—-可以看出来，不要往这里面放置太多东西。</li>
-<li><code>defaultConfiguration</code>方法，默认配置属性的一个方法，通过<code>set</code>方法设置了<code>env，query parser，view，views</code>等等</li>
-</ul>
-<p><strong>lazyrouter方法</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">app.lazyrouter = <span class="function"><span class="keyword">function</span> <span class="title">lazyrouter</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>._router) &#123;</div><div class="line">    <span class="keyword">this</span>._router = <span class="keyword">new</span> Router(&#123;</div><div class="line">      <span class="attr">caseSensitive</span>: <span class="keyword">this</span>.enabled(<span class="string">'case sensitive routing'</span>),</div><div class="line">      <span class="attr">strict</span>: <span class="keyword">this</span>.enabled(<span class="string">'strict routing'</span>)</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">this</span>._router.use(query(<span class="keyword">this</span>.get(<span class="string">'query parser fn'</span>)));</div><div class="line">    <span class="keyword">this</span>._router.use(middleware.init(<span class="keyword">this</span>));</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>我认为的很重要方法。定义了一个私有属性<code>_router</code>为一个<code>Router</code>对象(<strong>其实不算new了一个Router对象，事实是这个对象返回了一个继承该对象的函数，看下面代码就知道了</strong>)，然后<code>use</code>了两个中间件，一就是现在唯一两个<code>express</code>自带的中间件。物以稀为贵啊。</p>
-<p>我们翻翻这个<code>Router</code>是什么.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// router/index.js</span></div><div class="line"><span class="keyword">var</span> proto = <span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">router</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    router.handle(req, res, next);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// mixin Router class functions</span></div><div class="line">  router.__proto__ = proto;</div><div class="line"></div><div class="line">  router.params = &#123;&#125;;</div><div class="line">  router._params = [];</div><div class="line">  router.caseSensitive = opts.caseSensitive;</div><div class="line">  router.mergeParams = opts.mergeParams;</div><div class="line">  router.strict = opts.strict;</div><div class="line">  router.stack = [];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> router;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>看到了吗   <strong>router.stack = [];</strong>  这也是为什么我上面说<code>app._router</code> 是<code>connect</code>加强版，所有中间件都是放在这里嘀，，，</p>
-<p>然后，我们以<code>use，get</code>方法为例，来看看这个<code>stack</code>放了什么。</p>
-<p>等等，</p>
-<p>等等，好像上面没有<code>get，post</code>之类的啊，这哪来的。。。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//application.js</span></div><div class="line"><span class="comment">//methods =  ['get', 'post', 'put', 'head', 'delete', 'options', 'trace', 'copy', 'lock', 'mkcol', 'move', 'purge', 'propfind', 'proppatch', 'unlock', 'report', 'mkactivity', 'checkout', 'merge', 'm-search', 'notify', 'subscribe', 'unsubscribe', 'patch', 'search', 'connect'];</span></div><div class="line"></div><div class="line">methods.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</div><div class="line">  app[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (method === <span class="string">'get'</span> &amp;&amp; <span class="built_in">arguments</span>.length === <span class="number">1</span>) &#123;</div><div class="line">      <span class="comment">// app.get(setting)</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.set(path);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.lazyrouter();</div><div class="line"></div><div class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>._router.route(path);</div><div class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>比方说我们<code>use</code>这两个 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="string">'/users'</span>,(req,res,next) =&gt;&#123;</div><div class="line">    res.end(<span class="string">'hahahah'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.get(<span class="string">'/users'</span>,(req,res) =&gt;&#123;</div><div class="line">    res.end(<span class="string">'hahahah'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>然后我们直接看结果</p>
-<p><img src="/img/express/result.png" alt=""></p>
-<p>你可以明显看到<code>stack[2]</code>是我们<code>use</code>产生的，<code>stack[0],stack[1]</code>是默认的两个中间，<code>stack[3]</code>是<code>get</code>产生的。</p>
-<p>我们可以初步做个总结 </p>
-<p><strong>express中的中间件 function 都是会被一个Layer对象封装，通过app._router.stack数组 push 该Layer对象</strong></p>
-<p><strong>app.use</strong></p>
-<p>传入的参数（路径、回调函数）会被封装成<code>Layer</code>对象（其中route属性为undefined），<code>push</code>到<code>app._router.stack</code></p>
-<p><strong>app.get</strong></p>
-<p>1.首先根据传入的路径封装一个<code>Route</code>对象，再对传入的回调函数封装成<code>Laye</code>r对象，接着把这个<code>Layer</code>对象<code>push</code>到<code>this._router..stack</code>里面去</p>
-<p>2.再创建一个默认<code>Layer</code>(跟app.use里面Layer的同级)，把步骤一中的<code>Route</code>挂到这个<code>Layer.route</code>属性上面，而这个<code>Layer</code>对象，会被<code>push</code>到<code>app._router.stack</code>里面</p>
-<h2 id="app-use代码"><a href="#app-use代码" class="headerlink" title="app.use代码"></a>app.use代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// application.js</span></div><div class="line"></div><div class="line">app.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line"> 	...</div><div class="line">  <span class="comment">// setup router</span></div><div class="line">  <span class="keyword">this</span>.lazyrouter();</div><div class="line">  <span class="keyword">var</span> router = <span class="keyword">this</span>._router;</div><div class="line">  </div><div class="line">  fns.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="comment">// restore .app property on req and res</span></div><div class="line">    router.use(path, <span class="function"><span class="keyword">function</span> <span class="title">mounted_app</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> orig = req.app;</div><div class="line">      fn.handle(req, res, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">        req.__proto__ = orig.request;</div><div class="line">        res.__proto__ = orig.response;</div><div class="line">        next(err);</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">    &#125;);</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">// mounted an app</span></div><div class="line"></div><div class="line">    fn.emit(<span class="string">'mount'</span>, <span class="keyword">this</span>);</div><div class="line"></div><div class="line">  &#125;, <span class="keyword">this</span>);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>可以看到<code>app.use</code>总是会调用<code>router</code>的<code>use</code>，也就是<code>connect</code>的加强版。这里<code>app.use</code>两个参数的时候，利用<code>offset</code>来保证每次<code>fns</code>总是函数列表。</p>
-<h2 id="app-get代码"><a href="#app-get代码" class="headerlink" title="app.get代码"></a>app.get代码</h2><p><code>get</code>方法看代码有一个值得注意的地方。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//application.js</span></div><div class="line">methods.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</div><div class="line">  app[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (method === <span class="string">'get'</span> &amp;&amp; <span class="built_in">arguments</span>.length === <span class="number">1</span>) &#123;</div><div class="line">      <span class="comment">// app.get(setting)</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.set(path);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.lazyrouter();</div><div class="line"></div><div class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>._router.route(path);</div><div class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">  &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>上面<code>_router</code>是下面的<code>index.js</code>里的<code>proto</code>。你可以很清楚的看到<code>new</code>了<code>Route，layer，</code>然后把<code>layer.route</code>设为<code>route</code>，根据我们总结的<code>route</code>得有一个<code>stack</code>属性里面还放置了<code>layer</code>，但看这个代码只有一个<code>_router</code>放置了，我们的<code>route</code>是没有的。关键就在<code>route[method].apply(route, slice.call(arguments, 1));</code>这句话，具体你看代码就知道了。 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// lib/index.js</span></div><div class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</div><div class="line"></div><div class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</div><div class="line">    <span class="attr">sensitive</span>: <span class="keyword">this</span>.caseSensitive,</div><div class="line">    <span class="attr">strict</span>: <span class="keyword">this</span>.strict,</div><div class="line">    <span class="attr">end</span>: <span class="literal">true</span></div><div class="line">  &#125;, route.dispatch.bind(route));</div><div class="line"></div><div class="line">  layer.route = route;</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.stack.push(layer);</div><div class="line">  <span class="keyword">return</span> route;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>最后看看常用两个方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">app.use(<span class="string">'/'</span>,Router)</div><div class="line">app.route(<span class="string">'/events'</span>)</div><div class="line">.all(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="comment">// to do </span></div><div class="line">&#125;)</div><div class="line">.get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="comment">//to do</span></div><div class="line">&#125;)</div><div class="line">.post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="comment">//to do </span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>一个是<code>use</code>一个路由而不是中间件，方便组织。</p>
-<p>一个是一个路由多种请求方式的简单写法。</p>
-<p>先说下面简单的 <code>app.route()</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// application.js</span></div><div class="line">app.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.lazyrouter();</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>._router.route(path);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这个和上面<code>get</code>方法差不多，<code>get</code>方法是往<code>route</code>对象的<code>stack</code>上<code>push</code>一个<code>Layer</code>,而这个是往<code>route</code>对象的<code>stack</code>上<code>push</code><strong>请求方式个</strong>Layer对象。</p>
-<p>(如果是app.get(‘/‘,mid,fun)这种通过mid件，进行某些处理，也是一样的)</p>
-<p><strong>app.use(‘/‘,Router)</strong></p>
-<p>这个方法很特殊，特殊之处不在于<code>use</code>逻辑，而在于<strong>Router</strong></p>
-<p>首先明确一点Router=express.Router()也就是proto返回的router函数。</p>
-<p><strong>这个函数跟上面用到的<code>this._router</code>是一样的</strong>，而这个<code>Router</code>可以看成是个<strong>二级_router</strong></p>
-<p>我们所有中间件是放在这个<code>this._router.stack</code>里面的。而这次放的是这个<code>二级_router</code>,其他的就没有什么稀奇的。</p>
-<h2 id="next链式调用"><a href="#next链式调用" class="headerlink" title="next链式调用"></a>next链式调用</h2><p>最后我们看看是怎么链式调用的，根据上面分析流程是这样的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">请求过来--&gt; app.handle---&gt; proto.handle</div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">app.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, callback</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> router = <span class="keyword">this</span>._router;</div><div class="line">  ...</div><div class="line">  router.handle(req, res, done);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">proto.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, out</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// middleware and routes</span></div><div class="line">  <span class="keyword">var</span> stack = self.stack;</div><div class="line"></div><div class="line">  next();</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// find next matching layer</span></div><div class="line">    <span class="keyword">var</span> layer;</div><div class="line">    <span class="keyword">var</span> match;</div><div class="line">    <span class="keyword">var</span> route;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (match !== <span class="literal">true</span> &amp;&amp; idx &lt; stack.length) &#123;</div><div class="line">      layer = stack[idx++];</div><div class="line">      match = matchLayer(layer, path);</div><div class="line">      route = layer.route;</div><div class="line">      </div><div class="line">      <span class="keyword">if</span> (match !== <span class="literal">true</span>) &#123;</div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (!route) &#123;</div><div class="line">        <span class="comment">// process non-route handlers normally</span></div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// no match</span></div><div class="line">    <span class="keyword">if</span> (match !== <span class="literal">true</span>) &#123;</div><div class="line">      <span class="keyword">return</span> done(layerError);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// this should be done for the layer</span></div><div class="line">    self.process_params(layer, paramcalled, req, res, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span> next(layerError || err);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (route) &#123;</div><div class="line">        <span class="keyword">return</span> layer.handle_request(req, res, next);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      trim_prefix(layer, layerError, layerPath, path);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>_router.stack里面存储了一个个Layer对象,获取到每个layer对象之后，用请求path与layer进行匹配，此处匹配用的是layer.match，如果能匹配到对应的layer，则获得layer.route.</p>
-<p><strong>如果route不为空则执行对应的layer.handle_request()，如果route为空说明这个layer是通过use()添加的非路由中间件</strong>.</p>
-<p>(handle_request用来执行next的和connect里面call是差不多的)</p>
-<p>(如果通过use()添加的中间件没有指定path，则在layer.match中默认返回true，也就是说，没有指定path的非路由中间件会匹配所有的http请求)</p>
-<p>这个next写的有点乱，暂时就这样，以后回来挖坑。。。</p>
-<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/03/14/关于express我知道的不多/" data-id="cj8lswfnm00255svbono50wp4" class="article-share-link" data-share="baidu" data-title="关于express我知道的不多">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/03/14/关于express我知道的不多/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-再谈谈闭包的一些事" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/01/再谈谈闭包的一些事/" class="article-date">
-  <time datetime="2017-03-01T13:53:53.000Z" itemprop="datePublished">2017-03-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node/">Node</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/01/再谈谈闭包的一些事/">再谈谈闭包的一些事</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>闭包：</strong>闭包至少在<code>js</code>是和<code>[[scope]</code>相关的，别的语言不知道怎么实现的。</p>
-<p>我记的以前学习闭包的时候云里雾里的，后来看了汤姆大叔的js豁然开朗.</p>
-<p>再来复习一下，大叔是这么阐述的：</p>
-<p>每一个函数是一个上下文，上下文可以抽象成拥有<strong>变量对象，this指针，作用域链</strong>的<code>object</code>。</p>
-<p>而我们所关心的闭包是作用域链的一个特征 。</p>
-<p>作用域链=AO(变量对象)+[[Scope]]，<strong>其中变量对象是进入函数上下文创建，而[[Scope]]是在函数创建时被存储的，静态不变，直到销毁</strong>。</p>
-<p><code>[[Scope]]</code>是一个数组，<strong>包含所有父级AO对象</strong>。我们所谓的闭包就是引用这些AO对象，所以<strong>所有函数都是闭包．</strong></p>
-<p>怎么证明?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//全局作用域下</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">boo</span>(<span class="params"></span>)</span>&#123;&#125;</div></pre></td></tr></table></figure>
-<p>你打开<code>chrome</code>，在<code>watch</code>里面添加<code>foo</code>和<code>boo</code></p>
-<p><img src="/img/scope/1.png" alt="scope"></p>
-<p>你可以发现<code>[[Scope]]</code>确实是存在的，不过在<code>v8</code>里是叫<code>[[Scopes]]</code>.</p>
-<p>再看个代码 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> x = <span class="number">1</span>; </div><div class="line">  <span class="keyword">var</span> y = <span class="number">2</span>; </div><div class="line">  <span class="comment">// 返回一个闭包</span></div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// 使用了外层函数的变量 y</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> inner = outer(); <span class="comment">// 通过inner变量持有闭包</span></div></pre></td></tr></table></figure>
-<p>以前我认为，如果闭包被引用，那么闭包的外部函数也不会被释放，其中的所有变量都不会被销毁，比如我通过<code>inner</code>变量持有了闭包，此时<code>outer</code>中的<code>x、y</code> 均活在内存中，不会被销毁。事实真是这样吗？<br>答案是：<strong>在V8的实现中，当outer执行完毕，x 立即死亡，仅有 y 存活</strong>。</p>
-<p><img src="/img/scope/2.png" alt="scope"></p>
-<p>我们不管这里面内存是怎么分配的，我们只需要知道<code>x</code>在返回时挂了就可以了.</p>
-<p>再来看一个更复杂的例子：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span> (<span class="params"></span>) </span>&#123; </div><div class="line">  <span class="keyword">var</span> x; <span class="comment">// 真正的局部变量</span></div><div class="line">  <span class="keyword">var</span> y; <span class="comment">// context variable, 被inner1使用</span></div><div class="line">  <span class="keyword">var</span> z; <span class="comment">// context variable, 被inner2使用</span></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner1</span> (<span class="params"></span>) </span>&#123; </div><div class="line">    use(y); </div><div class="line">  &#125; </div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner2</span> (<span class="params"></span>) </span>&#123; </div><div class="line">    use(z); </div><div class="line">  &#125; </div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner3</span> (<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="comment">/* 虽然函数体为空，但是作为闭包，依旧引用outer的Context */</span></div><div class="line">  &#125; </div><div class="line">  <span class="keyword">return</span> [inner1, inner2, inner3];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>x、y、z 三个变量何时死亡？<br>x 在outer执行完后立即死亡， y、z 需要等到inner1、inner2、inner3三个闭包都死亡后，才会死亡。<br>x 未被任何闭包使用，因此是一个真正的局部变量，保存在栈，函数执行完即被出栈死亡。由于 y、z 两个变量分别被inner1、inner2使用，则它们会被加入outer的Context。<strong>所有闭包</strong>都会引用外部函数的Context，即使inner3为空，不使用任何外部函数的变量，也会引用Context，所以需要等到三个闭包都死亡后，y、z 才会死亡。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[inner1,inner2,inner] ------&gt; Context&#123;y,z&#125;</div></pre></td></tr></table></figure>
-<p>另附v8内存一些知识，留着自己以后看。</p>
-<p><a href="https://segmentfault.com/a/1190000000440270" target="_blank" rel="external">浅谈V8引擎中的垃圾回收机制</a></p>
-<p><a href="http://www.ituring.com.cn/article/263557" target="_blank" rel="external">node内存知识</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/03/01/再谈谈闭包的一些事/" data-id="cj8lswfnp00285svb7v0hcxw9" class="article-share-link" data-share="baidu" data-title="再谈谈闭包的一些事">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/03/01/再谈谈闭包的一些事/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
 
 
-  
-    <article id="post-JS函数式编程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/25/JS函数式编程/" class="article-date">
-  <time datetime="2017-02-25T06:59:55.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/25/JS函数式编程/">JS函数式编程-入坑指南</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以前一直听过函数式编程的大名，不过也没去了解。总感觉很牛逼的样子，这几天偶然在<code>gitbook</code>上发现一本书<code>JS函数式编程指南</code>，开始是因为它星星比较多，下载过来收藏一下。后来在家闲的无聊，看了看，，，对，我也就看了看。。</p>
-<p>引用某乎对函数式编程的一个解释，和我看的这本书所阐述的不谋而合。</p>
-<h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.简介</h2><p><strong>编程范式</strong></p>
-<p>函数式编程是一种编程范式，我们常见的编程范式有<strong>命令式编程（Imperative programming），函数式编程，逻辑式编程</strong>，常见的面向对象编程是也是一种命令式编程。</p>
-<p>命令式编程是面向<strong>计算机硬件</strong>的抽象，有<strong>变量</strong>（对应着存储单元，<strong>赋值语句</strong>（获取，存储指令），<strong>表达式</strong>（内存引用和算术运算）和<strong>控制语句</strong>（跳转指令），一句话，命令式程序就是一个<strong>冯诺依曼机的指令序列</strong>。</p>
-<p>而函数式编程是面向数学的抽象，将计算描述为一种<strong>表达式求值</strong>，一句话，函数式程序就是一个<strong>表达式</strong>。</p>
-<p><strong>函数式编程的本质</strong></p>
-<p>函数式编程中的<strong>函数</strong>这个术语不是指计算机中的函数（实际上是<strong>Subroutine</strong>），而是<strong>指数学中的函数</strong>，即自变量的映射。也就是说一个函数的值仅决定于函数参数的值，不依赖其他状态。比如sqrt(x)函数计算x的平方根，只要x不变，不论什么时候调用，调用几次，值都是不变的。</p>
-<p>在函数式语言中，<strong>函数作为一等公民</strong>，可以在任何地方定义，在函数内或函数外，可以作为函数的参数和返回值，可以对函数进行组合。</p>
-<p>纯函数式编程语言中的变量也不是命令式编程语言中的变量，即存储状态的单元，而是代数中的变量，即一个值的名称。变量的值是<strong>不可变</strong>的（immutable），也就是说不允许像命令式编程语言中那样多次给一个变量赋值。比如说在命令式编程语言我们写“x = x + 1”，这依赖可变状态的事实，拿给程序员看说是对的，但拿给数学家看，却被认为这个等式为假。</p>
-<p>函数式语言的如条件语句，循环语句也不是命令式编程语言中的<strong>控制语句</strong>，而是函数的语法糖，比如在Scala语言中，if else不是语句而是三元运算符，是有返回值的。</p>
-<p>严格意义上的函数式编程意味着不使用可变的变量，赋值，循环和其他命令式控制结构进行编程。</p>
-<p>从理论上说，函数式语言也不是通过冯诺伊曼体系结构的机器上运行的，而是通过λ演算来运行的，就是通过变量替换的方式进行，变量替换为其值或表达式，函数也替换为其表达式，并根据运算符进行计算。λ演算是图灵完全（Turing completeness）的，但是大多数情况，函数式程序还是被编译成（冯诺依曼机的）机器语言的指令执行的。</p>
-<p><strong>函数式编程的好处</strong></p>
-<p>由于命令式编程语言也可以通过类似函数指针的方式来实现高阶函数，函数式的最主要的好处主要是不可变性带来的。没有可变的状态，函数就是<strong>引用透明</strong>（Referential transparency）的和<strong>没有副作用</strong>（No Side Effect）。</p>
-<p>一个好处是，函数即不依赖外部的状态也不修改外部的状态，函数调用的结果不依赖调用的时间和位置，这样写的代码容易进行推理，不容易出错。这使得单元测试和调试都更容易。</p>
-<p>不变性带来的另一个好处是：由于（多个线程之间）不共享状态，不会造成<strong>资源争用</strong>(Race condition)，也就不需要用锁来保护可变状态，也就不会出现死锁，这样可以更好地并发起来，尤其是在对称<strong>多处理器</strong>（SMP）架构下能够更好地利用多个处理器（核）提供的并行处理能力。</p>
-<p><strong>函数式编程的特性</strong></p>
-<ul>
-<li><strong>高阶函数（Higher-order function）</strong>：参数为函数或返回值为函数的函数</li>
-<li><strong>偏应用函数（Partially Applied Functions）</strong>：函数是用来当做模板来生产出函数的</li>
-<li><strong>柯里化（Currying）</strong>：部分求值函数</li>
-<li><strong>闭包（Closure）</strong>：js里是[[scope]] 或则 简单说就是函数 </li>
-</ul>
-<h2 id="二-特性介绍"><a href="#二-特性介绍" class="headerlink" title="二.特性介绍"></a>二.特性介绍</h2><h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h3><blockquote>
-<p>纯函数是这样一种函数，即相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用。</p>
-</blockquote>
-<p>比方说<code>slice</code>和<code>splice</code>，相信很多人都用过，我们也清楚<code>slice</code>不会改变原数组，而<code>splice</code>会改变。在这里面我们就可以说<code>slice</code>是纯函数，<code>splice</code>是不纯的且有副作用，即改变了原数组。</p>
-<p>再举个例子</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//纯</span></div><div class="line"><span class="keyword">var</span> z = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x,y</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> x+y;</div><div class="line">&#125;</div><div class="line"><span class="comment">//不纯</span></div><div class="line"><span class="keyword">var</span> z = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x,y</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> x+y+z;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>你可以发现不纯的版本引入了z这个外部状态，输出是不确定的。</p>
-<p>我们看看副作用包括什么？</p>
-<blockquote>
-<p>副作用是在计算结果的过程中，系统状态的一种变化，或者与外部世界进行的可观察的交互。</p>
-<p>副作用可能包含，但不限于：更改文件系统，往数据库插入记录发送一个 http 请求可变数据，打印/log<br>，获取用户输入，DOM 查询，访问系统状态</p>
-</blockquote>
-<p><strong>一般来说纯函数，只处理传入的参数，而不和外界进行某种交流。而且说有用的纯函数势必会返回一些东西。</strong></p>
-<p>副作用让一个函数变得不纯是有道理的：从定义上来说，纯函数必须要能够根据相同的输入返回相同的输出；如果函数需要跟外部事物打交道，那么就无法保证这一点了。</p>
-<p><strong>追求“纯”的几个理由</strong></p>
-<ul>
-<li>可缓存性。我们利用闭包可以把任何东西存起来(不管是函数参数，函数里定义的变量)，以便获取<strong>。重点是我们可以缓存任意一个函数，不管它们看起来多么具有破坏性。</strong>curry就是把函数当参数缓存起来。</li>
-<li>纯函数的依赖很明确，没有偷偷摸摸的小动作。也就是说我们从可以纯函数里得到更多的信息，</li>
-<li><strong>引用透明性</strong>。这是里面及其重要的概念，<strong>如果一段代码可以替换成它执行所得的结果，而且是在不改变整个程序行为的前提下替换的，那么我们就说这段代码是引用透明的</strong>。(由于纯函数总是能够根据相同的输入返回相同的输出，所以它们就能够保证总是返回同一个结果，这也就保证了引用透明性。)<ul>
-<li>引用透明带来一个十分重要的特性就是<strong>等式推导</strong>，这点可以让重构十分简单。第三章的例子里面我们可以 看到它的强大。</li>
-</ul>
-</li>
-</ul>
-<h3 id="柯里化（curry）"><a href="#柯里化（curry）" class="headerlink" title="柯里化（curry）"></a>柯里化（curry）</h3><blockquote>
-<p>curry的概念很简单：只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数。</p>
-</blockquote>
-<p>curry的简单实现</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//callback版的curry</span></div><div class="line"><span class="keyword">var</span> curry = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</div><div class="line">      <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>,...args.push(callback))</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//任意参数的curry</span></div><div class="line"><span class="keyword">var</span> curry = <span class="function"><span class="keyword">function</span>(<span class="params"> fn </span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> limit = fn.length;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">judgeCurry</span> (<span class="params">...args</span>)</span>&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &gt;= limit )&#123;</div><div class="line">			<span class="keyword">return</span> fn.apply(<span class="literal">null</span>,args);</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args2</span>)</span>&#123;</div><div class="line">				<span class="keyword">return</span> judgeCurry.apply(<span class="literal">null</span>,args.concat(args2));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后我们创建几个curry函数来感受下。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> match = curry(<span class="function"><span class="keyword">function</span> (<span class="params">what, str</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> str.match(what);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> filter = curry(<span class="function"><span class="keyword">function</span> (<span class="params">f, ary</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> ary.filter(f);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> replace = curry(<span class="function"><span class="keyword">function</span> (<span class="params">what, replacement, str</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> str.replace(what, replacement);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> map = curry(<span class="function"><span class="keyword">function</span> (<span class="params">f, ary</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> ary.map(f);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>上面的代码中遵循的是一种简单，同时也非常重要的模式。即策略性地把要操作的数据（String， Array）放到最后一个参数里。</p>
-<p>测试一下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 下面match一下调用两个参数的情况一般不怎么常见，所以curry可以等价成上面那个函数。</span></div><div class="line">match(<span class="regexp">/\s+/g</span>, <span class="string">"hello world"</span>);</div><div class="line"><span class="comment">// [ ' ' ]</span></div><div class="line">match(<span class="regexp">/\s+/g</span>)(<span class="string">"hello world"</span>);</div><div class="line"><span class="comment">// [ ' ' ]</span></div><div class="line"><span class="keyword">var</span> hasSpaces = match(<span class="regexp">/\s+/g</span>);</div><div class="line"><span class="comment">// function(x) &#123; return x.match(/\s+/g) &#125;</span></div><div class="line">hasSpaces(<span class="string">"hello world"</span>);</div><div class="line"><span class="comment">// [ ' ' ]</span></div><div class="line">hasSpaces(<span class="string">"spaceless"</span>);</div><div class="line"><span class="comment">// null</span></div><div class="line">filter(hasSpaces, [<span class="string">"tori_spelling"</span>, <span class="string">"tori amos"</span>]);</div><div class="line"><span class="comment">// ["tori amos"]</span></div></pre></td></tr></table></figure>
-<p>当我们谈论纯函数的时候，我们说它们接受一个输入返回一个输出。curry 函数所做的正是这样：每传递一个参数调用函数，就返回一个新函数处理剩余的参数。这就是一个输入对应一个输出啊。哪怕输出是另一个函数，它也是纯函数。</p>
-<h3 id="代码组合-compose"><a href="#代码组合-compose" class="headerlink" title="代码组合(compose)"></a>代码组合(compose)</h3><blockquote>
-<p>compose 把上一个函数的返回值当作下一个函数的参数这就是代码组合</p>
-</blockquote>
-<p>两种<code>compose</code>的实现方式</p>
-<p><code>compose</code> — 命令式</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> compose = <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> len = args.length;</div><div class="line">  <span class="keyword">var</span> count  = len - <span class="number">1</span>;</div><div class="line">  <span class="keyword">var</span> result;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params">...args1</span>)</span>&#123;</div><div class="line">    result = args[count].apply(<span class="keyword">this</span>,args1);</div><div class="line">    <span class="keyword">if</span> ( count &lt;= <span class="number">0</span> )&#123;</div><div class="line">      count = len - <span class="number">1</span>;</div><div class="line">      <span class="keyword">return</span> result;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      count --;</div><div class="line">      <span class="keyword">return</span> g.call(<span class="keyword">this</span>,result)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//做个测试</span></div><div class="line"><span class="keyword">var</span> head = <span class="function"><span class="params">x</span> =&gt;</span> x[<span class="number">0</span>]</div><div class="line"><span class="keyword">var</span> toUpper = <span class="function"><span class="params">str</span> =&gt;</span> str.toUpperCase()</div><div class="line"><span class="keyword">var</span> addStr = <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="string">'hahah'</span>;</div><div class="line"><span class="keyword">var</span> newFn = compose(head,toUpper,addStr)</div><div class="line">newFn(<span class="string">'zjl'</span>)  <span class="comment">// Z</span></div></pre></td></tr></table></figure>
-<p><code>compose</code>—函数式</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> compose = <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> args.reverse().reduce(_pipe,args.shift());</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> _pipe = <span class="function"><span class="keyword">function</span>(<span class="params">f,g</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</div><div class="line">		<span class="keyword">return</span> g.call(<span class="keyword">this</span>,f.apply(<span class="keyword">this</span>,args));</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//</span></div><div class="line"><span class="keyword">var</span> head = <span class="function"><span class="params">x</span> =&gt;</span> x[<span class="number">0</span>]</div><div class="line"><span class="keyword">var</span> toUpper = <span class="function"><span class="params">str</span> =&gt;</span> str.toUpperCase()</div><div class="line"><span class="keyword">var</span> addStr = <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="string">'hahah'</span>;</div><div class="line"><span class="keyword">var</span> newFn = compose(head,toUpper,addStr)</div><div class="line">newFn(<span class="string">'zjl'</span>)  <span class="comment">//z</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>上面compose里的函数是从右到左执行的</p>
-</blockquote>
-<p>利用 <code>curry,compose</code>我们就能做到让每个函数都先接收数据，然后操作数据，最后再把数据传递到下一个函数那里去。这就像管道一样，数据在函数之间流通。</p>
-<p>学了<code>currry,compose</code>之后，我们再来看一个重要的概念<code>pointfree</code></p>
-<h3 id="pointfree"><a href="#pointfree" class="headerlink" title="pointfree"></a>pointfree</h3><blockquote>
-<p> 永远不必说出你的数据，即 —不要命名转瞬即逝的中间变量，</p>
-</blockquote>
-<p>参考：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 非 pointfree，因为提到了数据：word</span></div><div class="line"><span class="keyword">var</span> snakeCase = <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> word.toLowerCase().replace(<span class="regexp">/\s+/ig</span>, <span class="string">'_'</span>);</div><div class="line">&#125;;</div><div class="line"><span class="comment">// pointfree</span></div><div class="line"><span class="keyword">var</span> snakeCase = compose(replace(<span class="regexp">/\s+/ig</span>, <span class="string">'_'</span>), toLowerCase);</div></pre></td></tr></table></figure>
-<p>你可以发现<code>pointfree</code>模式能够帮助我们减少不必要的命名，让代码保持简洁和通用。</p>
-<h2 id="三-实例应用"><a href="#三-实例应用" class="headerlink" title="三.实例应用"></a>三.实例应用</h2><p>上面1，2节已经充斥著各种概念，什么纯函数，引用透明 ，副作用 ，curry，compose，pointfree等等，现在我们把一切串起来 。</p>
-<p>我们来看个例子，比方说我们获取一个接口，返回数据是这样的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">items:[</div><div class="line">    &#123; <span class="string">"media"</span> : &#123; <span class="string">"m"</span> : <span class="string">"xxx.png"</span> &#125; &#125;,</div><div class="line">    &#123; <span class="string">"media"</span> : &#123; <span class="string">"m"</span> : <span class="string">"yyy.png"</span> &#125; &#125;，</div><div class="line">  	...</div><div class="line">]</div></pre></td></tr></table></figure>
-<p>我们要把图片渲染到网页上，分两步走。</p>
-<ol>
-<li>获取<code>items</code>数组里面的m–也就是图片路径</li>
-<li>根据图片路径生成<code>img</code>标签，并把标签追加到<code>body</code>里面 </li>
-</ol>
-<p>首先创建一个方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getJSON =  _.curry(<span class="function"><span class="keyword">function</span>(<span class="params">callback, url</span>) </span>&#123;</div><div class="line">	$.getJSON(url, callback);</div><div class="line">&#125;),</div></pre></td></tr></table></figure>
-<p>这里面<code>getJSON</code>是一个不纯的函数，因为他是异步操作，和网络环境联系到了一起，我们先放放，用个假<code>getJSON</code>的来代替。(以后用Monad可以把它变成纯函数 )</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> data = &#123;</div><div class="line">  <span class="attr">items</span>:[</div><div class="line">    &#123; <span class="string">"media"</span> : &#123; <span class="string">"m"</span> : <span class="string">"xxx.png"</span> &#125; &#125;,</div><div class="line">    &#123; <span class="string">"media"</span> : &#123; <span class="string">"m"</span> : <span class="string">"yyy.png"</span> &#125; &#125;</div><div class="line">  ]</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> getJSON = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">   <span class="keyword">return</span> data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后开始我们的工作 </p>
-<p><strong>1.获取items数组里面的m</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//curry和compose用的是上面自己实现的</span></div><div class="line"></div><div class="line"><span class="comment">//获取对象的属性 </span></div><div class="line"><span class="keyword">var</span> prop = curry(<span class="function"><span class="keyword">function</span>(<span class="params">property, object</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> object[property];</div><div class="line">&#125;);</div><div class="line"><span class="comment">//map方法</span></div><div class="line"><span class="keyword">var</span> map = curry(<span class="function"><span class="keyword">function</span>(<span class="params">fn,arr</span>)</span>&#123;</div><div class="line">   <span class="keyword">return</span> arr.map(fn);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//遍历map，获取m属性</span></div><div class="line"><span class="keyword">var</span> getMediaUrl = compose(prop(<span class="string">'m'</span>),prop(<span class="string">'media'</span>))</div><div class="line"><span class="keyword">var</span> getSrcs = compose(map(getMediaUrl),prop(<span class="string">'items'</span>))</div></pre></td></tr></table></figure>
-<p>测试一下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//暂时先不用getJSON</span></div><div class="line"><span class="built_in">console</span>.log(getSrcs(data))</div><div class="line"><span class="comment">//['xxx.png','yyy.png']</span></div></pre></td></tr></table></figure>
-<p><strong>2.根据图片路径生成img标签，并把标签追加到body里面</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建img节点</span></div><div class="line"><span class="keyword">var</span> img = <span class="function"><span class="keyword">function</span> (<span class="params">url</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</div><div class="line">  img.src = url;</div><div class="line">  <span class="keyword">return</span> img;</div><div class="line">&#125;</div><div class="line"><span class="comment">//追加img节点到body (这个函数也是不纯的，因为它依赖外部dom对象)</span></div><div class="line"><span class="keyword">var</span> setImg = <span class="function"><span class="keyword">function</span>(<span class="params">childTag</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">document</span>.body.appendChild(childTag);</div><div class="line">&#125;</div><div class="line"><span class="comment">//遍历map，获取m属性(也就是标签地址)</span></div><div class="line"><span class="keyword">var</span> getMediaUrl = compose(prop(<span class="string">'m'</span>),prop(<span class="string">'media'</span>))</div><div class="line"><span class="keyword">var</span> getSrcs = compose(map(getMediaUrl),prop(<span class="string">'items'</span>))</div><div class="line"><span class="comment">//遍历map生成节点，遍历map追加节点</span></div><div class="line"><span class="keyword">var</span> getImgTag = compose(map(img),getSrcs);</div><div class="line"><span class="keyword">var</span> renderImgs = compose(map(setImg),getImgTag);</div></pre></td></tr></table></figure>
-<p>测试一下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//暂时先不用getJSON</span></div><div class="line"><span class="built_in">console</span>.log(renderImgs(data))</div></pre></td></tr></table></figure>
-<p><strong>3.最后</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getMediaUrl = compose(prop(<span class="string">'m'</span>),prop(<span class="string">'media'</span>))</div><div class="line"></div><div class="line"><span class="keyword">var</span> getSrcs = compose(map(getMediaUrl),prop(<span class="string">'items'</span>))</div><div class="line"></div><div class="line"><span class="keyword">var</span> getImgTag = compose(map(img),getSrcs);</div><div class="line"></div><div class="line"><span class="keyword">var</span> renderImgs = compose(map(setImg),getImgTag);</div><div class="line"></div><div class="line"><span class="keyword">var</span> app = compose(renderImgs,getJSON);</div><div class="line"><span class="comment">//这里实际应该传一个url地址，但是没api，只能模拟一下。</span></div><div class="line">app(data)</div></pre></td></tr></table></figure>
-<p>看看，多么美妙的声明式规范啊，只说做什么，不说怎么做。现在我们可以把每一行代码都视作一个等式，变量名所代表的属性就是等式的含义。我们可以利用这些属性去推导分析和重构这个应用。</p>
-<h3 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h3><p><code>map</code>的组合律</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compose(map(f), map(g)) == map(compose(f, g));</div></pre></td></tr></table></figure>
-<p>我们可以利用这个定律优化代码，进行一次有原则的重构。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//原有代码 </span></div><div class="line"><span class="keyword">var</span> getMediaUrl = compose(prop(<span class="string">'m'</span>),prop(<span class="string">'media'</span>))</div><div class="line"></div><div class="line"><span class="keyword">var</span> getSrcs = compose(map(getMediaUrl),prop(<span class="string">'items'</span>))</div><div class="line"></div><div class="line"><span class="keyword">var</span> getImgTag = compose(map(img),getSrcs);</div></pre></td></tr></table></figure>
-<p>感谢等式推导及纯函数的特性，我们可以内联调用<code>getSrcs</code>和<code>getImgTag</code>，也就是把<code>map</code> 调用排列起来。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getMediaUrl = compose(prop(<span class="string">'m'</span>), _.prop(<span class="string">'media'</span>));</div><div class="line"><span class="comment">// compose(x,compose(y,z)) =  compose(x,y,z)</span></div><div class="line"><span class="keyword">var</span> getImgTag = compose(map(img), map(getMediaUrl), prop(<span class="string">'items'</span>));</div></pre></td></tr></table></figure>
-<p>把 map 排成一列之后就可以应用组合律了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getMediaUrl = compose(prop(<span class="string">'m'</span>), prop(<span class="string">'media'</span>));</div><div class="line"><span class="keyword">var</span> getImgTag = compose(map(compose(img, mediaUrl)), prop(<span class="string">'items'</span>));</div></pre></td></tr></table></figure>
-<p>你可以发现原来代码要循环两次，而现在只需要循环一次！！！</p>
-<h2 id="四-functor和Monad"><a href="#四-functor和Monad" class="headerlink" title="四.functor和Monad"></a>四.functor和Monad</h2><blockquote>
-<p>functor(函子)可以看成是一种数据结构：提供了存储数据，而且自己能调用函数去处理数据的能力。</p>
-</blockquote>
-<p>这样的容器可以自由的选择如何的操作这个函数，以致于惰性求值，错误处理，异步调用等等。</p>
-<p><strong>一个最简单的容器:</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Container = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.__value = x;</div><div class="line">&#125;</div><div class="line">Container.of = <span class="function"><span class="params">x</span> =&gt;</span> <span class="keyword">new</span> Container(x);</div><div class="line">Container.prototype.map = <span class="function"><span class="keyword">function</span>(<span class="params">f</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> Container.of(f(<span class="keyword">this</span>.__value))</div><div class="line">&#125;</div><div class="line"><span class="comment">//试试看</span></div><div class="line">Container.of(<span class="number">1</span>);</div><div class="line"><span class="comment">//=&gt; Container(1)</span></div><div class="line"></div><div class="line">Container.of(<span class="number">3</span>)</div><div class="line">    .map(<span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">1</span>)                <span class="comment">//=&gt; Container(4)</span></div><div class="line">    .map(<span class="function"><span class="params">x</span> =&gt;</span> <span class="string">'Result is '</span> + x);    <span class="comment">//=&gt; Container('Result is 4')</span></div></pre></td></tr></table></figure>
-<p>也就是说，如果我们要将普通函数应用到一个被容器包裹的值，那么我们首先需要定义一个叫<strong>Functor</strong> 的数据类型，在这个数据类型中需要定义如何使用 <strong>map</strong> 来应用这个普通函数。而且你看到了吗，<code>3</code>这个值经过了两个函数的处理，这不就是<code>compose</code>?</p>
-<p><a href="">函数式编程</a></p>
-<p><a href="">函数式编程指南</a></p>
-<p><strong>本人技术有限，如果文中存在错误或者不足，欢迎大家指正，相互交流。</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/02/25/JS函数式编程/" data-id="cj8lswfmk000t5svb6qgt5k13" class="article-share-link" data-share="baidu" data-title="JS函数式编程-入坑指南">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/25/JS函数式编程/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
 
 
-  <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-  </nav>
-</section>
-      
-      <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node/">Node</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/es6/">es6</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 17.5px;">JavaScript</a> <a href="/tags/Node/" style="font-size: 20px;">Node</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/tools/" style="font-size: 12.5px;">tools</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/09/15/koa-router小笔记/">koa-router小笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/10/一些源码分析解析/">一些npm包源码分析</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/02/fiddler/">fiddler抓包工具</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/02/这些年我用过的软件/">那些年我用过的软件</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/02/利用pipe处理并发/">利用pipe处理并发的可行性</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
-    <div class="widget">
-      <ul>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-      
-    </div>
-    <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 ChenXing<br>
-      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
-      .
-      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
-    </div>
-  </div>
-</footer>
-  </div>
-  <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-  <!-- totop start -->
-<div id="totop">
-<a title="totop"><img src="/img/scrollup.png"/></a>
-</div>
-
-<!-- totop end -->
-
-<!-- 多说公共js代码 start -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"reqianduan"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共js代码 end -->
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
 
-<!-- 百度分享 start -->
-
-<div id="article-share-box" class="article-share-box">
-  <div id="bdshare" class="bdsharebuttonbox article-share-links">
-    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
-    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
-    <a class="article-share-more" data-cmd="more" title="更多"></a>
-  </div>
-</div>
 <script>
-  function SetShareData(cmd, config) {
-    if (shareDataTitle && shareDataUrl) {
-      config.bdText = shareDataTitle;
-      config.bdUrl = shareDataUrl;
-    }
-    return config;
-  }
-  window._bd_share_config={
-    "common":{onBeforeClick: SetShareData},
-    "share":{"bdCustomStyle":"/css/bdshare.css"}
-  };
-  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
 </script>
 
-<!-- 百度分享 end -->
+  <title> ChenXing </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
+</head>
+<body lang="zh-Hans">
 
-<script src="/js/script.js"></script>
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="ChenXing">ChenXing</h1>
+        <h3 class="description" data-text=""></h3>
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+<div class="index-content">
+
+  <div class="posts-list">
+    <div>
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/03/20/async和koa2/">async和koa2</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-03-20T21:53:53+08:00" content="2017-03-20">
+        2017-03-20
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/03/20/async和koa2/">
+        
+        async123456789async function fn(args)&#123;	// ...&#125;// 等同于function fn(args)&#123;	return spawn(function*() &#123;	// ...	&#125;);&#125;
+阮大大在es6里面给
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/03/20/async和koa2/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/03/18/从零开始的promise/">从零开始的promise</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-03-18T21:53:53+08:00" content="2017-03-18">
+        2017-03-18
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/03/18/从零开始的promise/">
+        
+        前几天看到一个题，大概是这样的
+1234567new Promise((resolve, reject) =&gt; &#123;        resolve(1)    &#125;)    .then("2")    .then((value) =&gt; &#123;        cons
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/03/18/从零开始的promise/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/03/14/关于express我知道的不多/">关于express我知道的不多</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-03-14T21:53:53+08:00" content="2017-03-14">
+        2017-03-14
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/03/14/关于express我知道的不多/">
+        
+        这几天要开始看koa了，决定把express做个总结，以免以后忘了。
+首先express是connect的加强版，准确来说应该是app._router是connect的加强版。
+connect我们先复习一下connect，
+12345678910//index.jsfunction createSe
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/03/14/关于express我知道的不多/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/03/01/再谈谈闭包的一些事/">再谈谈闭包的一些事</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-03-01T21:53:53+08:00" content="2017-03-01">
+        2017-03-01
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/03/01/再谈谈闭包的一些事/">
+        
+        闭包：闭包至少在js是和[[scope]相关的，别的语言不知道怎么实现的。
+我记的以前学习闭包的时候云里雾里的，后来看了汤姆大叔的js豁然开朗.
+再来复习一下，大叔是这么阐述的：
+每一个函数是一个上下文，上下文可以抽象成拥有变量对象，this指针，作用域链的object。
+而我们所关心的闭包是作用域
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#Node" itemprop="url" rel="index">
+              <span itemprop="name">Node</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/03/01/再谈谈闭包的一些事/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+        
+
+
+<div class="post-item without-bgimage">
+
+
+  <div class="title-wrap" style="background: url() center / cover">
+    <h2 class="title"><a href="/2017/02/25/JS函数式编程/">JS函数式编程-入坑指南</a></h2>
+  </div>
+
+  <div class="post-cont">
+    <span class="post-time">
+      发表于
+      <time datetime="2017-02-25T14:59:55+08:00" content="2017-02-25">
+        2017-02-25
+      </time>
+    </span>
+    <div class="text">
+      <a href="/2017/02/25/JS函数式编程/">
+        
+        以前一直听过函数式编程的大名，不过也没去了解。总感觉很牛逼的样子，这几天偶然在gitbook上发现一本书JS函数式编程指南，开始是因为它星星比较多，下载过来收藏一下。后来在家闲的无聊，看了看，，，对，我也就看了看。。
+引用某乎对函数式编程的一个解释，和我看的这本书所阐述的不谋而合。
+一.简介编程范式
+        ...
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+
+    
+      <span class="post-category" >
+        &nbsp; 分类于
+        
+          <span itemprop="about" itemscope>
+            <a href="/categories#JavaScript" itemprop="url" rel="index">
+              <span itemprop="name">JavaScript</span>
+            </a>
+          </span>
+
+          
+          
+
+        
+      </span>
+    
+
+    <a class="read-more-btn" target="_blank" href="/2017/02/25/JS函数式编程/" itemprop="url">
+      more...
+    </a>
+  </div>
+</div>
+
+      
+    </div>
+    
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+  </nav>
+
+
+  </div>
+
+  <div class="right-info">
+  <div class="featured-tags">
+    <h5>FEATURED TAGS</h5>
+    <div class="tags">
+    
+      <a href="/tags#Node">Node</a>
+    
+      <a href="/tags#JavaScript">JavaScript</a>
+    
+      <a href="/tags#Python">Python</a>
+    
+      <a href="/tags#Java">Java</a>
+    
+      <a href="/tags#es6">es6</a>
+    
+      <a href="/tags#tools">tools</a>
+    
+      <a href="/tags#hexo">hexo</a>
+    
+    </div>
+  </div>
+  <div class="about-me">
+    <h5>ABOUT ME</h5>
+    <img src="/img/author.png" alt="ChenXing" itemprop="image" />
+    <p class="description motion-element" itemprop="description"></p>
+
+    <div class="links-of-author clearfix">
+      
+        
+          <span class="links-of-author-item">
+            <a href="https://github.com/5196666qwe" target="_blank" class="github">
+              <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+            </a>
+          </span>
+        
+          <span class="links-of-author-item">
+            <a href="http://www.zhihu.com/people/?" target="_blank" class="zhihu">
+              <i class="fa fa-zhihu fa-stack-1x fa-inverse"></i>
+            </a>
+          </span>
+        
+          <span class="links-of-author-item">
+            <a href="http://weibo.com/?" target="_blank" class="weibo">
+              <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+            </a>
+          </span>
+        
+      
+    </div>
+  </div>
+  
+  <div class="friend-links">
+    <h5>FRIEND LINKS</h5>
+    
+      
+        <a href="http://www.cnbeta.com/" target="_blank" title="Cnbeta">Cnbeta</a>
+      
+    
+      
+        <a href="http://www.id97.com/" target="_blank" title="id">id</a>
+      
+    
+  <div>
+  
+</div>
+
 
 </div>
+
+
+
+      
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
 </body>
 </html>
