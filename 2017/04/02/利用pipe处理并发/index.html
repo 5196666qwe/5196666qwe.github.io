@@ -45,18 +45,16 @@
 <meta name="description" content="以前在某处看到一个用pipe处理数组的。
 前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用pipe处理并发的可行性">
+<meta property="og:title" content="利用pipe处理做爬虫">
 <meta property="og:url" content="http://yoursite.com/2017/04/02/利用pipe处理并发/index.html">
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="以前在某处看到一个用pipe处理数组的。
 前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是">
-<meta property="og:image" content="http://yoursite.com/img/stream/stream.png">
-<meta property="og:updated_time" content="2017-04-23T14:06:27.601Z">
+<meta property="og:updated_time" content="2017-10-11T01:26:51.913Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用pipe处理并发的可行性">
+<meta name="twitter:title" content="利用pipe处理做爬虫">
 <meta name="twitter:description" content="以前在某处看到一个用pipe处理数组的。
 前因是作者看到另外一篇文章说JS的那些数组操作 (map/ reduce/filter) 啥的，每次调用的时候都会进行一次完整的遍历。试想一下如果有一个第一个数是1，长度是 1亿 的递增为 1 的数组，需要把所有的数组都乘 3，再排除其中的奇数，如果用 (map/filter) 的方法，只要也需要循环 一亿五千万次；那么如果有其他办法能只循环一亿次，是不是">
-<meta name="twitter:image" content="http://yoursite.com/img/stream/stream.png">
 
 
 
@@ -83,7 +81,7 @@
 })();
 </script>
 
-  <title> 利用pipe处理并发的可行性 </title>
+  <title> 利用pipe处理做爬虫 </title>
   
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -130,7 +128,7 @@
   <div class="header-cont">
     <div class="text-area">
       
-        <h1 class="title" data-text="利用pipe处理并发的可行性"> 利用pipe处理并发的可行性 </h1>
+        <h1 class="title" data-text="利用pipe处理做爬虫"> 利用pipe处理做爬虫 </h1>
 
         
         <div class="post-meta">
@@ -224,8 +222,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPicUrl</span>(<span class="params">page</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> urls = []</div><div class="line">    <span class="keyword">var</span> $ = cheerio.load(page);</div><div class="line">    $(<span class="string">'.thumb-listing-page'</span>).find(<span class="string">'.preview'</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        urls.push($(<span class="keyword">this</span>).attr(<span class="string">'href'</span>).substr(<span class="number">37</span>));</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> urls;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>最后把他们连接起来</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">getWallhavenUrls()</div><div class="line">    .pipe(getWallhavenPics())</div><div class="line">    .pipe(downloadImg())</div></pre></td></tr></table></figure>
-<p>cpu稳定在3%以下，mem稳定在30M以下，除了一些连接太慢，console了timeout，其他完美。最后看看成果 </p>
-<p><img src="/img/stream/stream.png" alt="stream"></p>
+<p>cpu稳定在3%以下，mem稳定在30M以下，除了一些连接太慢，console了timeout.</p>
 </div>
 
     <div class="post-sidebar">
@@ -267,7 +264,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/04/02/利用pipe处理并发/"
-           data-title="利用pipe处理并发的可行性" data-url="http://yoursite.com/2017/04/02/利用pipe处理并发/">
+           data-title="利用pipe处理做爬虫" data-url="http://yoursite.com/2017/04/02/利用pipe处理并发/">
       </div>
     
   </div>
