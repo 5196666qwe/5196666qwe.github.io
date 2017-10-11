@@ -50,13 +50,13 @@
 <meta property="og:site_name" content="ChenXing">
 <meta property="og:description" content="koa-router小笔记koa-compose的一个小知识 
 12345678910111213141516171819function (context, next) &amp;#123;    let index = -1    return dispatch(0)    function dispatch (i) &amp;#123;      if (i &amp;lt;= index) return Prom">
-<meta property="og:image" content="http://yoursite.com/img/koa/koa-router.jpg">
-<meta property="og:updated_time" content="2017-10-10T15:24:27.393Z">
+<meta property="og:image" content="http://yoursite.com/img/koa/koa-router.png">
+<meta property="og:updated_time" content="2017-10-11T01:24:15.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="koa-router小笔记">
 <meta name="twitter:description" content="koa-router小笔记koa-compose的一个小知识 
 12345678910111213141516171819function (context, next) &amp;#123;    let index = -1    return dispatch(0)    function dispatch (i) &amp;#123;      if (i &amp;lt;= index) return Prom">
-<meta name="twitter:image" content="http://yoursite.com/img/koa/koa-router.jpg">
+<meta name="twitter:image" content="http://yoursite.com/img/koa/koa-router.png">
 
 
 
@@ -220,7 +220,7 @@
 <p>老惯例,先上一张图</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</div><div class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Koa()</div><div class="line"><span class="keyword">var</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 装载所有子路由</span></div><div class="line"><span class="keyword">var</span> router = <span class="keyword">new</span> Router()</div><div class="line"><span class="keyword">var</span> home = <span class="keyword">new</span> Router()</div><div class="line"></div><div class="line">router.get(<span class="string">'/'</span>,<span class="keyword">async</span>(ctx,next)=&gt;&#123;</div><div class="line">  ctx.body  = <span class="string">'hello world '</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// 子路由1</span></div><div class="line">home.get(<span class="string">'/hello'</span>, <span class="keyword">async</span>( ctx,next )=&gt;&#123;</div><div class="line">  <span class="keyword">return</span> next();</div><div class="line">&#125;, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>  (<span class="params">ctx</span>)</span>&#123;</div><div class="line">  ctx.body  = <span class="string">'home'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line">home.get(<span class="string">'/ '</span>, <span class="keyword">async</span>( ctx,next )=&gt;&#123;</div><div class="line">  <span class="keyword">return</span> next();</div><div class="line">&#125;, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>  (<span class="params">ctx</span>)</span>&#123;</div><div class="line">  ctx.body  = <span class="string">'hello home'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"></div><div class="line">router.use(<span class="string">'/home'</span>, home.routes())</div><div class="line"></div><div class="line">app.use(router.routes())</div><div class="line">app.use(router.allowedMethods())</div><div class="line"></div><div class="line">app.listen(<span class="number">3000</span>, () =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'[demo] route-use-middleware is starting at port 3000'</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <p>use对应的背后逻辑如下(没添加allowMethods方法)</p>
-<p><img src="/img/koa/koa-router.jpg" alt="koa-router"></p>
+<p><img src="/img/koa/koa-router.png" alt="koa-router"></p>
 <h3 id="Router结构"><a href="#Router结构" class="headerlink" title="Router结构"></a>Router结构</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Router(opts)&#123;</div><div class="line">	<span class="attr">opts</span> : opts || &#123;&#125;;</div><div class="line">	methods : opts.methods || [<span class="string">'head'</span>,<span class="string">'options'</span>,<span class="string">'get'</span>,<span class="string">'put'</span>,<span class="string">'patch'</span>,<span class="string">'post'</span>,<span class="string">'delete'</span>]</div><div class="line">	params : &#123;   &#125;</div><div class="line">	stack[ layer, layer, layer ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>在我看来这个和<code>express</code>里面<code>router</code>是差不多的,看过源码的可能都会有个印象,就是<code>app = express()</code> 有个<code>_router</code>对象,它也有个<code>stack</code>用来<code>push</code>中间件,更巧的是里面也都是<code>layer</code>对象.</p>
 <p>回到<code>koa</code>的<code>router</code>上面来,通过<code>methods</code>插件.往<code>Router</code>对象身上注册一系列方法<code>get,post,put,head,delete</code>.</p>
@@ -272,7 +272,7 @@
 </li>
 <li><p>如果该对象的<code>route</code>不存在，那么<code>return next1()</code>，即下一个<code>allowedMethods</code>处理方法不匹配的逻辑中间件，</p>
 </li>
-<li><p>如果存在，则第二次<code>compose</code> 给ctx添加参数的中间件和匹配到该路由和方法的handle中间件(就是我们写的<code>async</code>方法)，<strong>compose(layerChain)(ctx, next1)</strong>, 里面的中间件大概是长这样的 </p>
+<li><p>如果存在，则<strong>第二次compose</strong> 给ctx添加参数的中间件和匹配到该路由和方法的handle中间件(就是我们写的<code>async</code>方法)，<strong>compose(layerChain)(ctx, next1)</strong>, 里面的中间件大概是长这样的 </p>
 <ul>
 <li>[参数中间件，async, async, 参数中间件，async ]</li>
 </ul>
@@ -283,7 +283,8 @@
 </ul>
 </li>
 </ul>
-<p>这里有个神奇的东西，可以试试在路由最后的async里加上 next2() , 会发生意想不到的事。。。就是第一个compose又开始执行了。。。。</p>
+<p>这里有个神奇的东西，可以试试在路由最后的async里加上 next2() , 会发生意想不到的事。。。</p>
+<p>就是第一个compose又开始执行了。。。。</p>
 </div>
 
     <div class="post-sidebar">
