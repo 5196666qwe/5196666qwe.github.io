@@ -54,7 +54,7 @@
 我开始想可能是undefined，因为the">
 <meta property="og:image" content="http://yoursite.com/img/promise/promise1.png">
 <meta property="og:image" content="http://yoursite.com/img/promise/promise2.png">
-<meta property="og:updated_time" content="2017-06-05T08:55:05.704Z">
+<meta property="og:updated_time" content="2017-11-07T02:26:13.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始的promise">
 <meta name="twitter:description" content="前几天看到一个题，大概是这样的
@@ -220,8 +220,8 @@
 <p>然而事情还没完，我又看到个题。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        reject(<span class="string">'error 1'</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;).then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'error 2'</span>);</div><div class="line">&#125;).catch(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p><code>reject</code>状态改变后，应该要被<code>catch</code>到，要输出<code>error 1</code>，答案确实是这样的。</p>
-<p>但是<code>then</code>抛出的异常哪里去了，是没执行那是咋地，我都有错误了，为什么没人阻止我呢。上网查了查，没说出个所以然。而且自己对<code>then</code>里面发生了什么？什么时候执行<code>then(onFulfilled)</code>里面这个<code>onFulfilled</code>？如果是异步的，又是怎么执行？如果说<code>then</code>里面返回一个<code>promise</code>状态是怎么传递的？这些我一概不知。索性花时间看看<code>promise</code>是怎么实现的(Stream，http看不懂，小小的promise还看不懂了？).</p>
-<p>对于任何一个通过<code>Promise/A+</code>测试集的<code>promise</code>库，我们挑一个来学习，没差别。这是一个<a href="https://zhuanlan.zhihu.com/p/25178630" target="_blank" rel="external">Promise 实现详解</a>,作者对<a href="https://github.com/calvinmetcalf/lie" target="_blank" rel="external">lie</a> (一个实现 Promise/A+ 规范的库)的实现进行了分析(点赞的人太少了)。方法讲的很到位，就是异步的流程从头到尾没讲清楚(作者说，怪我喽？)。我们来走一遍。</p>
+<p>但是<code>then</code>抛出的异常哪里去了，是没执行那是咋地，我都有错误了，为什么没人阻止我呢。上网查了查，没说出个所以然。而且自己对<code>then</code>里面发生了什么？什么时候执行<code>then(onFulfilled)</code>里面这个<code>onFulfilled</code>？如果是异步的，又是怎么执行？如果说<code>then</code>里面返回一个<code>promise</code>状态是怎么传递的？这些我一概不知。索性花时间看看<code>promise</code>是怎么实现的.</p>
+<p>对于任何一个通过<code>Promise/A+</code>测试集的<code>promise</code>库，我们挑一个来学习，没差别。这是一个<a href="https://zhuanlan.zhihu.com/p/25178630" target="_blank" rel="external">Promise 实现详解</a>,作者对<a href="https://github.com/nswbmw/appoint" target="_blank" rel="external">lie</a> (一个实现 Promise/A+ 规范的库)的实现进行了分析(点赞的人太少了)。方法讲的很到位，就是异步的流程从头到尾没讲清楚(作者说，怪我喽？)。我们来走一遍。</p>
 <h2 id="promise基本结构"><a href="#promise基本结构" class="headerlink" title="promise基本结构"></a>promise基本结构</h2><p><img src="/img/promise/promise1.png" alt="promise结构"></p>
 <ol>
 <li><code>new Promise((resolve,reject) =&gt; {...})</code>是一个拥有<code>value，state，queue</code>基本属性和<code>then,catch</code>方法的对象。<ol>
