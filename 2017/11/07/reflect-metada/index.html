@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- content-Type -->
+<meta charset="utf-8">
+
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="language" content="en">
+<meta name="robots" content="all">
+
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+<meta name="google-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+<meta name="baidu-site-verification" content="xxxxxxxxxx" />
+
+
+
+
+
+
+
+<meta name="keywords" content="TypeScript," />
+
+
+<meta name="description" content="Reflect.decorate = decorate;Reflect.metadata = metadata;Reflect.defineMetadata = OrdinaryDefineOwnMetadataReflect.hasMetadata = hasMetadata;Reflect.hasOwnMetadata = hasOwnMetadata;Reflect.getMetadata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="reflect-metadata解析">
+<meta property="og:url" content="http://yoursite.com/2017/11/07/reflect-metada/index.html">
+<meta property="og:site_name" content="ChenXing">
+<meta property="og:description" content="Reflect.decorate = decorate;Reflect.metadata = metadata;Reflect.defineMetadata = OrdinaryDefineOwnMetadataReflect.hasMetadata = hasMetadata;Reflect.hasOwnMetadata = hasOwnMetadata;Reflect.getMetadata">
+<meta property="og:updated_time" content="2017-11-13T08:41:15.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="reflect-metadata解析">
+<meta name="twitter:description" content="Reflect.decorate = decorate;Reflect.metadata = metadata;Reflect.defineMetadata = OrdinaryDefineOwnMetadataReflect.hasMetadata = hasMetadata;Reflect.hasOwnMetadata = hasOwnMetadata;Reflect.getMetadata">
+
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/img/favicon.ico?v=0.4.5.1" />
+
+
+
+
+
+
+<link href="http://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+<script>
+(function(){
+  var bp = document.createElement('script');
+  bp.src = '//push.zhanzhang.baidu.com/push.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <title> reflect-metadata解析 </title>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'xxxxxxxxxx', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?1551fdd18711ccb1c048bb11f579b1a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+</head>
+<body lang="zh-Hans">
+
+  <!--[if lte IE 9]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+  <div class="another-theme layout">
+
+    
+<header class="header" id="header">
+
+  <div class="header-cont">
+    <div class="text-area">
+      
+        <h1 class="title" data-text="reflect-metadata解析"> reflect-metadata解析 </h1>
+
+        
+        <div class="post-meta">
+          <div class="post-time">
+            发表于
+            <time  datetime="2017-11-07T20:53:53+08:00" content="2017-11-07">
+              2017-11-07
+            </time>
+          </div>
+
+          
+            <div class="post-category" >
+              
+                <span>
+                  <a href="/categories#TypeScript" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </div>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <a href="/2017/11/07/reflect-metada/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/07/reflect-metada/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+        </div>
+        
+      
+    </div>
+    <!-- Navigation -->
+    
+    <nav class="navigation clearfix" id="navigation">
+      
+        
+        <a class="nav-link" href="/" rel="section">
+          首页
+        </a>
+      
+        
+        <a class="nav-link" href="/tags" rel="section">
+          标签
+        </a>
+      
+        
+        <a class="nav-link" href="/categories" rel="section">
+          分类
+        </a>
+      
+        
+        <a class="nav-link" href="/about" rel="section">
+          关于
+        </a>
+      
+    </nav>
+    
+  </div>
+  <div class="mask"></div>
+</header>
+
+
+    <main class="container">
+
+      
+
+  <article class="post-article post-type-normal post" itemscope>
+
+  <div class="post-body">
+
+    <div class="content markdown-body"><p>Reflect.decorate = decorate;<br>Reflect.metadata = metadata;<br>Reflect.defineMetadata = OrdinaryDefineOwnMetadata<br>Reflect.hasMetadata = hasMetadata;<br>Reflect.hasOwnMetadata = hasOwnMetadata;<br>Reflect.getMetadata = getMetadata;<br>Reflect.getOwnMetadata = getMetadata;</p>
+<p><strong>Reflect.descorate 一个不相关的函数</strong></p>
+<p>之所以这么说,是因为其他的<code>api</code>和这个函数基本没有交集.</p>
+<p>作用: 替代内部装饰器的实现.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> __decorate =  <span class="function"><span class="keyword">function</span> (<span class="params">decorators, target, key, desc</span>) </span>&#123;</div><div class="line">	...</div><div class="line">    if (<span class="keyword">typeof</span> <span class="built_in">Reflect</span> === <span class="string">"object"</span> &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">Reflect</span>.decorate === <span class="string">"function"</span>) </div><div class="line">    	r = <span class="built_in">Reflect</span>.decorate(decorators, target, key, desc);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">for</span> (<span class="keyword">var</span> i = decorators.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) </div><div class="line">   	 	<span class="keyword">if</span> (d = decorators[i]) </div><div class="line">    		r = (c &lt; <span class="number">3</span> ? d(r) : c &gt; <span class="number">3</span> ? d(target, key, r) : d(target, key)) || r;</div><div class="line">	...</div><div class="line">&#125;;</div><div class="line"><span class="built_in">Reflect</span>.decorate = decorate;</div></pre></td></tr></table></figure>
+<p>当没有导入<code>Reflect-metadata</code>时, <code>_descorate</code>会使用自己定义的.而实际上<code>Reflect.descorate</code>和他干的事情差不多.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">decorate</span>(<span class="params">decorators, target, propertyKey, attributes</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!IsUndefined(propertyKey)) &#123;</div><div class="line">        ...</div><div class="line">        <span class="comment">//修饰属性,方法</span></div><div class="line">        <span class="keyword">return</span> DecorateProperty(decorators, target, propertyKey, attributes);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        ...</div><div class="line">        <span class="comment">//修饰构造函数,也就是我们的类.</span></div><div class="line">        <span class="keyword">return</span> DecorateConstructor(decorators, target);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">Reflect</span>.metadata = metadata;</div></pre></td></tr></table></figure>
+<p><strong>Reflect.metadata 充当装饰器的函数</strong></p>
+<p>作用: 可以直接使用在类的任何地方,充当装饰器. 方便以后获取设置的元数据.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">Reflect</span>.metadata(key, value)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">// property (on constructor, TypeScript only)</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</div><div class="line">    @<span class="built_in">Reflect</span>.metadata(key, value)</div><div class="line">    <span class="keyword">static</span> staticProperty;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// property (on prototype, TypeScript only)</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</div><div class="line">    @<span class="built_in">Reflect</span>.metadata(key, value)</div><div class="line">    property;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>key, value</code>也是下面的 <code>metadtakey, metadataValue</code> ,也就是元数据, 是我们可以获取到的信息的.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">metadata</span>(<span class="params">metadataKey, metadataValue</span>) </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">decorator</span>(<span class="params">target, propertyKey</span>) </span>&#123;</div><div class="line">		...</div><div class="line">        OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, propertyKey);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看看这个<code>OrdinaryDefineOwnMetadata</code>是什么</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">OrdinaryDefineOwnMetadata</span>(<span class="params">MetadataKey, MetadataValue, O, P</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> metadataMap = GetOrCreateMetadataMap(O, P, <span class="comment">/*Create*/</span> <span class="literal">true</span>);</div><div class="line">    metadataMap.set(MetadataKey, MetadataValue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>GetOrCreateMetadataMap</code> 是我们的核心方法,这个方法创建了如下结构</p>
+<p><code>GetOrCreateMetadataMap</code> 是我们的核心方法,这个方法创建了如下结构</p>
+<p><code>GetOrCreateMetadataMap</code> 是我们的核心方法,这个方法创建了如下结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Metadata: <span class="built_in">WeakMap</span>&#123;</div><div class="line">  <span class="string">'target'</span> -&gt; targetMetadata : <span class="built_in">Map</span>&#123;</div><div class="line">    <span class="string">'propertyKey'</span> -&gt; metadataMap : map&#123;</div><div class="line">      <span class="string">'metadataKey'</span> -&gt; <span class="string">'MetadataValue'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3 层 <code>map</code>,</p>
+<ul>
+<li>第 1 层 <code>weakmap</code>,<ul>
+<li><code>key</code>  是我们的 <code>target</code>,主要就两种, <code>(function|function.prototype)</code>.也就是我们的构造函数或则原型对象.</li>
+<li><code>value</code> 是<code>map</code>, 我们暂时叫做 <code>targetMetadaMap</code></li>
+</ul>
+</li>
+<li>第 2 层 <code>targetMetadaMap</code><ul>
+<li><code>key</code>  就是我们的对象属性或则方法名称(string), 类(Object).<strong>当为类的时候,此时的key为undefined.</strong></li>
+<li><code>value</code> 是 <code>map</code>,我们暂时叫做<code>metadataMap</code></li>
+</ul>
+</li>
+<li>第 3 层 <code>metadataMap</code><ul>
+<li><code>key</code>  就是我们定义的元数据的<code>key</code>了,</li>
+<li><code>value</code>  是元数据的<code>value</code></li>
+</ul>
+</li>
+</ul>
+<p>明白了这个结构,剩下的<code>api</code>几乎看名字就能立马使用.</p>
+<p><strong>Reflect.defineMetadata</strong></p>
+<p> <code>Reflect.defineMetadata</code> 等同与 <code>OrdinaryDefineOwnMetadata</code> , 也是生成上述结构.</p>
+<p><strong>Reflect.hasMetadata </strong></p>
+<p>一看名字大概就能知道是干吗的了. 判断该对象的属性,方法,或则自己是否携带某元数据.</p>
+<p>值得注意的是<code>hasMetadata</code>如果在该对象上没有找到, 会访问他的<code>__proto__</code>, 一般为<code>Function.prototype</code>或则<code>Object.prototype</code>, 不懂请查看网上很火的原型图.</p>
+<p><strong>Reflect.hasOwnMetadata</strong></p>
+<p>同上,失败后直接返回,不访问<code>__proto__</code>.</p>
+<p><strong>Reflect.getMetadata</strong></p>
+<p>用来获取元数据的<code>value</code>, 也可以用来获取<strong>类型元数据,参数类型元数据,返回值类型元数据</strong></p>
+<p> 获取这三种类型，必须开启 <code>emitDecoratorMetadata</code> ，否则会返回<code>undefined</code>.</p>
+<p>而且有个特别狗的地方就是，如果那对应的类或则方法或则属性上面没有装饰器而直接获取也会返回 <code>undefined</code> .(即使你这个装饰器什么都没干…..)</p>
+<ul>
+<li><strong>类型元数据</strong>使用元数据键”design:type”</li>
+<li><strong>参数类型元数据</strong>使用元数据键”design:paramtypes”</li>
+<li><strong>返回值类型元数据</strong>使用元数据键”design:returntype”</li>
+</ul>
+<p>实际上在<code>map</code>里面是找不到对应的这样的<code>design:type</code>的<code>key</code>的,应该是<code>typescript</code>自己设置的.</p>
+<p><strong>Reflect.getOwnMetadata</strong></p>
+<p>同上.</p>
+<p><strong>Reflect.getMetadataKeys</strong></p>
+<p>获取定义在该<code>target</code>身上的<code>propertyKey</code>所有元数据<code>key</code>,会继续访问他的<code>__proto__</code>.<code>key</code>相同,会用<code>set</code>过滤,然后全部返回.</p>
+<p><strong>Reflect.getOwnMetadataKeys</strong></p>
+<p>同上</p>
+</div>
+
+    <div class="post-sidebar">
+  <div class="toggle-btn" id="toggle-btn">
+    <i class="fa fa-reorder"></i>
+  </div>
+  <section class="post-toc-wrap" id="post-sidebar">
+    <h2 class="toc-title">内容目录</h2>
+    <div class="post-toc">
+      
+      
+        <p class="post-toc-empty">此文章未包含目录</p>
+      
+    </div>
+  </section>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    
+      <div class="post-tags">
+        
+          <a href="/tags#TypeScript" rel="tag">#TypeScript</a>
+        
+      </div>
+    
+    
+
+  </footer>
+
+</article>
+
+
+
+
+      
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/11/07/reflect-metada/"
+           data-title="reflect-metadata解析" data-url="http://yoursite.com/2017/11/07/reflect-metada/">
+      </div>
+    
+  </div>
+
+
+
+
+    </main>
+
+    <footer class="footer clearfix">
+  <div class="copyright" >
+    <span>Copyright</span>
+    
+    &copy; 
+    <span itemprop="copyrightYear">2017</span>
+    <span class="author" itemprop="copyrightHolder">ChenXing</span>
+  </div>
+
+  <div class="info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <span id="busuanzi_container_site_pv">
+        总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+  </div>
+
+</footer>
+
+
+  </div>
+
+  <div class="back-top-btn" id="back-top-btn"><i class="fa fa-chevron-up"></i></div>
+
+
+
+
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxxxxxxxxx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+
+
+
+
+<script type="text/javascript" src="/js/motto.min.js?v=0.4.5.1"></script>
+<script type="text/javascript" src="/js/main.js?v=0.4.5.1"></script>
+
+
+</body>
+</html>
